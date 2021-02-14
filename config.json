@@ -1,0 +1,8 @@
+{
+    "prefix": "u!",
+    "everyoneMention": true,
+    "hostedBy": true,
+    "defaultSettings": {
+        "prefix": "u!"
+    }
+}
