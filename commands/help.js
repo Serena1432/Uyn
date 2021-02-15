@@ -20,7 +20,7 @@ module.exports.run = async (client, message, args) => {
         var fields = [];
         fields.push({
             name: "Developer:",
-            value: "<@536899471720841228>",
+            value: "<@" + client.config.ownerId + ">",
             inline: false
         });
         fields.push({
