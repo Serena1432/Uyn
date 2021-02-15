@@ -10,7 +10,7 @@
 
 ## How to run this BOT yourself?
 
-* **Step 1:** Download [UynServer](https://www.github.com/UynServer) and config the PHP and the MySQL server.
+* **Step 1:** Download [UynServer](https://www.github.com/LilShieru/UynServer) and config the PHP and the MySQL server.
 * **Step 2:** Download the Uyn source code.
 * **Step 3:** Config the Environment Variables: `BOT_TOKEN` with your BOT token, `php_server_url` with the URL of your PHP server, `php_server_token` with the token you configured in your PHP server, and `tenor_api_key` with your Tenor API Key.
 * **Step 4:** Install the dependencies with the `npm install` command. You needn't to do it if you're using Heroku.
