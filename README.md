@@ -18,6 +18,10 @@
 * **Step 6:** Run the BOT with the `node index.js` command. If you're in Heroku, make sure that you've enabled the `web` dyno in the `Resources` tab. If you prefer the `worker` dyno, change the `web: node index.js` into `worker: node index.js` in the `Procfile` file.
 * **Step 7:** ENJOY!!! xD
 
+By the way, I'm currently using THIS repository to deploy the code into my Heroku BOT app, so you don't worry about the vulnerability :D
+
+![Uyn repo screenshot](https://i.ibb.co/pbfbtGv/Screenshot-20210215-163514-2.png)
+
 ## List of commands
 
 You can use the `u!help (command)` command to get information about a specific command!
