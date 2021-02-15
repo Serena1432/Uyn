@@ -7,7 +7,7 @@ const {
 } = require('util');
 
 module.exports.run = async (client, message, args) => {
-    if (!message.member.permissions.has("KICK_MEMBERS") && message.author.id != 536899471720841228) return message.reply("You don't have the rights to do this!");
+    if (!message.member.permissions.has("KICK_MEMBERS")) return message.reply("You don't have the rights to do this!");
     if (!message.mentions.members.size) return message.reply("You must mention an user!");
     if (message.mentions.members.first().user.id == message.author.id) return message.reply("You can't mute yourself!");
     if (message.mentions.members.first().roles.highest.rawPosition >= message.member.roles.highest.rawPosition) return message.reply("The mentioned member's highest role is higher than yours!");

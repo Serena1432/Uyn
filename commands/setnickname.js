@@ -5,7 +5,7 @@ const {
 } = require('util');
 
 module.exports.run = async (client, message, args) => {
-    if (!message.member.permissions.has("CHANGE_NICKNAME") && message.author.id != 536899471720841228) return message.reply("You don't have the rights to do this!");
+    if (!message.member.permissions.has("CHANGE_NICKNAME")) return message.reply("You don't have the rights to do this!");
 	if (!message.guild.member(client.user).permissions.has("CHANGE_NICKNAME")) return message.reply("BOT doesn't have the Change Nickname permission on this server! Please contact the server admin to fix this issue!");
 	if (!message.mentions.members.size) return message.reply("Please mention a member first!");
 	args.splice(0,1);

@@ -5,7 +5,7 @@ const {
 } = require('util');
 
 module.exports.run = async (client, message, args) => {
-    if (!message.member.permissions.has("MANAGE_ROLES") && message.author.id != 536899471720841228) return message.reply("You don't have the rights to do this!");
+    if (!message.member.permissions.has("MANAGE_ROLES")) return message.reply("You don't have the rights to do this!");
 	if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply("BOT doesn't have the Manage Roles permission on this server! Please contact the server admin to fix this issue!");
 	if (!message.mentions.roles.size) return message.reply("Please mention a role first!");
 	if (!args[1]) return message.reply("Please specify a role color!");
