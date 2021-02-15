@@ -3,7 +3,7 @@ const fs = require('fs');
 const { inspect } = require('util');
 
 module.exports.run = async (client, message, args) => {
-    if (message.author.id == '536899471720841228') {
+    if (message.author.id == client.config.ownerId) {
         let evaled;
         try {
           evaled = await eval(args.join(' '));
