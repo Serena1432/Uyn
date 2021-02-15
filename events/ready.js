@@ -15,11 +15,11 @@ module.exports = (client) => {
         res.send("true");
     });
     console.log(`Ready as ${client.user.tag} to server in ${client.channels.cache.size} channels on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users.`);
-    client.users.fetch('536899471720841228').then((user) => {
+    client.users.fetch(client.config.ownerId).then((user) => {
         user.send("BOT has been restarted!");
     });
     setInterval(function() {
-        client.devUsername = client.users.cache.get("536899471720841228").tag;
+        client.devUsername = client.users.cache.get(client.config.ownerId).tag;
         gamePlaying = ['with ' + client.devUsername, 'on ' + client.guilds.cache.size + ' servers with ' + client.users.cache.size + ' members!', 'based on Discord.JS v12.4.1; BOT version v2021.2.13', 'with ' + client.config.prefix + 'help command'];
     }, 5000);
     var gameType = ['PLAYING', 'PLAYING', 'PLAYING', 'PLAYING'];
@@ -40,7 +40,7 @@ module.exports = (client) => {
         if (response && response.statusCode == 200 && !body.includes("Connection failed")) {
             client.quotes = JSON.parse(body);
             console.log("👌 Ping-responsing system successfully initialized");
-        } else client.users.cache.get("536899471720841228").send("Ping-responsing system failed to initialize.");
+        } else client.users.cache.get(client.config.ownerId).send("Ping-responsing system failed to initialize.");
     });
     request(process.env.php_server_url + '/MuteManager.php?token=' + process.env.php_server_token + '&type=get', function(error, response, body) {
         if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Error")) {
@@ -89,7 +89,7 @@ module.exports = (client) => {
                                                 console.log("Successfully unmuted " + member.user.tag + " because the time is up.");
                                             } else {
                                                 console.log("Failed to unmute " + member.user.tag + ".");
-                                                client.users.cache.get("536899471720841228").send("Cannot connect to the unmute server.");
+                                                client.users.cache.get(client.config.ownerId).send("Cannot connect to the unmute server.");
                                             }
                                         }
                                     });
@@ -107,7 +107,7 @@ module.exports = (client) => {
                                         console.log("Successfully unmuted " + member.user.tag + " because no Muted role was found.");
                                     } else {
                                         console.log("Failed to unmute " + member.user.tag + ".");
-                                        client.users.cache.get("536899471720841228").send("Cannot connect to the unmute server.");
+                                        client.users.cache.get(client.config.ownerId).send("Cannot connect to the unmute server.");
                                     }
                                 });
                             }
@@ -117,6 +117,6 @@ module.exports = (client) => {
                     }
                 }
             }, 5000);
-        } else client.users.cache.get("536899471720841228").send("Mute system failed to initialize.");
+        } else client.users.cache.get(client.config.ownerId).send("Mute system failed to initialize.");
     });
 };
