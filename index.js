@@ -63,7 +63,7 @@ client.on("guildMemberAdd", (member) => {
             setTimeout(function() {
                 var guild = member.guild;
                 var mutedRole = message.guild.roles.cache.find(role => role.name == "Muted");
-                request(process.env.php_server_url + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=delete&victim=' + member.user.id + '&server=' + guild.id, function(error, response, body) {
+                request(process.env.php_server_url + '/MuteManager.php?token=' + process.env.php_server_token + '&type=delete&victim=' + member.user.id + '&server=' + guild.id, function(error, response, body) {
                     if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Error")) {
                         member.roles.remove(mutedRole, "Automatic Unmute");
                         member.user.send({
