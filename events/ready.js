@@ -20,7 +20,7 @@ module.exports = (client) => {
     });
     setInterval(function() {
         client.devUsername = client.users.cache.get("536899471720841228").tag;
-        gamePlaying = ['with ' + client.devUsername, 'on ' + client.guilds.cache.size + ' servers with ' + client.users.cache.size + ' members!', 'based on Discord.JS v12.4.1; BOT version v2021.2.13', 'with u!help command'];
+        gamePlaying = ['with ' + client.devUsername, 'on ' + client.guilds.cache.size + ' servers with ' + client.users.cache.size + ' members!', 'based on Discord.JS v12.4.1; BOT version v2021.2.13', 'with ' + client.config.prefix + 'help command'];
     }, 5000);
     var gameType = ['PLAYING', 'PLAYING', 'PLAYING', 'PLAYING'];
     setInterval(function() {
