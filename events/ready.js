@@ -36,13 +36,13 @@ module.exports = (client) => {
     client.quotes = [];
     client.floodchat = [];
     client.mutes = [];
-    request(process.env.php_server_token + '/GetAllQuotes.php', function(error, response, body) {
+    request(process.env.php_server_url + '/GetAllQuotes.php', function(error, response, body) {
         if (response && response.statusCode == 200 && !body.includes("Connection failed")) {
             client.quotes = JSON.parse(body);
             console.log("👌 Ping-responsing system successfully initialized");
         } else client.users.cache.get("536899471720841228").send("Ping-responsing system failed to initialize.");
     });
-    request(process.env.php_server_token + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=get', function(error, response, body) {
+    request(process.env.php_server_url + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=get', function(error, response, body) {
         if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Error")) {
             console.log("👌 Mute system successfully initialized");
             client.mutes = JSON.parse(body);
@@ -60,8 +60,8 @@ module.exports = (client) => {
                         if (member) {
                             console.log("Mute ID " + id + " in i = " + i + ": author: " + author.tag + "; victim: " + member.user.tag + "; guild: " + guild.name + "; endtime: " + endtime + "; currentTime: " + time + "; diff: " + (endtime - time));
                             if (endtime <= time && member.roles.cache.find(role => role.id == mutedRole.id)) {
-                                request(process.env.php_server_token + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=delete&victim=' + member.user.id + '&server=' + guild.id, function(error, response, body) {
-                                    request(process.env.php_server_token + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=get', function(error, response, body) {
+                                request(process.env.php_server_url + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=delete&victim=' + member.user.id + '&server=' + guild.id, function(error, response, body) {
+                                    request(process.env.php_server_url + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=get', function(error, response, body) {
                                         if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Error")) {
                                             console.log("👌 Mute system successfully updated");
                                             client.mutes = JSON.parse(body);
@@ -95,9 +95,9 @@ module.exports = (client) => {
                                     });
                                 });
                             } else if (!member.roles.cache.find(role => role.id == mutedRole.id)) {
-                                request(process.env.php_server_token + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=delete&victim=' + member.user.id + '&server=' + guild.id, function(error, response, body) {
+                                request(process.env.php_server_url + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=delete&victim=' + member.user.id + '&server=' + guild.id, function(error, response, body) {
                                     if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Error")) {
-                                        request(process.env.php_server_token + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=get', function(error, response, body) {
+                                        request(process.env.php_server_url + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=get', function(error, response, body) {
                                             if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Error")) {
                                                 console.log("👌 Mute system successfully updated");
                                                 client.mutes = JSON.parse(body);
