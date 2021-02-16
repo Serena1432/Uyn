@@ -1,7 +1,7 @@
 {
-  "name": "Rachel",
-  "version": "0.0.1",
-  "description": "A miscellaneous BOT.",
+  "name": "Uyn",
+  "version": "0.0.2",
+  "description": "A BOT for doing miscellaneous things.",
   "main": "index.js",
   "scripts": {
     "test": "node index.js"
