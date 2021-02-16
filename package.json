@@ -7,7 +7,6 @@
     "test": "node index.js"
   },
   "dependencies": {
-    "mongoose": "^5.10.5",
     "discord.js": "12.4.1",
     "ms": "^2.1.2",
     "request": "2.88.2",
