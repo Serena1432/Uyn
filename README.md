@@ -23,65 +23,48 @@ By the way, I'm currently using THIS repository to deploy the code into my Herok
 ![Uyn repo screenshot](https://i.ibb.co/pbfbtGv/Screenshot-20210215-163514-2.png)
 
 ## List of commands
-
 You can use the `u!help (command)` command to get information about a specific command!
 
 ### 👥 User information:
-
 account, avatar, developer, owner
 
 ### 😊 Just for fun:
-
 arrest, cert, coffindance, covid19, gay, img, les, lolicon, number, poll, quote, reverse, roll, say, trap, trash
 
 ### 👋 Interactions:
-
 baka, bite, boop, bully, cry, dance, greet, grin, highfive, hold, hug, hungry, kill, kiss, lewd, lick, love, muda, nom, pat, poke, pout, punch, shrug, slap, sleep, smile, smug, snuggle, stare, thinking, thumbsup, tickle, wag, wait, wave
 
 ### ⚙️ Moderations:
-
 ban, kick, mute, setnickname, unmute, warn
 
 ### 🚩 Server information:
-
 channels, guild, role
 
 ### 📜 Roles managing:
-
-createrole, giverole, setcolor, setname, takerole
+createrole, deleterole, giverole, setcolor, setname, takerole
 
 ### 💬 Ping-responsing:
-
-deletequote, setquote, showquote
+deletequote, setquote, showquote, togglequote
 
 <span style="color:#ba3f38">This ping-responsing message will only be sent if the pinging message meets these requirements:</span>
-
- * The mentioned user has set the ping-responsing message by the setquote command
-
- * There's only one user mention in the message
-
- * The message content length is less than 125
-
- * The message author isn't a BOT
-
- * The message channel isn't a BOT channel (doesn't have the "bot" word in the channel name)
-
- * The time that the message was sent isn't between 8 PM and 12 PM (UTC).
-
+  * The mentioned user has set the ping-responsing message by the setquote command
+  * There's only one user mention in the message
+  * The message content length is less than 125
+  * The message author isn't a BOT
+  * The message channel isn't a BOT channel (doesn't have the "bot" word in the channel name)
+  * The time that the message was sent isn't between 8 PM and 12 PM (UTC).
+  
 <span style="color:#ba3f38">This responsing message will be deleted in 5 seconds. Also, it only send 1 ping-responsing message each 1 minute. If the 1-minute timer isn't up, it will react the ❌ emoji, and then unreact it in the next 2 seconds.</span>
-
-I will add the ping-responsing toggle command for each server in the future.
+  
+You can enable or disable sending the ping-responsing messages in your server by using the `u!togglequote on/off` command.
 
 ### 🤖 BOT information:
-
 invite, ping, stats
 
 ### 👋 Config:
-
 prefix
 
 ## More informations about this BOT
-
 This BOT is being ran using Heroku, Node.JS, PHP and MySQL. I made it without any cost so I am not sure about the BOT security very much.
 
 [Invite this BOT](https://discord.com/oauth2/authorize?client_id=770981744165519390&scope=bot&permissions=271707254)
@@ -89,7 +72,6 @@ This BOT is being ran using Heroku, Node.JS, PHP and MySQL. I made it without an
 [Support Server](https://discord.gg/v9c27j9CQ6)
 
 ## Developer information
-
 You can contact the developer by using these social networks:
 
 Discord: Nico Levianth#6958
