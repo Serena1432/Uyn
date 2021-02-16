@@ -43,5 +43,5 @@ module.exports.config = {
     accessableby: "Members",
     aliases: [],
     category: "💬 Ping-responsing",
-    dmAvailable: true
+    dmAvailable: false
 }
