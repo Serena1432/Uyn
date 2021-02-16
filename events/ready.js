@@ -52,6 +52,7 @@ module.exports = (client) => {
             client.toggleQuote = JSON.parse(body);
             console.log("👌 Ping-responsing toggle mode successfully initialized");
         } else {
+            console.error(response);
             console.error(error);
             console.error(body);
             client.users.cache.get(client.config.ownerId).send("Ping-responsing toggle mode failed to initialize.");
