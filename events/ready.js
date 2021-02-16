@@ -41,13 +41,21 @@ module.exports = (client) => {
         if (response && response.statusCode == 200 && !body.includes("Connection failed")) {
             client.quotes = JSON.parse(body);
             console.log("👌 Ping-responsing system successfully initialized");
-        } else client.users.cache.get(client.config.ownerId).send("Ping-responsing system failed to initialize.");
+        } else {
+            console.error(error);
+            console.error(body);
+            client.users.cache.get(client.config.ownerId).send("Ping-responsing system failed to initialize.");
+        }
     });
     request(process.env.php_server_url + '/ToggleQuote.php?token=' + process.env.php_server_token + '&type=get', function(error, response, body) {
         if (response && response.statusCode == 200 && !body.includes("Connection failed")) {
             client.toggleQuote = JSON.parse(body);
             console.log("👌 Ping-responsing toggle mode successfully initialized");
-        } else client.users.cache.get(client.config.ownerId).send("Ping-responsing toggle mode failed to initialize.");
+        } else {
+            console.error(error);
+            console.error(body);
+            client.users.cache.get(client.config.ownerId).send("Ping-responsing toggle mode failed to initialize.");
+        }
     });
     request(process.env.php_server_url + '/MuteManager.php?token=' + process.env.php_server_token + '&type=get', function(error, response, body) {
         if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Error")) {

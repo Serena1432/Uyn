@@ -25,7 +25,7 @@ module.exports.run = async (client, message, args) => {
 	// Check the current prefix
 	if (client.config.customPrefixes[message.guild.id] && client.config.customPrefixes[message.guild.id] == args[0]) return message.reply("The BOT's prefix on this server is already `" + args[0] + "`!");
     // Connecting to the server
-    request('https://hvnfollower.herokuapp.com/SetCustomPrefix.php?token=' + process.env.php_server_token + '&id=' + message.guild.id + "&prefix=" + encodeURIComponent(args[0]), function(err, response, body) {
+    request(process.env.php_server_url + 'SetCustomPrefix.php?token=' + process.env.php_server_token + '&id=' + message.guild.id + "&prefix=" + encodeURIComponent(args[0]), function(err, response, body) {
         if (!response || response.statusCode != 200 || body.includes('Connection failed')) {
             message.channel.send("Failed to connect to the server! Please try again later!");
         } else {
