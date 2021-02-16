@@ -15,7 +15,7 @@ module.exports.run = async (client, message, args) => {
     var enabled = 0;
     if (args[0] == "on") enabled = 1;
     else if (args[0] != "on" && args[0] != "off") return message.reply("Invalid value!\nYou need to type `on` or `off`!");
-        request(process.env.php_server_url + '/ToggleQuote.php?token=' + process.env.php_server_token + '&type=set&server=' + message.author.id + "&enabled=" + enabled, function(err, response, body) {
+        request(process.env.php_server_url + '/ToggleQuote.php?token=' + process.env.php_server_token + '&type=set&server=' + message.guild.id + "&enabled=" + enabled, function(err, response, body) {
             if (!response || response.statusCode != 200 || body.includes('Connection failed')) {
                 console.error(err);
                 console.error(body);
