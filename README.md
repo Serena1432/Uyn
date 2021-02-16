@@ -53,9 +53,9 @@ deletequote, setquote, showquote, togglequote
   * The message author isn't a BOT
   * The message channel isn't a BOT channel (doesn't have the "bot" word in the channel name)
   * The time that the message was sent isn't between 8 PM and 12 PM (UTC).
-  
+
 <span style="color:#ba3f38">This responsing message will be deleted in 5 seconds. Also, it only send 1 ping-responsing message each 1 minute. If the 1-minute timer isn't up, it will react the ❌ emoji, and then unreact it in the next 2 seconds.</span>
-  
+
 You can enable or disable sending the ping-responsing messages in your server by using the `u!togglequote on/off` command.
 
 ### 🤖 BOT information:
@@ -66,6 +66,31 @@ prefix
 
 ## More informations about this BOT
 This BOT is being ran using Heroku, Node.JS, PHP and MySQL. I made it without any cost so I am not sure about the BOT security very much.
+
+### npm packages used:
+
+* **[Discord.JS](https://www.npmjs.com/package/discord.js)** version 12.4.1
+* **[ms](https://www.npmjs.com/package/ms)** version 2.1.2
+* **[request](https://www.npmjs.com/package/request)** version 2.88.2
+* **[util](https://www.npmjs.com/package/util)** version 0.12.3
+* **[mysql](https://www.npmjs.com/package/mysql)** version 2.18.1
+* **[request](https://www.npmjs.com/package/request)** version 2.81.0
+* **[canvas](https://www.npmjs.com/package/canvas)** version 2.6.1
+* **[dotenv](https://www.npmjs.com/package/dotenv)** version 8.2.0
+* **[ytdl-core](https://www.npmjs.com/package/ytdl-core)** version 2.1.7
+* **[@discordjs/opus](https://www.npmjs.com/package/@discordjs/opus)** version 0.3.2
+* **[ffmpeg](https://www.npmjs.com/package/ffmpeg)** version 0.0.4
+* **[fluent-ffmpeg](https://www.npmjs.com/package/fluent-ffmpeg)** version 2.1.2
+* **[erela.js](https://www.npmjs.com/package/erela.js)** version 1.1.8
+* **[google-search-results-nodejs](https://www.npmjs.com/package/google-search-results-nodejs)** version 1.3.0
+* **[express](https://www.npmjs.com/package/express)** version 4.16.2
+
+### App requirements:
+
+* CPU: Dual-core or higher
+* RAM: 512MB or higher
+* Node.JS 12.0 or later
+* ffmpeg must be installed to help running the music commands in the future.
 
 [Invite this BOT](https://discord.com/oauth2/authorize?client_id=770981744165519390&scope=bot&permissions=271707254)
 
