@@ -22,7 +22,7 @@ module.exports.run = async (client, message, args) => {
                 if (body && body.includes('Success')) {
                     console.log(body);
                     request(process.env.php_server_url + '/ToggleQuote.php?token=' + process.env.php_server_token + '&type=get', function(error, response, body) {
-                        if (response && response.statusCode == 200 && !body.includes("Connection failed")) {
+                        if (response && !body.includes("Connection failed")) {
                             client.toggleQuote = JSON.parse(body);
                             console.log("👌 Ping-responsing toggle mode successfully updated");
                             if (enabled) message.reply("Successfully enabled sending ping-responsing message.");
