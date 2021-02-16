@@ -11,7 +11,7 @@ function random(min, max) {
 }
 
 module.exports.run = async (client, message, args) => {
-    request('https://hvnfollower.herokuapp.com/DeleteQuote.php?token=' + process.env.php_server_token + '&id=' + message.author.id, function(err, response, body) {
+    request(process.env.php_server_url + 'DeleteQuote.php?token=' + process.env.php_server_token + '&id=' + message.author.id, function(err, response, body) {
         if (!response || response.statusCode != 200 || body.includes('Connection failed')) {
             console.log(body);
             message.channel.send("Cannot connect to the BOT server! Please try again!");
