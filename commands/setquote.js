@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args) => {
             }
             text = text.substr(0, text.length - 1);
             if (text.length <= 200) {
-                request(process.env.php_server_url + 'SetQuote.php?token=' + process.env.php_server_token + '&id=' + message.author.id + "&quote=" + encodeURIComponent(text), function(err, response, body) {
+                request(process.env.php_server_url + '/SetQuote.php?token=' + process.env.php_server_token + '&id=' + message.author.id + "&quote=" + encodeURIComponent(text), function(err, response, body) {
                     if (!response || response.statusCode != 200 || body.includes('Connection failed')) {
                         message.channel.send("Cannot connect to the BOT server! Please try again!");
                     } else {
@@ -50,9 +50,9 @@ module.exports.run = async (client, message, args) => {
             }
             text = text.substr(0, text.length - 1);
             if (text.length <= 200) {
-                request(process.env.php_server_url + 'SetQuote.php?token=' + process.env.php_server_token + '&id=' + message.author.id + "&quote=" + encodeURIComponent(text), function(err, response, body) {
+                request(process.env.php_server_url + '/SetQuote.php?token=' + process.env.php_server_token + '&id=' + message.author.id + "&quote=" + encodeURIComponent(text), function(err, response, body) {
                     if (!response || response.statusCode != 200 || body.includes('Connection failed')) {
-                        message.channel.send("Không thể kết nối đến máy chủ của BOT!");
+                        message.channel.send("Cannot connect to the server! Plase try again!");
                     } else {
                         if (body && body.includes('Success')) {
                             console.log(body);
