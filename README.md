@@ -99,7 +99,7 @@ This BOT is being ran using Heroku, Node.JS, PHP and MySQL. I made it without an
 ## Developer information
 You can contact the developer by using these social networks:
 
-Discord: Nico Levianth#6958
+Discord: Nico Levianth#2005
 
 [Facebook](https://www.facebook.com/Yonaka12)
 
