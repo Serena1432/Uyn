@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ![Uyn logo](https://i.imgur.com/1UHPT0e.png)
 
 # [Invite this BOT](https://discord.com/oauth2/authorize?client_id=770981744165519390&scope=bot&permissions=271707254)
