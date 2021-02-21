@@ -214,4 +214,3 @@ Discord: Nico Levianth#2005
 [GitHub](https://www.github.com/LilShieru)
 
 [YouTube](https://www.youtube.com/c/yutorimegami)
->>>>>>> 4e23c1120fb2f95f9696628e087dbfdf6e6d254e
