@@ -20,7 +20,7 @@ module.exports.run = async (client, message, args) => {
         var fields = [];
         fields.push({
             name: "Developer:",
-            value: "<@536899471720841228>",
+            value: "<@" + client.config.ownerId + ">",
             inline: false
         });
         fields.push({
@@ -31,7 +31,7 @@ module.exports.run = async (client, message, args) => {
         for (i = 0; i < categories.length; i++) {
             var commandList = [];
             commands.forEach(command => {
-                if (command.config.category && categories[i] == command.config.category) {
+                if (command.config.category && categories[i] == command.config.category && !command.config.secretCommand) {
                     commandList.push(command.config.name);
                 }
             });
@@ -85,7 +85,7 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.config = {
     name: "help",
-    description: "List all of this BOT's command",
+    description: "List all of this BOT's commands",
     usage: "u!help",
     accessableby: "Members",
     aliases: [],

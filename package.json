@@ -1,13 +1,12 @@
 {
-  "name": "Rachel",
-  "version": "0.0.1",
-  "description": "A miscellaneous BOT.",
+  "name": "Uyn",
+  "version": "0.0.2",
+  "description": "A BOT for doing miscellaneous things.",
   "main": "index.js",
   "scripts": {
     "test": "node index.js"
   },
   "dependencies": {
-    "mongoose": "^5.10.5",
     "discord.js": "12.4.1",
     "ms": "^2.1.2",
     "request": "2.88.2",
@@ -22,7 +21,6 @@
     "fluent-ffmpeg": "^2.1.2",
     "erela.js": "^1.1.8",
     "google-search-results-nodejs": "1.3.0",
-    "nekos.life": "2.0.7",
     "express": "4.16.2"
   }
 }

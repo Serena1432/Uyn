@@ -15,12 +15,12 @@ module.exports = (client) => {
         res.send("true");
     });
     console.log(`Ready as ${client.user.tag} to server in ${client.channels.cache.size} channels on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users.`);
-    client.users.fetch('536899471720841228').then((user) => {
+    client.users.fetch(client.config.ownerId).then((user) => {
         user.send("BOT has been restarted!");
     });
     setInterval(function() {
-        client.devUsername = client.users.cache.get("536899471720841228").tag;
-        gamePlaying = ['with ' + client.devUsername, 'on ' + client.guilds.cache.size + ' servers with ' + client.users.cache.size + ' members!', 'based on Discord.JS v12.4.1; BOT version v2021.2.13', 'with u!help command'];
+        client.devUsername = client.users.cache.get(client.config.ownerId).tag;
+        gamePlaying = ['with ' + client.devUsername, 'on ' + client.guilds.cache.size + ' servers with ' + client.users.cache.size + ' members!', 'based on Discord.JS v12.4.1; BOT version v2021.2.13', 'with ' + client.config.prefix + 'help command'];
     }, 5000);
     var gameType = ['PLAYING', 'PLAYING', 'PLAYING', 'PLAYING'];
     setInterval(function() {
@@ -36,13 +36,28 @@ module.exports = (client) => {
     client.quotes = [];
     client.floodchat = [];
     client.mutes = [];
-    request(process.env.php_server_token + '/GetAllQuotes.php', function(error, response, body) {
+    client.toggleQuote = [];
+    request(process.env.php_server_url + '/GetAllQuotes.php', function(error, response, body) {
         if (response && response.statusCode == 200 && !body.includes("Connection failed")) {
             client.quotes = JSON.parse(body);
             console.log("👌 Ping-responsing system successfully initialized");
-        } else client.users.cache.get("536899471720841228").send("Ping-responsing system failed to initialize.");
+        } else {
+            console.error(error);
+            console.error(body);
+            client.users.cache.get(client.config.ownerId).send("Ping-responsing system failed to initialize.");
+        }
     });
-    request(process.env.php_server_token + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=get', function(error, response, body) {
+    request(process.env.php_server_url + '/ToggleQuote.php?token=' + process.env.php_server_token + '&type=get', function(error, response, body) {
+        if (response && !body.includes("Connection failed")) {
+            client.toggleQuote = JSON.parse(body);
+            console.log("👌 Ping-responsing toggle mode successfully initialized");
+        } else {
+            console.error(error);
+            console.error(body);
+            client.users.cache.get(client.config.ownerId).send("Ping-responsing toggle mode failed to initialize.");
+        }
+    });
+    request(process.env.php_server_url + '/MuteManager.php?token=' + process.env.php_server_token + '&type=get', function(error, response, body) {
         if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Error")) {
             console.log("👌 Mute system successfully initialized");
             client.mutes = JSON.parse(body);
@@ -60,8 +75,8 @@ module.exports = (client) => {
                         if (member) {
                             console.log("Mute ID " + id + " in i = " + i + ": author: " + author.tag + "; victim: " + member.user.tag + "; guild: " + guild.name + "; endtime: " + endtime + "; currentTime: " + time + "; diff: " + (endtime - time));
                             if (endtime <= time && member.roles.cache.find(role => role.id == mutedRole.id)) {
-                                request(process.env.php_server_token + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=delete&victim=' + member.user.id + '&server=' + guild.id, function(error, response, body) {
-                                    request(process.env.php_server_token + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=get', function(error, response, body) {
+                                request(process.env.php_server_url + '/MuteManager.php?token=' + process.env.php_server_token + '&type=delete&victim=' + member.user.id + '&server=' + guild.id, function(error, response, body) {
+                                    request(process.env.php_server_url + '/MuteManager.php?token=' + process.env.php_server_token + '&type=get', function(error, response, body) {
                                         if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Error")) {
                                             console.log("👌 Mute system successfully updated");
                                             client.mutes = JSON.parse(body);
@@ -89,15 +104,15 @@ module.exports = (client) => {
                                                 console.log("Successfully unmuted " + member.user.tag + " because the time is up.");
                                             } else {
                                                 console.log("Failed to unmute " + member.user.tag + ".");
-                                                client.users.cache.get("536899471720841228").send("Cannot connect to the unmute server.");
+                                                client.users.cache.get(client.config.ownerId).send("Cannot connect to the unmute server.");
                                             }
                                         }
                                     });
                                 });
                             } else if (!member.roles.cache.find(role => role.id == mutedRole.id)) {
-                                request(process.env.php_server_token + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=delete&victim=' + member.user.id + '&server=' + guild.id, function(error, response, body) {
+                                request(process.env.php_server_url + '/MuteManager.php?token=' + process.env.php_server_token + '&type=delete&victim=' + member.user.id + '&server=' + guild.id, function(error, response, body) {
                                     if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Error")) {
-                                        request(process.env.php_server_token + '/MuteManager.php?token=3LetaV3Ja94e6wttSJJ26RD5bwVuSp5N&type=get', function(error, response, body) {
+                                        request(process.env.php_server_url + '/MuteManager.php?token=' + process.env.php_server_token + '&type=get', function(error, response, body) {
                                             if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Error")) {
                                                 console.log("👌 Mute system successfully updated");
                                                 client.mutes = JSON.parse(body);
@@ -107,7 +122,7 @@ module.exports = (client) => {
                                         console.log("Successfully unmuted " + member.user.tag + " because no Muted role was found.");
                                     } else {
                                         console.log("Failed to unmute " + member.user.tag + ".");
-                                        client.users.cache.get("536899471720841228").send("Cannot connect to the unmute server.");
+                                        client.users.cache.get(client.config.ownerId).send("Cannot connect to the unmute server.");
                                     }
                                 });
                             }
@@ -117,6 +132,6 @@ module.exports = (client) => {
                     }
                 }
             }, 5000);
-        } else client.users.cache.get("536899471720841228").send("Mute system failed to initialize.");
+        } else client.users.cache.get(client.config.ownerId).send("Mute system failed to initialize.");
     });
 };

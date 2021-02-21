@@ -8,7 +8,10 @@ module.exports = async (client, message) => {
 	
 	// Ping-responsing part
 	var today = new Date();
-	if (message.mentions.users.size == 1 && message.content.length < 125 && client.quotes[message.mentions.users.first().id] && !message.author.bot && today.getHours() != 20 && today.getHours() != 21 && today.getHours() != 22 && today.getHours() != 23 && !message.channel.name.includes('bot')) {
+    var enabled = 0;
+    if (message.channel.type == "text")
+        if (client.toggleQuote[message.guild.id] == undefined || client.toggleQuote[message.guild.id] == 1) enabled = 1;
+	if (message.mentions.users.size == 1 && message.content.length < 125 && client.quotes[message.mentions.users.first().id] && !message.author.bot && today.getHours() != 20 && today.getHours() != 21 && today.getHours() != 22 && today.getHours() != 23 && !message.channel.name.includes('bot') && enabled) {
         if (!client.floodchat[message.mentions.users.first().id]) {
             client.users.fetch(message.mentions.users.first().id).then((user) => {
                 const mess = {
