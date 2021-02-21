@@ -79,7 +79,7 @@ tenor_api_key=<your Tenor API key>
   * `tenor_api_key` with your Tenor API Key.
 
 * **Step 4:** Deploy the entire code into your Heroku app. You can use the Heroku CLI or deploy the code from your GitHub repository.
-* **Step 5:** Make sure that you turned on the `web` dyno on the `Resources` tab. If you don't want to use the `worker` dyno instead to run it 24/7 (and you needn't to use the webpage), you can change this thing in the Procfile section:
+* **Step 5:** Make sure that you turned on the `web` dyno on the `Resources` tab. If you want to use the `worker` dyno instead to run it 24/7 (and you needn't to use the webpage), you can change this thing in the Procfile section:
 
 ```
 web: node index.js
