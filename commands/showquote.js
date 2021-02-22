@@ -14,7 +14,7 @@ module.exports.run = async (client, message, args) => {
     if (message.channel.type == "text") return message.reply("This command now can only be used in a Direct Messages channel!"); 
     var user;
     if (args[0] && message.mentions.users.size) user = message.mentions.users.first();
-    else if (args[0] && !message.mentions.users.size) user = client.users.get(args[0]);
+    else if (args[0] && !message.mentions.users.size) user = client.users.cache.get(args[0]);
     else user = message.author;
     if (!user) return message.reply("Cannot find this user! Please try again!")
     const embed = {
