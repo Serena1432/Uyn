@@ -9,42 +9,43 @@ module.exports = async (client, message) => {
 	// Ping-responsing part
 	var today = new Date();
     var enabled = 0;
-    if (message.channel.type == "text")
+    if (message.channel.type == "text") {
         if (client.toggleQuote[message.guild.id] == undefined || client.toggleQuote[message.guild.id] == 1) enabled = 1;
-	if (message.mentions.users.size == 1 && message.content.length < 125 && client.quotes[message.mentions.users.first().id] && !message.author.bot && today.getHours() != 20 && today.getHours() != 21 && today.getHours() != 22 && today.getHours() != 23 && !message.channel.name.includes('bot') && enabled) {
-        if (!client.floodchat[message.mentions.users.first().id]) {
-            client.users.fetch(message.mentions.users.first().id).then((user) => {
-                const mess = {
-                    color: Math.floor(Math.random() * 16777214) + 1,
-                    description: client.quotes[message.mentions.users.first().id],
-                    footer: {
-                        text: user.tag,
-                        icon_url: user.avatarURL({
-                            format: "png",
-                            dynamic: true,
-                            size: 2048
+        if (message.mentions.users.size == 1 && message.content.length < 125 && client.quotes[message.mentions.users.first().id] && !message.author.bot && today.getHours() != 20 && today.getHours() != 21 && today.getHours() != 22 && today.getHours() != 23 && !message.channel.name.includes('bot') && enabled) {
+            if (!client.floodchat[message.mentions.users.first().id]) {
+                client.users.fetch(message.mentions.users.first().id).then((user) => {
+                    const mess = {
+                        color: Math.floor(Math.random() * 16777214) + 1,
+                        description: client.quotes[message.mentions.users.first().id],
+                        footer: {
+                            text: user.tag,
+                            icon_url: user.avatarURL({
+                                format: "png",
+                                dynamic: true,
+                                size: 2048
+                            })
+                        }
+                    };
+                    message.channel.send({
+                        embed: mess
+                    }).then(msg => {
+                        msg.delete({
+                            timeout: 5000
                         })
-                    }
-                };
-                message.channel.send({
-                    embed: mess
-                }).then(msg => {
-                    msg.delete({
-                        timeout: 5000
-                    })
+                    });
                 });
-            });
-            client.floodchat[message.mentions.users.first().id] = true;
-            var fbQuote = setInterval(function() {
-                if (client.floodchat[message.mentions.users.first().id]) {
-                    client.floodchat[message.mentions.users.first().id] = null;
-                    clearInterval(fbQuote);
-                }
-            }, 60000);
-        } else {
-            message.react('❌').then(react => setTimeout(function() {
-				react.remove();
-			}, 2000));
+                client.floodchat[message.mentions.users.first().id] = true;
+                var fbQuote = setInterval(function() {
+                    if (client.floodchat[message.mentions.users.first().id]) {
+                        client.floodchat[message.mentions.users.first().id] = null;
+                        clearInterval(fbQuote);
+                    }
+                }, 60000);
+            } else {
+                message.react('❌').then(react => setTimeout(function() {
+                    react.remove();
+                }, 2000));
+            }
         }
     }
 
