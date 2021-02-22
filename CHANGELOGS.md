@@ -2,6 +2,9 @@
 
 # Uyn BOT Changelogs
 
+### February 22, 2021
+* Updated setquote, showquote and deletequote commands
+
 ### February 20, 2021
 
 * Fixed a typo and added a new property in the `help` command to help the later use.
