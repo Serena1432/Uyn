@@ -3,7 +3,7 @@
 # Uyn BOT Changelogs
 
 ### February 22, 2021
-* Updated setquote, showquote and deletequote commands
+* Updated `setquote`, `showquote` and `deletequote` commands
 
 ### February 20, 2021
 

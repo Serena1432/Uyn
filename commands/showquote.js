@@ -12,11 +12,11 @@ function random(min, max) {
 
 module.exports.run = async (client, message, args) => {
     if (message.channel.type == "text") return message.reply("This command now can only be used in a Direct Messages channel!"); 
-    var member;
-    if (args[0] && message.mentions.users.size) member = message.mentions.users.first();
-    else if (args[0] && !message.mentions.users.size) member = client.users.get(args[0]);
-    else member = message.author;
-    if (!member) return message.reply("Cannot find this user! Please try again!")
+    var user;
+    if (args[0] && message.mentions.users.size) user = message.mentions.users.first();
+    else if (args[0] && !message.mentions.users.size) user = client.users.get(args[0]);
+    else user = message.author;
+    if (!user) return message.reply("Cannot find this user! Please try again!")
     const embed = {
         color: Math.floor(Math.random() * 16777214) + 1,
         description: client.quotes[user.id],
