@@ -11,6 +11,7 @@ function random(min, max) {
 }
 
 module.exports.run = async (client, message, args) => {
+    if (message.channel.type == "text") return message.reply("This command now can only be used in a Direct Messages channel!"); 
     if (args[0]) {
         if (!client.quotes[message.author.id]) {
             var text = "";
@@ -30,7 +31,19 @@ module.exports.run = async (client, message, args) => {
                                 console.log(response.statusCode);
                                 if (response && response.statusCode == 200) {
                                     client.quotes = JSON.parse(body);
-                                    message.reply("Updated your ping-responsing message into `" + text + "`.");
+                                    const embed = {
+                                        color: Math.floor(Math.random() * 16777214) + 1,
+                                        description: client.quotes[message.author.id],
+                                        footer: {
+                                            text: message.author.tag,
+                                            icon_url: message.author.avatarURL({
+                                                format: "png",
+                                                dynamic: true,
+                                                size: 2048
+                                            })
+                                        }
+                                    };
+                                    message.reply("Updated your ping-responsing message.", {embed: embed});
                                 }
                             });
 
@@ -61,7 +74,19 @@ module.exports.run = async (client, message, args) => {
                                 console.log(response.statusCode);
                                 if (response && response.statusCode == 200) {
                                     client.quotes = JSON.parse(body);
-                                    message.reply("Updated your ping-responsing message into `" + text + "`.");
+                                    const embed = {
+                                        color: Math.floor(Math.random() * 16777214) + 1,
+                                        description: client.quotes[message.author.id],
+                                        footer: {
+                                            text: message.author.tag,
+                                            icon_url: message.author.avatarURL({
+                                                format: "png",
+                                                dynamic: true,
+                                                size: 2048
+                                            })
+                                        }
+                                    };
+                                    message.reply("Updated your ping-responsing message.", {embed: embed});
                                 }
                             });
                         } else {

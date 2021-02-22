@@ -11,17 +11,35 @@ function random(min, max) {
 }
 
 module.exports.run = async (client, message, args) => {
-    if (message.mentions.users.size == 0) {
-        if (client.quotes[message.author.id]) {
-            message.reply("Your current ping-responsing quote is `" + client.quotes[message.author.id] + "`.");
+    if (message.channel.type == "text") return message.reply("This command now can only be used in a Direct Messages channel!"); 
+    var member;
+    if (args[0] && message.mentions.users.size) member = message.mentions.users.first();
+    else if (args[0] && !message.mentions.users.size) member = client.users.get(args[0]);
+    else member = message.author;
+    if (!member) return message.reply("Cannot find this user! Please try again!")
+    const embed = {
+        color: Math.floor(Math.random() * 16777214) + 1,
+        description: client.quotes[user.id],
+        footer: {
+            text: user.tag,
+            icon_url: user.avatarURL({
+                format: "png",
+                dynamic: true,
+                size: 2048
+            })
+        }
+    };
+    if (user.id == message.author.id) {
+        if (client.quotes[user.id]) {
+            message.reply("Here is your ping-responsing message:", {embed: embed});
         } else {
             message.reply("You haven't set any quote yet!");
         }
     } else {
-        if (client.quotes[message.mentions.users.first().id]) {
-            message.reply(message.mentions.users.first().username + "'s current ping-responsing message is `" + client.quotes[message.mentions.users.first().id] + "`.");
+        if (client.quotes[user.id]) {
+            message.reply("Here is " + user.username + "'s ping-responsing message:", {embed: embed});
         } else {
-            message.reply(message.mentions.users.first().username + " hasn't set any quote yet!");
+            message.reply(user.username + " hasn't set any quote yet!");
         }
     }
 }

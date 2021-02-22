@@ -64,7 +64,6 @@ This BOT is being ran using Heroku, Node.JS, PHP and MySQL. I made it without an
 * **[request](https://www.npmjs.com/package/request)** version 2.88.2
 * **[util](https://www.npmjs.com/package/util)** version 0.12.3
 * **[mysql](https://www.npmjs.com/package/mysql)** version 2.18.1
-* **[request](https://www.npmjs.com/package/request)** version 2.81.0
 * **[canvas](https://www.npmjs.com/package/canvas)** version 2.6.1
 * **[dotenv](https://www.npmjs.com/package/dotenv)** version 8.2.0
 * **[ytdl-core](https://www.npmjs.com/package/ytdl-core)** version 2.1.7
