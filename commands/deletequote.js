@@ -24,7 +24,7 @@ module.exports.run = async (client, message, args) => {
                     console.log(response.statusCode);
                     if (response && response.statusCode == 200) {
                         client.quotes = JSON.parse(body);
-                        message.reply("Successfully deleted your quote.");
+                        message.reply("Successfully deleted your quote.\nRead more information about ping-responsing messages here:\nhttps://github.com/LilShieru/Uyn/blob/master/README.md#-ping-responsing");
                     }
                 });
             } else {

@@ -31,13 +31,13 @@ module.exports.run = async (client, message, args) => {
     };
     if (user.id == message.author.id) {
         if (client.quotes[user.id]) {
-            message.reply("Here is your ping-responsing message:", {embed: embed});
+            message.reply("Here is your ping-responsing message:\nRead more information about ping-responsing messages here:\nhttps://github.com/LilShieru/Uyn/blob/master/README.md#-ping-responsing", {embed: embed});
         } else {
             message.reply("You haven't set any quote yet!");
         }
     } else {
         if (client.quotes[user.id]) {
-            message.reply("Here is " + user.username + "'s ping-responsing message:", {embed: embed});
+            message.reply("Here is " + user.username + "'s ping-responsing message:\nRead more information about ping-responsing messages here:\nhttps://github.com/LilShieru/Uyn/blob/master/README.md#-ping-responsing", {embed: embed});
         } else {
             message.reply(user.username + " hasn't set any quote yet!");
         }

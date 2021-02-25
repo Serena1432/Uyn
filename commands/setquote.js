@@ -43,7 +43,7 @@ module.exports.run = async (client, message, args) => {
                                             })
                                         }
                                     };
-                                    message.reply("Updated your ping-responsing message.", {embed: embed});
+                                    message.reply("Updated your ping-responsing message.\nRead more information about ping-responsing messages here:\nhttps://github.com/LilShieru/Uyn/blob/master/README.md#-ping-responsing", {embed: embed});
                                 }
                             });
 
@@ -86,7 +86,7 @@ module.exports.run = async (client, message, args) => {
                                             })
                                         }
                                     };
-                                    message.reply("Updated your ping-responsing message.", {embed: embed});
+                                    message.reply("Updated your ping-responsing message.\nRead more information about ping-responsing messages here:\nhttps://github.com/LilShieru/Uyn/blob/master/README.md#-ping-responsing", {embed: embed});
                                 }
                             });
                         } else {
