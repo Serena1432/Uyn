@@ -21,7 +21,7 @@ module.exports.run = async (client, message, args) => {
 	var guild = message.guild;
 	var author = message.author;
     args.splice(0, 1);
-    if (ms(args[0])) {
+    if (args[0] && ms(args[0])) {
         duration = ms(args[0]);
         args.splice(0, 1);
     }
