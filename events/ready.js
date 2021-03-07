@@ -138,7 +138,7 @@ module.exports = (client) => {
 		const DBL = require("dblapi.js");
 		const dbl = new DBL(process.env.dbl_token, client);
 		setInterval(() => {
-			dbl.postStats(client.guilds.cache.size, client.shards.Id, client.shards.total);
+			dbl.postStats(client.guilds.cache.size);
 		}, 1800000);
 	}
 };
