@@ -134,4 +134,11 @@ module.exports = (client) => {
             }, 5000);
         } else client.users.cache.get(client.config.ownerId).send("Mute system failed to initialize.");
     });
+	if (process.env.dbl_token) {
+		const DBL = require("dblapi.js");
+		const dbl = new DBL(process.env.dbl_token, client);
+		setInterval(() => {
+			dbl.postStats(client.guilds.cache.size, client.shards.Id, client.shards.total);
+		}, 1800000);
+	}
 };
