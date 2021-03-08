@@ -19,7 +19,10 @@ module.exports = (client) => {
     app.post('/VoteReceiver', (req, res) => {
         if (process.env.dbl_vote_authorization) {
             if (JSON.parse(req.headers).authorization != process.env.dbl_vote_authorization) return res.status(401).send("Invalid authorization token");
+            if (!req.body.user) return res.status(500).send("Cannot find the user!");
+            if (!client.users.cache.get(req.body.user)) return res.status(500).send("Cannot find the user!");
             req.body.user.send("Thank you for voting me " + user.username + "!");
+            res.send("Success!");
         }
         else res.status(401).send("ERROR: Cannot find the 'dbl_vote_authorization' environment variable; please add it and try again");
     })
