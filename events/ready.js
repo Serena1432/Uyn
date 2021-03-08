@@ -20,8 +20,9 @@ module.exports = (client) => {
         if (process.env.dbl_vote_authorization) {
             if (req.headers.authorization != process.env.dbl_vote_authorization) return res.status(401).send("Invalid authorization token");
             if (!req.body.user) return res.status(500).send("Cannot find the user!");
+            console.log(req.body.user);
             if (!client.users.cache.get(req.body.user)) return res.status(500).send("Cannot find the user!");
-            req.body.user.send("Thank you for voting me " + user.username + "!\n(Note: This Vote Message feature is still in development; maybe a Voting Reward will coming soon if this BOT is completely developed)");
+            req.body.user.send("Thank you for voting me " + req.body.user.username + "!\n(Note: This Vote Message feature is still in development; maybe a Voting Reward will coming soon if this BOT is completely developed)");
             res.send("Success!");
         }
         else res.status(401).send("ERROR: Cannot find the 'dbl_vote_authorization' environment variable; please add it and try again");
