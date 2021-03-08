@@ -14,6 +14,15 @@ module.exports = (client) => {
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.send("true");
     });
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+    app.post('/VoteReceiver', (req, res) => {
+        if (process.env.dbl_vote_authorization) {
+            if (JSON.parse(req.headers).authorization != process.env.dbl_vote_authorization) return res.status(401).send("Invalid authorization token");
+            req.body.user.send("Thank you for voting me " + user.username + "!");
+        }
+        else res.status(401).send("ERROR: Cannot find the 'dbl_vote_authorization' environment variable; please add it and try again");
+    })
     console.log(`Ready as ${client.user.tag} to server in ${client.channels.cache.size} channels on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users.`);
     client.users.fetch(client.config.ownerId).then((user) => {
         user.send("BOT has been restarted!");
