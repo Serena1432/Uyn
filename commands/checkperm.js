@@ -37,7 +37,7 @@ module.exports.run = async (client, message, args) => {
       t10 = "This BOT can't ban any members in this server.";
     }
     var t11 = "❎ Manage Nicknames", t12 = "This BOT can't change nickname of any members in this server.";
-    if (message.guild.member(client.user).permissions.has("BAN_MEMBERS")) {
+    if (message.guild.member(client.user).permissions.has("MANAGE_NICKNAMES")) {
       t11 = "✅ Manage Nicknames";
       t12 = "This BOT can change nickname of any members in this server.";
     }
