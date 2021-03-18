@@ -14,7 +14,7 @@ module.exports.run = async (client, message, args) => {
     var t1 = "❎ Manage Messages", t2 = "This BOT can't delete any messages in this server, including ping-responsing messages that will automatically deleted after 5 seconds.";
     if (message.guild.member(client.user).permissions.has("MANAGE_MESSAGES")) {
       t1 = "✅ Manage Messages";
-      t2 = "This BOT can't delete any messages in this server, including ping-responsing messages that will automatically deleted after 5 seconds.";
+      t2 = "This BOT can delete any messages in this server, including ping-responsing messages that will automatically deleted after 5 seconds.";
     }
     var t3 = "❎ Manage Channels", t4 = "This BOT can't edit or delete any channels in this server.";
     if (message.guild.member(client.user).permissions.has("MANAGE_CHANNELS")) {
