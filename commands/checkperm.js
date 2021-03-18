@@ -84,8 +84,8 @@ module.exports.run = async (client, message, args) => {
           }
         ],
         footer: {
-            text: user.tag,
-            icon_url: user.avatarURL({
+            text: client.user.tag,
+            icon_url: client.user.avatarURL({
                 format: "png",
                 dynamic: true,
                 size: 2048
