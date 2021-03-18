@@ -23,7 +23,7 @@ module.exports.run = async (client, message, args) => {
     }
     var t5 = "❎ Manage Roles", t6 = "This BOT can't create, edit or delete any roles in this server.";
     if (message.guild.member(client.user).permissions.has("MANAGE_ROLES")) {
-      t5 = "✅ Manage Channels";
+      t5 = "✅ Manage Roles";
       t6 = "This BOT can create, edit or delete any roles in this server.";
     }
     var t7 = "❎ Kick Members", t8 = "This BOT can't kick any members in this server.";
