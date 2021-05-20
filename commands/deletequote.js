@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args) => {
         } else {
             if (body && body.includes('Success')) {
                 console.log(body);
-                request(process.env.php_server_url + '/GetAllQuotes.php' + message.author.id, function(error, response, body) {
+                request(process.env.php_server_url + '/GetAllQuotes.php', function(error, response, body) {
                     console.error('error:', error); // Print the error if one occurred
                     console.log(response.statusCode);
                     if (response && response.statusCode == 200) {
