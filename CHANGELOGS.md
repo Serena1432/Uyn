@@ -2,6 +2,10 @@
 
 # Uyn BOT Changelogs
 
+### May 20, 2021
+* Fixed bugs in the `setquote` and `deletequote` commands
+* Added the `bonk` command (Requested by Lan Anh#1218)
+
 ### February 22, 2021
 * Updated `setquote`, `showquote` and `deletequote` commands
 

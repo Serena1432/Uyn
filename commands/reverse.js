@@ -45,5 +45,5 @@ module.exports.config = {
     accessableby: "Members",
     aliases: [],
     category: "😊 Just for fun",
-    dmAvailable: false
+    dmAvailable: true
 }
