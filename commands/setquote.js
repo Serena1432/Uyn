@@ -14,11 +14,7 @@ module.exports.run = async (client, message, args) => {
     if (message.channel.type == "text") return message.reply("This command now can only be used in a Direct Messages channel!"); 
     if (args[0]) {
         if (!client.quotes[message.author.id]) {
-            var text = "";
-            for (var i = 0; i < args.length; i++) {
-                text += args[i] + " ";
-            }
-            text = text.substr(0, text.length - 1);
+            var text = args.join(" ");
             if (text.length <= 200) {
                 request(process.env.php_server_url + '/SetQuote.php?token=' + process.env.php_server_token + '&id=' + message.author.id + "&quote=" + encodeURIComponent(text), function(err, response, body) {
                     if (!response || response.statusCode != 200 || body.includes('Connection failed')) {
@@ -57,11 +53,7 @@ module.exports.run = async (client, message, args) => {
                 message.reply("Your quote length is higher than 200!");
             }
         } else {
-            var text = "";
-            for (var i = 0; i < args.length; i++) {
-                text += args[i] + " ";
-            }
-            text = text.substr(0, text.length - 1);
+            var text = args.join(" ");
             if (text.length <= 200) {
                 request(process.env.php_server_url + '/SetQuote.php?token=' + process.env.php_server_token + '&id=' + message.author.id + "&quote=" + encodeURIComponent(text), function(err, response, body) {
                     if (!response || response.statusCode != 200 || body.includes('Connection failed')) {
