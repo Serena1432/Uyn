@@ -28,7 +28,7 @@ module.exports = class Player {
             return;
         }
 
-        this.stream = broadcaster.play(await ytdl(url), { type: "opus" });
+        this.stream = broadcaster.play(await ytdl(url), {type: "opus"});
     }
 
     async skip() {
@@ -38,13 +38,35 @@ module.exports = class Player {
         await this.play(this.queue[0].uri);
     }
 
+    async destroy() {
+        await this.voiceChannel.leave();
+        this.clear();
+    }
+
     async #connect() {
         return await this.voiceChannel.join();
     }
 
-    reset() {
+    pause() {
+        this.stream.pause(true);
+    }
+
+    resume() {
+        this.stream.pause(false);
+    }
+
+    setVolume(vol) {
+        this.stream.setVolume(vol);
+    }
+
+    on(event, callback) {
+        this.stream.on(event, (...args) => callback(args));
+    }
+
+    clear() {
         this.stream.destroy();
         this.queue = null;
         this.playingTrack = null;
+        this.voiceChannel = null;
     }
 }
