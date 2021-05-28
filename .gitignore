@@ -263,4 +263,4 @@ dist
 .pnp.*
 
 .env
-config.json
+config.example.json
