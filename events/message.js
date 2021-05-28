@@ -83,8 +83,8 @@ module.exports = async (client, message) => {
     // Ignore messages not starting with the prefix
     if (message.content.toLowerCase().indexOf(prefix) !== 0) return;
   
-    var command = args[0];
-    args.splice(0, 1);
+    const args = message.content.slice(prefix.length).trim().split(/\s+/g);
+    const command = args.shift().toLowerCase();
   
     // Grab the command data from the client.commands Enmap
     const cmd = client.commands.get(command);
