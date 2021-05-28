@@ -1,6 +1,7 @@
 const fs = require('fs');
 const request = require("request");
 const ms = require('ms');
+const { Manager } = require("erela.js");
 require('dotenv').config()
 
 const Discord = require('discord.js');
@@ -125,6 +126,19 @@ fs.readdir("./commands/", (_err, files) => {
         console.log(`👌 Command loaded: ${commandName}`);
     });
 });
+
+client.music = new Manager({
+    nodes: config.nodes,
+    send: (id, payload) => {
+        const guild = client.guilds.cache.get(id);
+        if (guild) guild.shard.send(payload);
+    }
+})
+    .on("nodeConnect", node => console.log(`Node ${node.options.identifier} connected`))
+    .on("nodeError", (node, error) => console.log(`Node ${node.options.identifier} had an error: ${error.message}`))
+    .on("trackStart", (player, track) => {
+        player.connect();
+    });
 
 // Login
 client.login(process.env.BOT_TOKEN);

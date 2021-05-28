@@ -6,6 +6,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 module.exports = (client) => {
+    client.music.init(client.user.id);
     const server = app.listen(process.env.PORT || 3000, () => {
         console.log(`Express running → PORT ${server.address().port}`);
     });
