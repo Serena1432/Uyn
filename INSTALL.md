@@ -34,9 +34,10 @@ BOT_TOKEN=<your BOT token here>
 php_server_url=<your PHP server URL>
 php_server_token=<your PHP server token as configured above>
 tenor_api_key=<your Tenor API key>
+YOUTUBE_API_KEY=<Youtube Data API v3 Key>
 ```
 
-* **Step 3:** Go to the `config.json` file and configure these variables:
+* **Step 3:** Rename the file `config.example.json` to `config.json` then configure these variables:
 
 ```json
 {
