@@ -66,12 +66,7 @@ This BOT is being ran using Heroku, Node.JS, PHP and MySQL. I made it without an
 * **[mysql](https://www.npmjs.com/package/mysql)** version 2.18.1
 * **[canvas](https://www.npmjs.com/package/canvas)** version 2.6.1
 * **[dotenv](https://www.npmjs.com/package/dotenv)** version 8.2.0
-* **[ytdl-core](https://www.npmjs.com/package/ytdl-core)** version 2.1.7
-* **[@discordjs/opus](https://www.npmjs.com/package/@discordjs/opus)** version 0.3.2
-* **[ffmpeg](https://www.npmjs.com/package/ffmpeg)** version 0.0.4
-* **[fluent-ffmpeg](https://www.npmjs.com/package/fluent-ffmpeg)** version 2.1.2
 * **[erela.js](https://www.npmjs.com/package/erela.js)** version 1.1.8
-* **[google-search-results-nodejs](https://www.npmjs.com/package/google-search-results-nodejs)** version 1.3.0
 * **[express](https://www.npmjs.com/package/express)** version 4.16.2
 
 ### App requirements:
@@ -79,7 +74,7 @@ This BOT is being ran using Heroku, Node.JS, PHP and MySQL. I made it without an
 * CPU: Dual-core or higher
 * RAM: 512MB or higher
 * Node.JS 12.0 or later
-* ffmpeg must be installed to help running the music commands in the future.
+* A lavalink node must be installed to help running the music commands in the future.
 
 [Invite this BOT](https://discord.com/oauth2/authorize?client_id=770981744165519390&scope=bot&permissions=271707254)
 

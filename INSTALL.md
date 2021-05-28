@@ -36,9 +36,9 @@ php_server_token=<your PHP server token as configured above>
 tenor_api_key=<your Tenor API key>
 ```
 
-* **Step 3:** Go to the `config.json` file and configure these variables:
+* **Step 3:** Rename `config.example.json` to `config.json` file and configure these variables:
 
-```json
+```json5
 {
     "prefix": "<your BOT prefix>",
     "everyoneMention": true,
@@ -46,7 +46,14 @@ tenor_api_key=<your Tenor API key>
     "defaultSettings": {
         "prefix": "<your BOT prefix>"
     },
-    "ownerId": "<your Discord ID>"
+    "ownerId": "<your Discord ID>",
+    "nodes": [
+      {
+        "host": "your lavalink host",
+        "port": 0, // You can change it into any numeric value
+        "password": "your lavalink password"
+      }
+    ]
 }
 ```
 
