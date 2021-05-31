@@ -29,7 +29,7 @@ module.exports = (client) => {
         else res.status(401).send("ERROR: Cannot find the 'dbl_vote_authorization' environment variable; please add it and try again");
     })
     console.log(`Ready as ${client.user.tag} to server in ${client.channels.cache.size} channels on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users.`);
-    client.users.fetch(client.config.ownerId).then((user) => {
+    client.users.fetch(client.config.ownerId[0]).then((user) => {
         user.send("BOT has been restarted!");
     });
     setInterval(function() {
