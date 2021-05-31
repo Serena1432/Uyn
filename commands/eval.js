@@ -3,7 +3,7 @@ const fs = require('fs');
 const { inspect } = require('util');
 
 module.exports.run = async (client, message, args) => {
-  client.config.ownerId.forEach(ownerId => {
+  client.config.ownerId.forEach(async ownerId => {
     if (message.author.id == ownerId) {
       let evaled;
       try {
