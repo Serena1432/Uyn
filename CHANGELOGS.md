@@ -2,6 +2,9 @@
 
 # Uyn BOT Changelogs
 
+### May 31, 2021
+* Added multiple owners support.
+
 ### May 20, 2021
 * Fixed bugs in the `setquote` and `deletequote` commands
 * Added the `bonk` command (Requested by Lan Anh#1218)
