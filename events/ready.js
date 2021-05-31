@@ -33,15 +33,19 @@ module.exports = (client) => {
         user.send("BOT has been restarted!");
     });
     setInterval(function() {
-        client.devUsername = client.users.cache.get(client.config.ownerId).tag;
+        client.devUsername = client.users.cache.get(client.config.ownerId[0]).tag;
         gamePlaying = ['with ' + client.devUsername, 'on ' + client.guilds.cache.size + ' servers with ' + client.users.cache.size + ' members!', 'based on Discord.JS v12.4.1; BOT version v2021.2.13', 'with ' + client.config.prefix + 'help command'];
+        if (client.config.ownerId.length > 1) {
+            for (var i = 1; i < client.config.ownerId.length; i++) {
+                gamePlaying.push("with " + client.users.cache.get(client.config.ownerId[i]).tag);
+            }
+        }
     }, 5000);
-    var gameType = ['PLAYING', 'PLAYING', 'PLAYING', 'PLAYING'];
     setInterval(function() {
         var rand = random(0, gamePlaying.length);
         client.user.setStatus('online');
         client.user.setActivity(gamePlaying[rand], {
-            type: gameType[rand]
+            type: "PLAYING"
         });
     }, 10000);
     client.startTime = new Date();

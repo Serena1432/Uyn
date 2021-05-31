@@ -9,6 +9,10 @@ module.exports.run = async (client, message, args) => {
     } = client;
 
     if (!args.length) {
+        devInfo = [];
+        client.config.ownerId.forEach(ownerId => {
+            devInfo.push("<@" + ownerId + ">");
+        });
         commands.forEach(command => {
             if (command.config.category) {
                 var exist = false;
@@ -20,7 +24,7 @@ module.exports.run = async (client, message, args) => {
         var fields = [];
         fields.push({
             name: "Developer:",
-            value: "<@" + client.config.ownerId + ">",
+            value: devInfo.join(", "),
             inline: false
         });
         fields.push({
@@ -72,8 +76,7 @@ module.exports.run = async (client, message, args) => {
     if (command.config.aliases && command.config.aliases.length) data.push(`**Aliases:** ${command.config.aliases.join(', ')}`);
     if (command.config.description) data.push(`**Description:** ${command.config.description}`);
     if (command.config.usage) data.push(`**Uses:** \`${command.config.usage}\``);
-    if (command.config.dmAvailable) data.push(`**Can be used on a DM channel:** Yes`);
-	else data.push(`**Can be used on a DM channel:** No`);
+    data.push("**Can be used on a DM channel:** " + command.config.dmAvailable ? "Yes" : "No");
 
     var embed = new Discord.MessageEmbed()
         .setAuthor(`${command.config.name}`)

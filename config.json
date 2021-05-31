@@ -1,9 +1,4 @@
 {
     "prefix": "u!",
-    "everyoneMention": true,
-    "hostedBy": true,
-    "defaultSettings": {
-        "prefix": "u!"
-    },
-    "ownerId": "536899471720841228"
+    "ownerId": ["536899471720841228", "527652357354422272"]
 }

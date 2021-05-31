@@ -3,19 +3,20 @@ const fs = require('fs');
 const { inspect } = require('util');
 
 module.exports.run = async (client, message, args) => {
-    if (message.author.id == client.config.ownerId) {
-        let evaled;
-        try {
-          evaled = await eval(args.join(' '));
-        }
-        catch (error) {
-          console.error(error);
-          message.reply('there was an error during evaluation.');
-        }
+  client.config.ownerId.forEach(ownerId => {
+    if (message.author.id == ownerId) {
+      let evaled;
+      try {
+        evaled = await eval(args.join(' '));
+      }
+      catch (error) {
+        console.error(error);
+        message.reply('there was an error during evaluation.');
+      }
+      return;
     }
-    else {
-        message.reply("Only " + client.devUsername + " can run this command.");
-    }
+  });
+  message.reply("Only BOT developers can run this command!");
 }
 
 module.exports.config = {
