@@ -8,10 +8,10 @@ module.exports.run = async (client, message, args) => {
     message.delete({
         timeout: 10000
     });
-    var member = client.users.cache.get("536899471720841228");
+    var member = client.users.cache.get(client.config.ownerId[0]);
     var guildMember;
     if (message.channel.type == "text") {
-        guildMember = message.guild.member(client.users.cache.get("536899471720841228"));
+        guildMember = message.guild.member(client.users.cache.get(client.config.ownerId[0]));
         if (guildMember) {
             var jd = member.createdAt;
             var dateString = jd.getDate() + "/" + (jd.getMonth() + 1) + "/" + jd.getFullYear() + "; " + jd.getHours() + ":" + jd.getMinutes() + ":" + jd.getSeconds() + " (GMT +0)";
