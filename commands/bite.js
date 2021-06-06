@@ -57,7 +57,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "bite",
     description: "Bite someone",
-    usage: "u!bite @mention",
+    usage: require("../config.json").prefix + "bite @mention",
     accessableby: "Members",
     aliases: [],
     category: "👋 Interactions",

@@ -42,7 +42,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "trash",
     description: "Throw someone into the trash",
-    usage: "u!trash @mention",
+    usage: require("../config.json").prefix + "trash @mention",
     accessableby: "Members",
     aliases: [],
     category: "😊 Just for fun",

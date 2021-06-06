@@ -189,7 +189,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "owner",
     description: "View this server's owner information",
-    usage: "u!owner",
+    usage: require("../config.json").prefix + "owner",
     accessableby: "Members",
     aliases: [],
     category: "👥 User information",

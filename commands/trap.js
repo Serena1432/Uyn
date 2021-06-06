@@ -29,7 +29,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "trap",
     description: "Proves yourself as a trap",
-    usage: "u!trap",
+    usage: require("../config.json").prefix + "trap",
     accessableby: "Members",
     aliases: [],
     category: "😊 Just for fun",

@@ -41,7 +41,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "reverse",
     description: "Reverse some text",
-    usage: "u!reverse (content)",
+    usage: require("../config.json").prefix + "reverse (content)",
     accessableby: "Members",
     aliases: [],
     category: "😊 Just for fun",

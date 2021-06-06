@@ -15,7 +15,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "ping",
     description: "Test the BOT's Response Time",
-    usage: "u!ping",
+    usage: require("../config.json").prefix + "ping",
     accessableby: "Members",
     aliases: [],
     category: "🤖 BOT information",

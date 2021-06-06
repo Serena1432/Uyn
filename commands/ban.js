@@ -59,7 +59,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "ban",
     description: "Ban someone",
-    usage: "u!ban @mention (reason)",
+    usage: require("../config.json").prefix + "ban @mention (reason)",
     accessableby: "Members",
     aliases: [],
     category: "⚙️ Moderations",

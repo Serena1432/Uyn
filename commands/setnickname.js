@@ -45,7 +45,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "setnickname",
     description: "Set a new nickname for a specific member",
-    usage: "u!setnickname @mention (new nickname)",
+    usage: require("../config.json").prefix + "setnickname @mention (new nickname)",
     accessableby: "Members",
     aliases: [],
     category: "⚙️ Moderations",

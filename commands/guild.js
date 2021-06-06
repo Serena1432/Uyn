@@ -126,7 +126,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "guild",
     description: "View this server's information",
-    usage: "u!guild",
+    usage: require("../config.json").prefix + "guild",
     accessableby: "Members",
     aliases: [],
     category: "🚩 Server information",

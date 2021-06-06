@@ -24,7 +24,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "eval",
     description: "Evaluate a command (Developer Only)",
-    usage: "u!eval",
+    usage: require("../config.json").prefix + "eval",
     accessableby: "Owners",
     aliases: [],
 	dmAvailable: true

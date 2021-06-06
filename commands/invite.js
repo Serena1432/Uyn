@@ -15,8 +15,8 @@ module.exports.run = async (client, message, args) => {
     });
     const mess = {
         color: Math.floor(Math.random() * 16777214) + 1,
-        title: 'Uyn BOT\'s Invite Link',
-        description: '[Invite this BOT](https://discord.com/oauth2/authorize?client_id=770981744165519390&scope=bot&permissions=271707254) | [Support Server](https://discord.gg/v9c27j9CQ6)',
+        title: client.user.username + ' BOT\'s Invite Link',
+        description: '[Invite this BOT](https://discord.com/oauth2/authorize?client_id=' + client.user.id + '&scope=bot&permissions=271707254) | [Support Server](https://discord.gg/v9c27j9CQ6)',
         footer: {
             text: 'Thank you so much!'
         },
@@ -29,7 +29,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "invite",
     description: "Get the BOT's invite link",
-    usage: "u!invite",
+    usage: require("../config.json").prefix + "invite",
     accessableby: "Members",
     aliases: [],
     category: "🤖 BOT information",

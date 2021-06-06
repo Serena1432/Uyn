@@ -38,7 +38,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "deletequote",
     description: "Delete your current ping-responsing message",
-    usage: "u!deletequote",
+    usage: require("../config.json").prefix + "deletequote",
     accessableby: "Members",
     aliases: [],
     category: "💬 Ping-responsing",

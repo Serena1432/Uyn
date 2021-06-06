@@ -132,7 +132,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "cert",
     description: "Give someone a certificate about something",
-    usage: "u!cert @mention (name)",
+    usage: require("../config.json").prefix + "cert @mention (name)",
     accessableby: "Members",
     aliases: [],
     category: "😊 Just for fun",

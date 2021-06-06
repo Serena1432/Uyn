@@ -30,7 +30,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "channels",
     description: "List of all of this server's channels",
-    usage: "u!channels",
+    usage: require("../config.json").prefix + "channels",
     accessableby: "Members",
     aliases: [],
     category: "🚩 Server information",

@@ -27,7 +27,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "number",
     description: "Randomize a number range",
-    usage: "u!number min max",
+    usage: require("../config.json").prefix + "number min max",
     accessableby: "Members",
     aliases: [],
     category: "😊 Just for fun",

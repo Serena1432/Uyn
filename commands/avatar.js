@@ -38,7 +38,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "avatar",
     description: "View your or someone's avatar",
-    usage: "u!avatar @mention",
+    usage: require("../config.json").prefix + "avatar @mention",
     accessableby: "Members",
     aliases: [],
     category: "👥 User information",

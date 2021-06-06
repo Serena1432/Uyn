@@ -36,7 +36,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "createrole",
     description: "Create a role with a specific name",
-    usage: "u!createrole (name)",
+    usage: require("../config.json").prefix + "createrole (name)",
     accessableby: "Members",
     aliases: [],
     category: "📜 Roles managing",

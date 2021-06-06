@@ -93,7 +93,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "wait",
     description: "Wait for someone",
-    usage: "u!wait @mention",
+    usage: require("../config.json").prefix + "wait @mention",
     accessableby: "Members",
     aliases: ["chờ"],
     category: "👋 Interactions",

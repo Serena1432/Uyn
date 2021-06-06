@@ -99,7 +99,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "setquote",
     description: "Set your ping-responsing message",
-    usage: "u!setquote (quote)",
+    usage: require("../config.json").prefix + "setquote (quote)",
     accessableby: "Members",
     aliases: [],
     category: "💬 Ping-responsing",

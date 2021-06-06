@@ -43,7 +43,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "role",
     description: "Get all the members that have a specific role",
-    usage: "u!role (name)",
+    usage: require("../config.json").prefix + "role (name)",
     accessableby: "Members",
     aliases: [],
     category: "🚩 Server information",

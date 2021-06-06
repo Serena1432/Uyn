@@ -23,7 +23,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "say",
     description: "Make the BOT say anything",
-    usage: "u!say (content)",
+    usage: require("../config.json").prefix + "say (content)",
     accessableby: "Members",
     aliases: [],
     category: "😊 Just for fun",

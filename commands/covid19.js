@@ -78,7 +78,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "covid19",
     description: "View the informations about COVID-19 disease",
-    usage: "u!covid19",
+    usage: require("../config.json").prefix + "covid19",
     accessableby: "Members",
     aliases: [],
     category: "😊 Just for fun",

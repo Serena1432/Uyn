@@ -98,7 +98,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "checkperm",
     description: "Check BOT's permissions in this server",
-    usage: "u!checkperm",
+    usage: require("../config.json").prefix + "checkperm",
     accessableby: "Members",
     aliases: [],
     category: "🤖 BOT information",

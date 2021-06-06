@@ -64,7 +64,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "unmute",
     description: "Unmute someone",
-    usage: "u!unmute @mention",
+    usage: require("../config.json").prefix + "unmute @mention",
     accessableby: "Members",
     aliases: [],
     category: "⚙️ Moderations",

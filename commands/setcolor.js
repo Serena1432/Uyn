@@ -31,7 +31,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "setcolor",
     description: "Change the color of a specific role",
-    usage: "u!setcolor @role (color)",
+    usage: require("../config.json").prefix + "setcolor @role (color)",
     accessableby: "Members",
     aliases: [],
     category: "📜 Roles managing",

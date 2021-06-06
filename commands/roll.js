@@ -29,7 +29,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "roll",
     description: "Roll a number between 0 and 99",
-    usage: "u!roll",
+    usage: require("../config.json").prefix + "roll",
     accessableby: "Members",
     aliases: ["xoso"],
     category: "😊 Just for fun",

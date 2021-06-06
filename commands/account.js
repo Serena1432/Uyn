@@ -260,7 +260,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "account",
     description: "View your or someone's information",
-    usage: "u!account @mention",
+    usage: require("../config.json").prefix + "account @mention",
     accessableby: "Members",
     aliases: ["whois"],
     category: "👥 User information",

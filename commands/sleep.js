@@ -50,7 +50,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "sleep",
     description: "Go to bed",
-    usage: "u!sleep @mention",
+    usage: require("../config.json").prefix + "sleep @mention",
     accessableby: "Members",
     aliases: ["ngủ"],
     category: "👋 Interactions",

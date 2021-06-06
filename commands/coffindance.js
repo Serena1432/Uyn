@@ -43,7 +43,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "coffindance",
     description: "Make a Coffin Dance Meme about someone",
-    usage: "u!coffindance @mention",
+    usage: require("../config.json").prefix + "coffindance @mention",
     accessableby: "Members",
     aliases: [],
     category: "😊 Just for fun",

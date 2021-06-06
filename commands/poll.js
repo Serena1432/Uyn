@@ -31,7 +31,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "poll",
     description: "Create a Yes/No Poll",
-    usage: "u!poll (content)",
+    usage: require("../config.json").prefix + "poll (content)",
     accessableby: "Members",
     aliases: [],
     category: "😊 Just for fun",

@@ -46,7 +46,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "stats",
     description: "Get the BOT's statistics",
-    usage: "u!stats",
+    usage: require("../config.json").prefix + "stats",
     accessableby: "Members",
     aliases: [],
     category: "🤖 BOT information",

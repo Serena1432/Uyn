@@ -39,7 +39,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "togglequote",
     description: "Enable the ping-responsing messages in this server",
-    usage: "u!togglequote (on/off)",
+    usage: require("../config.json").prefix + "togglequote (on/off)",
     accessableby: "Members",
     aliases: [],
     category: "💬 Ping-responsing",

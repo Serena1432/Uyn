@@ -249,7 +249,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "developer",
     description: "View developer's information",
-    usage: "u!developer",
+    usage: require("../config.json").prefix + "developer",
     accessableby: "Members",
     aliases: [],
     category: "👥 User information",

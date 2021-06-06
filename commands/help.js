@@ -29,7 +29,7 @@ module.exports.run = async (client, message, args) => {
         });
         fields.push({
             name: "BOT Information",
-            value: "[Invite Link](https://discord.com/oauth2/authorize?client_id=770981744165519390&scope=bot&permissions=271707254) | [Support Server](https://discord.gg/v9c27j9CQ6)",
+            value: "[Invite Link](https://discord.com/oauth2/authorize?client_id=" + client.user.id + "&scope=bot&permissions=271707254) | [Support Server](https://discord.gg/v9c27j9CQ6)",
             inline: false
         });
         for (i = 0; i < categories.length; i++) {
@@ -89,7 +89,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "help",
     description: "List all of this BOT's commands",
-    usage: "u!help",
+    usage: require("../config.json").prefix + "help",
     accessableby: "Members",
     aliases: [],
 	dmAvailable: true

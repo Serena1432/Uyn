@@ -11,7 +11,7 @@ const request = require("request");
 module.exports.config = {
     name: "prefix",
     description: "View/set the BOT's prefix on this server",
-    usage: "u!prefix [prefix]",
+    usage: require("../config.json").prefix + "prefix [prefix]",
     accessableby: "Members",
     category: "👋 Config",
 	dmAvailable: false

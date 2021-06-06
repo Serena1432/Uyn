@@ -31,7 +31,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "img",
     description: "Make the BOT send an image",
-    usage: "u!img (link)",
+    usage: require("../config.json").prefix + "img (link)",
     accessableby: "Members",
     aliases: [],
     category: "😊 Just for fun",

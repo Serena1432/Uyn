@@ -47,7 +47,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "showquote",
     description: "View your current ping-responsing message",
-    usage: "u!showquote",
+    usage: require("../config.json").prefix + "showquote",
     accessableby: "Members",
     aliases: [],
     category: "💬 Ping-responsing",

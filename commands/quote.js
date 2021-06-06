@@ -32,7 +32,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "quote",
     description: "Turn your message into a quote box",
-    usage: "u!quote (content)",
+    usage: require("../config.json").prefix + "quote (content)",
     accessableby: "Members",
     aliases: [],
     category: "😊 Just for fun",
