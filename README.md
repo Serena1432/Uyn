@@ -1,6 +1,6 @@
 ![Uyn logo](https://i.imgur.com/1UHPT0e.png)
 
-# [Invite this BOT](https://discord.com/oauth2/authorize?client_id=770981744165519390&scope=bot&permissions=271707254)
+# [Invite this BOT](https://discord.com/oauth2/authorize?client_id=850900162930802729&scope=bot&permissions=271707254)
 
 * [How to Install](https://www.github.com/LilShieru/Uyn/blob/master/INSTALL.md)
 * [Changelogs](https://www.github.com/LilShieru/Uyn/blob/master/CHANGELOGS.md)
