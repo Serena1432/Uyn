@@ -8,7 +8,7 @@ module.exports.run = async (client, message, args) => {
         if (client.economyManager[message.author.id]) {
             if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
             try {
-                message.reply("You currently have **" + decrypt(client.economyManager[message.author.id].coins) + " 🪙 Uyncoins**!");
+                message.reply("You currently have **" + decrypt(client.economyManager[message.author.id].coins) + " " + client.config.currency + "**!");
             }
             catch (err) {
                 console.log(err);
@@ -21,7 +21,7 @@ module.exports.run = async (client, message, args) => {
         if (client.economyManager[message.mentions.users.first().id]) {
             if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply("Cannot get the coins information.");
             try {
-                message.reply("**" + message.mentions.users.first().username + "** currently have **" + decrypt(client.economyManager[message.mentions.users.first().id].coins) + " 🪙 Uyncoins**!");
+                message.reply("**" + message.mentions.users.first().username + "** currently have **" + decrypt(client.economyManager[message.mentions.users.first().id].coins) + " " + client.config.currency + "**!");
             }
             catch (err) {
                 console.log(err);

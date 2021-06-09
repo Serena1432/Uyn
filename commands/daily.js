@@ -38,7 +38,7 @@ module.exports.run = async (client, message, args) => {
                 }}, function(error, response, body) {
                     if (!error && response.statusCode == 200 && body.includes("Success")) {
                         console.log(message.author.tag + " has just been rewarded " + dailyCoins.toString() + " Uyncoins!");
-                        message.channel.send("Here is your daily reward: **" + dailyCoins.toString() + " 🪙 Uyncoins**!");
+                        message.channel.send("Here is your daily reward: **" + dailyCoins.toString() + " " + client.config.currency + "**!");
                     }
                     else {
                         client.economyManager[message.author.id].dailyCountdown = undefined;

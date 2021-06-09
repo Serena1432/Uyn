@@ -1,5 +1,6 @@
 const request = require("request");
 const {encrypt, decrypt} = require("../utils/crypto.js");
+const Discord = require("discord.js");
 
 module.exports = async (client, message) => {
     // Ignore all bots
@@ -105,13 +106,13 @@ module.exports = async (client, message) => {
                 }
                 else if (!client.addRole[message.author.id].description) {
                     client.addRole[message.author.id].description = message.content;
-                    return message.reply("This role's description in the server shop will be:\n" + message.content + "\nNext, what's the role price in 🪙 Uyncoins?")
+                    return message.reply("This role's description in the server shop will be:\n" + message.content + "\nNext, what's the role price in " + client.config.currency + "?")
                 }
                 else if (!client.addRole[message.author.id].price) {
                     if (isNaN(message.content)) return message.reply("The price must be a number!");
                     client.addRole[message.author.id].price = parseInt(message.content);
                     client.addRole[message.author.id].confirmation = true;
-                    return message.reply("The role price will be **" + message.content + " 🪙 Uyncoins**.\nIs the role information all set? Type yes to proceed or no to reset the information.");
+                    return message.reply("The role price will be **" + message.content + " " + client.config.currency + "**.\nIs the role information all set? Type yes to proceed or no to reset the information.");
                 }
                 else if (client.addRole[message.author.id].confirmation) {
                     switch (message.content.toLowerCase()) {
@@ -149,7 +150,7 @@ module.exports = async (client, message) => {
                                     .setAuthor('Added the ' + role.name + ' role to the server shop.', message.guild.iconURL({size: 128}))
                                     .addFields(
                                         { name: 'Description:', value: client.addRole[message.author.id].description},
-                                        { name: 'Price:', value: client.addRole[message.author.id].price.toString() + " 🪙 Uyncoins"},
+                                        { name: 'Price:', value: client.addRole[message.author.id].price.toString() + " " + client.config.currency + ""},
                                     )
                                     .setTimestamp()
                                     .setFooter(client.devUsername, client.user.avatarURL({size: 128}));

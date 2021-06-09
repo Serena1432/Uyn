@@ -38,7 +38,7 @@ module.exports.run = async (client, message, args) => {
                 }}, function(error, response, body) {
                     if (!error && response.statusCode == 200 && body.includes("Success")) {
                         console.log(message.author.tag + " has just been rewarded " + weeklyCoins.toString() + " Uyncoins!");
-                        message.channel.send("Here is your weekly reward: **" + weeklyCoins.toString() + " 🪙 Uyncoins**!");
+                        message.channel.send("Here is your weekly reward: **" + weeklyCoins.toString() + " " + client.config.currency + "**!");
                     }
                     else {
                         client.economyManager[message.author.id].weeklyCountdown = undefined;

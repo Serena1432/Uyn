@@ -22,28 +22,28 @@ module.exports.run = async (client, message, args) => {
                             var slots = ["🍒", "🍆", "🍊", "🔔", "🥑", "7️⃣"];
                             var slots1, slots2, slots3, slotsi1, slotsi2, slotsi3;
                             client.countdown[message.author.id] = parseInt(new Date().getTime() + 15000);
-                            message.channel.send("🇽|🇽|🇽| **" + message.author.username + "** bets **" + args[0] + " 🪙 Uyncoins**...").then(msg => {
+                            message.channel.send("🇽|🇽|🇽| **" + message.author.username + "** bets **" + args[0] + " " + client.config.currency + "**...").then(msg => {
                                 setTimeout(function() {
                                     slotsi1 = random(0, slots.length - 1);
                                     slots1 = slots[slotsi1];
-                                    msg.edit(slots1 + "|🇽|🇽| **" + message.author.username + "** bets **" + args[0] + " 🪙 Uyncoins**...");
+                                    msg.edit(slots1 + "|🇽|🇽| **" + message.author.username + "** bets **" + args[0] + " " + client.config.currency + "**...");
                                     setTimeout(function() {
                                         slotsi2 = random(0, slots.length - 1);
                                         slots2 = slots[slotsi2];
-                                        msg.edit(slots1 + "|" + slots2 + "|🇽| **" + message.author.username + "** bets **" + args[0] + " 🪙 Uyncoins**...");
+                                        msg.edit(slots1 + "|" + slots2 + "|🇽| **" + message.author.username + "** bets **" + args[0] + " " + client.config.currency + "**...");
                                         setTimeout(function() {
                                             slotsi3 = random(0, slots.length - 1);
                                             slots3 = slots[slotsi3];
-                                            msg.edit(slots1 + "|" + slots2 + "|" + slots3 + "| **" + message.author.username + "** bets **" + args[0] + " 🪙 Uyncoins**...");
+                                            msg.edit(slots1 + "|" + slots2 + "|" + slots3 + "| **" + message.author.username + "** bets **" + args[0] + " " + client.config.currency + "**...");
                                             var resultText = "", coinValue;
                                             var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                                             if (slotsi1 == 5 && slotsi2 == 5 && slotsi3 == 5) {
                                                 coins += parseInt(args[0]) * 10;
-                                                resultText = "and won **" + coinValue + " 🪙 Uyncoins**!";
+                                                resultText = "and won **" + coinValue + " " + client.config.currency + "**!";
                                             }
                                             else if (slotsi1 == slotsi2 && slotsi2 == slotsi3) {
                                                 coins += parseInt(args[0]) * random(1, 7);
-                                                resultText = "and won **" + coinValue + " 🪙 Uyncoins**!";
+                                                resultText = "and won **" + coinValue + " " + client.config.currency + "**!";
                                             }
                                             else {
                                                 coins -= parseInt(args[0]);
@@ -57,7 +57,7 @@ module.exports.run = async (client, message, args) => {
                                                 data: JSON.stringify(client.economyManager[message.author.id])
                                             }}, function(error, response, body) {
                                                 if (!error && response.statusCode == 200 && body.includes("Success")) {
-                                                    msg.edit(slots1 + "|" + slots2 + "|" + slots3 + "| **" + message.author.username + "** bets **" + args[0] + "🪙 Uyncoins**...\n" + resultText);
+                                                    msg.edit(slots1 + "|" + slots2 + "|" + slots3 + "| **" + message.author.username + "** bets **" + args[0] + "" + client.config.currency + "**...\n" + resultText);
                                                 }
                                                 else {
                                                     coins = parseInt(decrypt(client.economyManager[message.author.id].coins));

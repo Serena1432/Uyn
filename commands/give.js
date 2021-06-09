@@ -34,7 +34,7 @@ module.exports.run = async (client, message, args) => {
                 }}, function(error2, response2, body2) {
                     if (!error2 && response2.statusCode == 200 && body2.includes("Success")) {
                         console.log(message.author.tag + " sent " + message.mentions.users.first().tag + " " + args[1] + " Uyncoins!");
-                        message.channel.send("**" + message.author.username + "** have just sent **" + args[1] + " 🪙 Uyncoins** to **" + message.mentions.users.first().username + "**!");
+                        message.channel.send("**" + message.author.username + "** have just sent **" + args[1] + " " + client.config.currency + "** to **" + message.mentions.users.first().username + "**!");
                     }
                     else {
                         var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));

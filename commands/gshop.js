@@ -20,7 +20,7 @@ module.exports.run = async (client, message, args) => {
                     if (client.economyManager[message.guild.id].roles[i]) {
                         var role = message.guild.roles.cache.get(client.economyManager[message.guild.id].roles[i].id);
                         if (role) {
-                            descText += "**" + (i + 1) + ". \"" + role.name + "\" role**\n**Description:**\n" + client.economyManager[message.guild.id].roles[i].description + "\n**Price:** " + client.economyManager[message.guild.id].roles[i].price.toString() + " 🪙 Uyncoins\nUse the `gbuy " + (i + 1) + "` command to buy this item.\n\n";
+                            descText += "**" + (i + 1) + ". \"" + role.name + "\" role**\n**Description:**\n" + client.economyManager[message.guild.id].roles[i].description + "\n**Price:** " + client.economyManager[message.guild.id].roles[i].price.toString() + " " + client.config.currency + "\nUse the `gbuy " + (i + 1) + "` command to buy this item.\n\n";
                         }
                     }
                     else break;

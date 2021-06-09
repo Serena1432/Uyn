@@ -41,7 +41,8 @@ tenor_api_key=<your Tenor API key>
 ```json
 {
     "prefix": "<your BOT prefix>",
-    "ownerId": ["<your Discord ID>", "<second developer's Discord ID>"]
+    "ownerId": ["<your Discord ID>", "<second developer's Discord ID>"],
+    "currency": "<your BOT currency name>"
 }
 ```
 
@@ -57,7 +58,8 @@ tenor_api_key=<your Tenor API key>
 ```json
 {
     "prefix": "<your BOT prefix>",
-    "ownerId": ["<your Discord ID>", "<second developer's Discord ID>"]
+    "ownerId": ["<your Discord ID>", "<second developer's Discord ID>"],
+    "currency": "<your BOT currency name>"
 }
 ```
 
