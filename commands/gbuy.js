@@ -69,9 +69,9 @@ module.exports.run = async (client, message, args) => {
 }
 
 module.exports.config = {
-    name: "gshop",
-    description: "Open your server's shop",
-    usage: require("../config.json").prefix + "gshop <page>",
+    name: "gbuy",
+    description: "Buy an item in the server's shop",
+    usage: require("../config.json").prefix + "gbuy <id>",
     accessableby: "Members",
     aliases: [],
     category: "💰 Economy",
