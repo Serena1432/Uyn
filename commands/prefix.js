@@ -19,11 +19,11 @@ module.exports.config = {
 
 module.exports.run = async (client, message, args) => {
     // If no prefix was sent, return server's current prefix
-    if (!args[0]) if (client.config.customPrefixes[message.guild.id]) return message.reply("The BOT's current prefix on this server is `" + client.config.customPrefixes[message.guild.id] + "`."); else return message.reply("The BOT's current prefix on this server is `r!`.");
+    if (!args[0]) if (client.customPrefixes[message.guild.id]) return message.reply("The BOT's current prefix on this server is `" + client.customPrefixes[message.guild.id] + "`."); else return message.reply("The BOT's current prefix on this server is `r!`.");
     // Checking for permissions
     if (!message.member.hasPermission("MANAGE_GUILD")) return message.reply("You need the Manage Guild permission to do this!");
 	// Check the current prefix
-	if (client.config.customPrefixes[message.guild.id] && client.config.customPrefixes[message.guild.id] == args[0]) return message.reply("The BOT's prefix on this server is already `" + args[0] + "`!");
+	if (client.customPrefixes[message.guild.id] && client.customPrefixes[message.guild.id] == args[0]) return message.reply("The BOT's prefix on this server is already `" + args[0] + "`!");
     // Connecting to the server
     request(process.env.php_server_url + '/SetCustomPrefix.php?token=' + process.env.php_server_token + '&id=' + message.guild.id + "&prefix=" + encodeURIComponent(args[0]), function(err, response, body) {
         if (!response || response.statusCode != 200 || body.includes('Connection failed')) {
@@ -35,7 +35,7 @@ module.exports.run = async (client, message, args) => {
                 request(process.env.php_server_url + '/GetCustomPrefixes.php', function(error, response, body) {
                     if (response && response.statusCode == 200) {
                         // Refreshing the prefixes list
-                        client.config.customPrefixes = JSON.parse(body);
+                        client.customPrefixes = JSON.parse(body);
                         message.reply("Successfully set the BOT's prefix on this server into `" + args[0] + "`.");
                     }
                 });

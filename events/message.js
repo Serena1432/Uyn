@@ -1,4 +1,5 @@
 const request = require("request");
+const {encrypt, decrypt} = require("../utils/crypto.js");
 
 module.exports = async (client, message) => {
     // Ignore all bots
@@ -10,6 +11,34 @@ module.exports = async (client, message) => {
 	var today = new Date();
     var enabled = 0;
     if (message.channel.type == "text") {
+        if (client.economyManager[message.author.id] && !client.messageCountdown[message.author.id] || client.messageCountdown[message.author.id] < 5 && !message.channel.name.toLowerCase().includes("bot")) {
+            try {
+                if (client.messageCountdown[message.author.id] == undefined) client.messageCountdown[message.author.id] = 0;
+                var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
+                coins += 5;
+                client.economyManager[message.author.id].coins = encrypt(coins.toString());
+                request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
+                    type: "update",
+                    token: process.env.php_server_token,
+                    id: message.author.id,
+                    data: JSON.stringify(client.economyManager[message.author.id])
+                }}, function(error, response, body) {
+                    if (!error && response.statusCode == 200 && body.includes("Success")) {
+                      console.log("Succesfully updated " + message.author.tag + "'s coins into " + coins.toString() + ".");
+                    }
+                    else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
+                });
+                client.messageCountdown[message.author.id]++;
+                if (client.messageCountdown[message.author.id] >= 5) {
+                  setTimeout(function() {
+                    client.messageCountdown[message.author.id] = 0;
+                  }, 300000);
+                }
+            }
+            catch (err) {
+                console.error(err);
+            }
+        }
         if (client.toggleQuote[message.guild.id] == undefined || client.toggleQuote[message.guild.id] == 1) enabled = 1;
         if (message.mentions.users.size == 1 && message.content.length < 125 && client.quotes[message.mentions.users.first().id] && !message.author.bot && today.getHours() != 20 && today.getHours() != 21 && today.getHours() != 22 && today.getHours() != 23 && !message.channel.name.includes('bot') && enabled) {
             if (!client.floodchat[message.mentions.users.first().id]) {
@@ -53,12 +82,108 @@ module.exports = async (client, message) => {
     var prefix = client.config.prefix;
     // Detect if it was a Guild Chat, if yes, go to the Custom Prefixes part
     if (message.channel.type == "text") {
-        // If the client.config.customPrefixes was null, refresh it
-        if (!client.config.customPrefixes) {
-            request(process.env.php_server_token + '/GetCustomPrefixes.php', function(error, response, body) {
+        if (client.addRole[message.author.id] && client.addRole[message.author.id].channel == message.channel.id) {
+            try {
+                if (message.content == "cancel") {
+                    client.addRole[message.author.id] = undefined;
+                    return message.reply("Cancelled the current role-adding request.");
+                }
+                else if (!client.addRole[message.author.id].role) {
+                    var role;
+                    if (message.mentions.roles.size > 0) role = message.mentions.roles.first();
+                    else if (message.mentions.roles.size == 0 && !isNaN(message.content)) role = message.guild.roles.cache.get(message.content);
+					else role = message.guild.roles.cache.find(r => r.name == message.content);
+                    if (!role) return message.reply("Cannot find the role! Please try again!");
+                    if (client.economyManager[message.guild.id]) {
+                        for (var i = 0; i < client.economyManager[message.guild.id].roles.length; i++) {
+                            if (client.economyManager[message.guild.id].roles[i].id == role.id) return message.reply("This role is already existed in the server shop!");
+                        }
+                    }
+                    if (role.position >= message.guild.member(client.user).roles.highest.position) return message.reply("This role's position is higher than the BOT's highest role's!");
+                    client.addRole[message.author.id].role = role.id;
+                    return message.reply("You're going to add the `" + role.name + "` role to the server shop. What's its description?");
+                }
+                else if (!client.addRole[message.author.id].description) {
+                    client.addRole[message.author.id].description = message.content;
+                    return message.reply("This role's description in the server shop will be:\n" + message.content + "\nNext, what's the role price in 🪙 Uyncoins?")
+                }
+                else if (!client.addRole[message.author.id].price) {
+                    if (isNaN(message.content)) return message.reply("The price must be a number!");
+                    client.addRole[message.author.id].price = parseInt(message.content);
+                    client.addRole[message.author.id].confirmation = true;
+                    return message.reply("The role price will be **" + message.content + " 🪙 Uyncoins**.\nIs the role information all set? Type yes to proceed or no to reset the information.");
+                }
+                else if (client.addRole[message.author.id].confirmation) {
+                    switch (message.content.toLowerCase()) {
+                        case "no": {
+                            client.addRole[message.author.id] = {
+                                channel: message.channel.id
+                            };
+                            message.channel.send("The role's information has been reset.\nWhat role you're trying to add? Please mention it or send its ID to this channel.\nType `cancel` anytime to cancel the role-adding request.");
+                            break;
+                        }
+                        case "yes": {
+                            var type = "update";
+                            if (!client.economyManager[message.guild.id]) {
+                                client.economyManager[message.guild.id] = {
+                                    roles: []
+                                };
+                                type = "add";
+                            }
+                            var length = client.economyManager[message.guild.id].roles.length;
+                            client.economyManager[message.guild.id].roles.push({
+                                id: client.addRole[message.author.id].role,
+                                description: client.addRole[message.author.id].description,
+                                price: client.addRole[message.author.id].price,
+                            });
+                            request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
+                                type: type,
+                                token: process.env.php_server_token,
+                                id: message.guild.id,
+                                data: JSON.stringify(client.economyManager[message.guild.id])
+                            }}, function(error, response, body) {
+                                if (!error && response.statusCode == 200 && body.includes("Success")) {
+                                    var role = message.guild.roles.cache.get(client.addRole[message.author.id].role);
+                                    const exampleEmbed = new Discord.MessageEmbed()
+                                    .setColor(role.hexColor)
+                                    .setAuthor('Added the ' + role.name + ' role to the server shop.', message.guild.iconURL({size: 128}))
+                                    .addFields(
+                                        { name: 'Description:', value: client.addRole[message.author.id].description},
+                                        { name: 'Price:', value: client.addRole[message.author.id].price.toString() + " 🪙 Uyncoins"},
+                                    )
+                                    .setTimestamp()
+                                    .setFooter(client.devUsername, client.user.avatarURL({size: 128}));
+                                    message.channel.send(exampleEmbed);
+                                    client.addRole[message.author.id] = undefined;
+                                }
+                                else {
+                                    client.economyManager[message.author.id].roles.splice(length, 1);
+                                    client.addRole[message.author.id] = undefined;
+                                    console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
+                                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                }
+                            });
+                            break;
+                        }
+                        default: {
+                            return message.reply("Invalid answer! Please type again!");
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (err) {
+                client.addRole[message.author.id] = undefined;
+                console.error(err);
+                return message.reply("An unexpected error occurred.");
+            }
+        }
+        // If the client.customPrefixes was null, refresh it
+        if (!client.customPrefixes) {
+            request(process.env.php_server_url + '/GetCustomPrefixes.php', function(error, response, body) {
                 if (response && response.statusCode == 200 && !body.includes("Connection failed")) {
                     // Refreshing the prefixes list
-                    client.config.customPrefixes = JSON.parse(body);
+                    client.customPrefixes = JSON.parse(body);
                     // Go to the Custom Prefix part
                     CustomPrefix();
                 }
@@ -70,7 +195,7 @@ module.exports = async (client, message) => {
     // Custom Prefix part
     function CustomPrefix() {
         // Check if the server has a prefix, if yes, assign it as the current prefix
-        if (client.config.customPrefixes[message.guild.id]) prefix = client.config.customPrefixes[message.guild.id];
+        if (client.customPrefixes[message.guild.id]) prefix = client.customPrefixes[message.guild.id];
     }
     
     // Done the Custom Prefix part.

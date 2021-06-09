@@ -9,14 +9,23 @@ const client = new Discord.Client();
 const config = require('./config.json');
 client.config = config;
 
-client.config.customPrefixes = [];
-
+client.customPrefixes = [];
+client.economyManager = [];
+client.messageCountdown = [];
+client.captchas = {
+    daily: [],
+    hourly: [],
+    weekly: [],
+    monthly: []
+};
+client.countdown = [];
+client.addRole = [];
 client.muteLeaved = [];
 
-request(process.env.php_server_token + '/GetCustomPrefixes.php', function(error, response, body) {
+request(process.env.php_server_url + '/GetCustomPrefixes.php', function(error, response, body) {
     if (response && response.statusCode == 200 && !body.includes("Connection failed")) {
         // Refreshing the prefixes list
-        client.config.customPrefixes = JSON.parse(body);
+        client.customPrefixes = JSON.parse(body);
     }
 });
 

@@ -4,6 +4,7 @@
 
 ### June 9, 2021
 * Fixed some serious bugs on the open-sourced repo.
+* Added the economy system and some gambling commands.
 
 ### May 31, 2021
 * Added multiple owners support.

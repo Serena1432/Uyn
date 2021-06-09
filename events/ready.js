@@ -152,6 +152,24 @@ module.exports = (client) => {
             }, 5000);
         } else client.users.cache.get(client.config.ownerId[0]).send("Mute system failed to initialize.");
     });
+    request(process.env.php_server_url + '/GetCustomPrefixes.php', function(error, response, body) {
+        if (response && response.statusCode == 200 && !body.includes("Connection failed")) {
+            client.customPrefixes = JSON.parse(body);
+            console.log("👌 Custom prefixes succesfully get");
+        }
+    });
+    request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
+            if (!error && response.statusCode == 200 && !body.includes("Error")) {
+                try {
+                    client.economyManager = JSON.parse(body);
+                    console.log("👌 Economy system successfully initialized");
+                }
+                catch (err) {
+                    console.error(err);
+                }
+            }
+            else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
+    });
 	if (process.env.dbl_token) {
 		const DBL = require("dblapi.js");
 		const dbl = new DBL(process.env.dbl_token, client);

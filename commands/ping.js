@@ -13,7 +13,7 @@ module.exports.run = async (client, message, args) => {
     }}).then(msg => {
         var serverPingText = "Unknown";
         request(process.env.php_server_url + "/GetAllQuotes.php", function(error, response, body) {
-            if (!error && response.statusCode == 200) {
+            if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
                 serverPingText = ((new Date()).getTime() - message.createdTimestamp).toString() + "ms";
             }
             else {
