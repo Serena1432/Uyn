@@ -66,8 +66,6 @@ This BOT is being ran using Heroku, Node.JS, PHP and MySQL. I made it without an
 
 [Invite this BOT](https://discord.com/oauth2/authorize?client_id=850900162930802729&scope=bot&permissions=271707254)
 
-[Support Server](https://discord.gg/v9c27j9CQ6)
-
 ## Developer information
 You can contact the developer by using these social networks:
 
