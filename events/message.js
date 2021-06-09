@@ -82,7 +82,8 @@ module.exports = async (client, message) => {
   
     // Ignore messages not starting with the prefix
     if (message.content.toLowerCase().indexOf(prefix) !== 0) return;
-  
+    
+    const args = message.content.substr(prefix.length).split(" ");
     var command = args[0];
     args.splice(0, 1);
   

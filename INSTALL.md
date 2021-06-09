@@ -41,15 +41,9 @@ tenor_api_key=<your Tenor API key>
 ```json
 {
     "prefix": "<your BOT prefix>",
-    "everyoneMention": true,
-    "hostedBy": true,
-    "defaultSettings": {
-        "prefix": "<your BOT prefix>"
-    },
-    "ownerId": "<your Discord ID>"
+    "ownerId": ["<your Discord ID>", "<second developer's Discord ID>"]
 }
 ```
-
 
 
 * **Step 4:** Run the `npm install` command to install all the necessary dependencies.
@@ -63,12 +57,7 @@ tenor_api_key=<your Tenor API key>
 ```json
 {
     "prefix": "<your BOT prefix>",
-    "everyoneMention": true,
-    "hostedBy": true,
-    "defaultSettings": {
-        "prefix": "<your BOT prefix>"
-    },
-    "ownerId": "<your Discord ID>"
+    "ownerId": ["<your Discord ID>", "<second developer's Discord ID>"]
 }
 ```
 

@@ -62,7 +62,7 @@ module.exports = (client) => {
         } else {
             console.error(error);
             console.error(body);
-            client.users.cache.get(client.config.ownerId).send("Ping-responsing system failed to initialize.");
+            client.users.cache.get(client.config.ownerId[0]).send("Ping-responsing system failed to initialize.");
         }
     });
     request(process.env.php_server_url + '/ToggleQuote.php?token=' + process.env.php_server_token + '&type=get', function(error, response, body) {
@@ -72,7 +72,7 @@ module.exports = (client) => {
         } else {
             console.error(error);
             console.error(body);
-            client.users.cache.get(client.config.ownerId).send("Ping-responsing toggle mode failed to initialize.");
+            client.users.cache.get(client.config.ownerId[0]).send("Ping-responsing toggle mode failed to initialize.");
         }
     });
     request(process.env.php_server_url + '/MuteManager.php?token=' + process.env.php_server_token + '&type=get', function(error, response, body) {
@@ -150,7 +150,7 @@ module.exports = (client) => {
                     }
                 }
             }, 5000);
-        } else client.users.cache.get(client.config.ownerId).send("Mute system failed to initialize.");
+        } else client.users.cache.get(client.config.ownerId[0]).send("Mute system failed to initialize.");
     });
 	if (process.env.dbl_token) {
 		const DBL = require("dblapi.js");

@@ -2,6 +2,9 @@
 
 # Uyn BOT Changelogs
 
+### June 9, 2021
+* Fixed some serious bugs on the open-sourced repo.
+
 ### May 31, 2021
 * Added multiple owners support.
 

@@ -33,11 +33,8 @@ fs.readdir("./events/", (_err, files) => {
 });
 
 client.on("guildMemberAdd", (member) => {
-    console.log("Guild member added!");
-    console.log("User: " + member.user.tag + "; ID: " + member.user.id + "; server: " + member.guild.name + "; serverid: " + member.guild.id);
     for (var i = 0; i < client.mutes.length; i++) {
         if (client.mutes[i].victim == member.user.id && client.mutes[i].server == member.guild.id && client.mutes[i].endtime >= (new Date()).getTime()) {
-            console.log("i = " + i + "; victim: " + client.mutes[i].victim + "; server: " + client.mutes[i].server);
             var mutedRole = member.guild.roles.cache.find(role => role.name == "Muted");
             member.roles.add(mutedRole, "Role persist");
             member.user.send({
@@ -85,17 +82,19 @@ client.on("guildMemberAdd", (member) => {
                             }
                         });
                     } else {
-                        client.users.cache.get("536899471720841228").send("Cannot connect to the unmute server.");
+                        client.users.cache.get(client.config.ownerId[0]).send("Cannot connect to the unmute server.");
                     }
                 });
             }, (endtime - (new Date()).getTime()));
 			client.muteLeaved[member.user.id] = false;
         }
     }
+    /*
+    Temporarily remove it because the official support server is not yet created.
 	if (member.guild.id == 653949728547143691) {
 		const e = new Discord.MessageEmbed()
 			.setColor(Math.floor(Math.random() * 16777214) + 1)
-			.setAuthor(client.devUsername, client.users.cache.get("536899471720841228").avatarURL({
+			.setAuthor(client.devUsername, client.users.cache.get(client.config.ownerId[0]).avatarURL({
                 format: "png",
                 dynamic: true,
                 size: 2048
@@ -111,6 +110,7 @@ client.on("guildMemberAdd", (member) => {
 		client.channels.cache.get("810005345799503882").send(e);
 		member.user.send(e);
 	}
+    */
 });
 
 client.commands = new Discord.Collection();
