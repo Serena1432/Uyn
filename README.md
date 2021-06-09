@@ -18,11 +18,14 @@ You can use the `u!help (command)` command to get information about a specific c
 ### 👥 User information:
 account, avatar, developer, owner
 
+### 💰 Economy
+account, avatar, developer, owner
+
 ### 😊 Just for fun:
-arrest, cert, coffindance, covid19, gay, img, les, lolicon, number, poll, quote, reverse, roll, say, trap, trash
+arrest, cert, coffindance, covid19, gay, img, les, number, poll, quote, reverse, roll, say, trap, trash
 
 ### 👋 Interactions:
-baka, bite, boop, bully, cry, dance, greet, grin, highfive, hold, hug, hungry, kill, kiss, lewd, lick, love, muda, nom, pat, poke, pout, punch, shrug, slap, sleep, smile, smug, snuggle, stare, thinking, thumbsup, tickle, wag, wait, wave
+baka, bite, bonk, boop, bully, cry, dance, greet, grin, highfive, hold, hug, hungry, kill, kiss, lewd, lick, love, muda, nom, pat, poke, pout, punch, shrug, slap, sleep, smile, smug, snuggle, stare, thinking, thumbsup, tickle, wag, wait, wave
 
 ### ⚙️ Moderations:
 ban, kick, mute, setnickname, unmute, warn
@@ -50,6 +53,9 @@ You can enable or disable sending the ping-responsing messages in your server by
 
 ### 🤖 BOT information:
 invite, ping, stats
+
+### 🎲 Gambling:
+flip, slots
 
 ### 👋 Config:
 prefix
