@@ -28,7 +28,7 @@ function weekly(client, message, args) {
                 var weeklyCoins = random(2500, 7500);
                 coins += weeklyCoins;
                 client.economyManager[message.author.id].coins = encrypt(coins.toString());
-                client.economyManager[message.author.id].weeklyCountdown = (new Date()).getTime() + 604800;
+                client.economyManager[message.author.id].weeklyCountdown = (new Date()).getTime() + 604800000;
                 request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                     type: "update",
                     token: process.env.php_server_token,

@@ -28,7 +28,7 @@ function daily(client, message, args) {
                 var dailyCoins = random(1000, 5000);
                 coins += dailyCoins;
                 client.economyManager[message.author.id].coins = encrypt(coins.toString());
-                client.economyManager[message.author.id].dailyCountdown = (new Date()).getTime() + 86400;
+                client.economyManager[message.author.id].dailyCountdown = (new Date()).getTime() + 86400000;
                 request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                     type: "update",
                     token: process.env.php_server_token,

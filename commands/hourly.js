@@ -28,7 +28,7 @@ function hourly(client, message, args) {
                 var hourlyCoins = random(100, 500);
                 coins += hourlyCoins;
                 client.economyManager[message.author.id].coins = encrypt(coins.toString());
-                client.economyManager[message.author.id].hourlyCountdown = (new Date()).getTime() + 3600;
+                client.economyManager[message.author.id].hourlyCountdown = (new Date()).getTime() + 3600000;
                 request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                     type: "update",
                     token: process.env.php_server_token,
