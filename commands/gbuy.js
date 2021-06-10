@@ -7,12 +7,8 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-module.exports.run = async (client, message, args) => {
-        request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
-            if (!error && response.statusCode == 200 && !body.includes("Error")) {
-                client.economyManager = JSON.parse(body);
-                if (client.economyManager[message.author.id]) {
-                    if (!args[0]) return message.reply("Please type an item ID!");
+function gbuy(client, message, args) {
+    if (!args[0]) return message.reply("Please type an item ID!");
                     if (isNaN(args[0])) return message.reply("The item ID must be a number!");
                     if (!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply("I don't have the Manage Roles permission! Please contact the server admin!");
                     if (!client.economyManager[message.guild.id] || client.economyManager[message.guild.id].roles.length == 0) return message.reply("Invalid item ID!");
@@ -61,8 +57,34 @@ module.exports.run = async (client, message, args) => {
                         console.error(err);
                         message.reply("An unexpected error occurred.");
                     }
+}
+
+module.exports.run = async (client, message, args) => {
+        request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
+            if (!error && response.statusCode == 200 && !body.includes("Error")) {
+                client.economyManager = JSON.parse(body);
+                if (client.economyManager[message.author.id]) {
+                    gbuy(client, message, args);
+                    return;
                 }
-                else return message.reply("I can't get your economy information; can you try initializing/refreshing your information using the `init` command?");
+                else {
+                    client.economyManager[message.author.id] = {
+                        coins: encrypt("500")
+                    };
+                    request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
+                        type: "add",
+                        token: process.env.php_server_token,
+                        id: message.author.id,
+                        data: JSON.stringify(client.economyManager[message.author.id])
+                    }}, function(error, response, body) {
+                        if (!error && response.statusCode == 200 && body.includes("Success")) {
+                            gbuy(client, message, args);
+                            return;
+                        }
+                        else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
+                        return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                    });
+                }
             }
             else return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
         });

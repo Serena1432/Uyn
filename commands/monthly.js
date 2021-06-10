@@ -8,9 +8,8 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-module.exports.run = async (client, message, args) => {
-    if (client.economyManager[message.author.id]) {
-        if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
+function monthly(client, message, args) {
+    if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
         try {
             if (!client.economyManager[message.author.id].monthlyCountdown || client.economyManager[message.author.id].monthlyCountdown < (new Date()).getTime()) {
                 if (!client.captchas.monthly[message.author.id]) {
@@ -68,8 +67,52 @@ module.exports.run = async (client, message, args) => {
             console.log(err);
             return message.reply("An unexpected error occurred.");
         }
+}
+
+module.exports.run = async (client, message, args) => {
+    if (client.economyManager[message.author.id]) {
+        monthly(client, message, args);
+        return;
     }
-    else return message.reply("I can't get your economy information; can you try initializing/refreshing your information using the `init` command?");
+    else {
+        request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
+            if (!error && response.statusCode == 200 && !body.includes("Error")) {
+                try {
+                    client.economyManager = JSON.parse(body);
+                    if (client.economyManager[message.author.id] != undefined) return message.reply("I have successfully refreshed your economy information!");
+                    else {
+                        try {
+                            client.economyManager[message.author.id] = {
+                                coins: encrypt("500")
+                            };
+                            request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
+                                type: "add",
+                                token: process.env.php_server_token,
+                                id: message.author.id,
+                                data: JSON.stringify(client.economyManager[message.author.id])
+                            }}, function(error, response, body) {
+                                if (!error && response.statusCode == 200 && body.includes("Success")) {
+                                    monthly(client, message, args);
+                                    return;
+                                }
+                                else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
+                                return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                            });
+                        }
+                        catch (err) {
+                            console.error(err);
+                            return message.reply("An unexpected error occurred.");
+                        }
+                    }
+                }
+                catch (err) {
+                    console.error(err);
+                    return message.reply("An unexpected error occurred.");
+                }
+            }
+            else return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+        });
+    }
 }
 
 module.exports.config = {

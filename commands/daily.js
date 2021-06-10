@@ -8,9 +8,8 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-module.exports.run = async (client, message, args) => {
-    if (client.economyManager[message.author.id]) {
-        if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
+function daily(client, message, args) {
+    if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
         try {
             if (!client.economyManager[message.author.id].dailyCountdown || client.economyManager[message.author.id].dailyCountdown < (new Date()).getTime()) {
                 if (!client.captchas.daily[message.author.id]) {
@@ -29,7 +28,7 @@ module.exports.run = async (client, message, args) => {
                 var dailyCoins = random(1000, 5000);
                 coins += dailyCoins;
                 client.economyManager[message.author.id].coins = encrypt(coins.toString());
-                client.economyManager[message.author.id].dailyCountdown = (new Date()).getTime() + 86400000;
+                client.economyManager[message.author.id].dailyCountdown = (new Date()).getTime() + 2592000000;
                 request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                     type: "update",
                     token: process.env.php_server_token,
@@ -68,8 +67,55 @@ module.exports.run = async (client, message, args) => {
             console.log(err);
             return message.reply("An unexpected error occurred.");
         }
+}
+
+module.exports.run = async (client, message, args) => {
+    if (client.economyManager[message.author.id]) {
+        daily(client, message, args);
+        return;
     }
-    else return message.reply("I can't get your economy information; can you try initializing/refreshing your information using the `init` command?");
+    else {
+        request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
+            if (!error && response.statusCode == 200 && !body.includes("Error")) {
+                try {
+                    client.economyManager = JSON.parse(body);
+                    if (client.economyManager[message.author.id] != undefined) {
+                        daily(client, message, args);
+                        return;
+                    }
+                    else {
+                        try {
+                            client.economyManager[message.author.id] = {
+                                coins: encrypt("500")
+                            };
+                            request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
+                                type: "add",
+                                token: process.env.php_server_token,
+                                id: message.author.id,
+                                data: JSON.stringify(client.economyManager[message.author.id])
+                            }}, function(error, response, body) {
+                                if (!error && response.statusCode == 200 && body.includes("Success")) {
+                                    daily(client, message, args);
+                                    return;
+                                }
+                                else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
+                                return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                            });
+                        }
+                        catch (err) {
+                            console.error(err);
+                            return message.reply("An unexpected error occurred.");
+                        }
+                    }
+                }
+                catch (err) {
+                    console.error(err);
+                    return message.reply("An unexpected error occurred.");
+                }
+            }
+            else return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+        });
+    }
 }
 
 module.exports.config = {
