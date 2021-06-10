@@ -84,7 +84,6 @@ module.exports.run = async (client, message, args) => {
                         return;
                     }
                     else {
-                        try {
                             client.economyManager[message.author.id] = {
                                 coins: encrypt("500")
                             };
@@ -101,11 +100,6 @@ module.exports.run = async (client, message, args) => {
                                 else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
                                 return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
                             });
-                        }
-                        catch (err) {
-                            console.error(err);
-                            return message.reply("An unexpected error occurred.");
-                        }
                     }
                 }
                 catch (err) {
