@@ -1,18 +1,66 @@
+const { profile } = require("console");
 const Discord = require("discord.js");
 const fs = require('fs');
 const request = require("request");
 const {encrypt, decrypt} = require("../utils/crypto.js");
+const Canvas = require("canvas");
 
-function bal(client, message, args, user) {
-    message.channel.send(new Discord.MessageEmbed()
-    .setColor(Math.floor(Math.random() * 16777215))
-    .setAuthor(user.username + "'s balance", user.avatarURL({size:128}))
-    .addFields([
-        {name: client.config.currency + ":", value: parseInt(decrypt(client.economyManager[user.id].coins)).toLocaleString()},
-        {name: "💬 Message Points:", value: (client.economyManager[user.id].messagePoints) ? parseInt(decrypt(client.economyManager[user.id].messagePoints)).toLocaleString() : "0"}
-    ])
-    .setTimestamp()
-    .setFooter(client.devUsername, client.user.avatarURL({size:128})));
+async function prof(client, message, args, user) {
+    var data = client.economyManager[user.id];
+    var theme;
+    if (!data.theme || data.theme == "dark") theme = "dark";
+    else theme = "light";
+    const canvas = Canvas.createCanvas(854, 480);
+    const ctx = canvas.getContext('2d');
+
+    var structure;
+    if (theme == "dark") structure = await Canvas.loadImage("./assets/profile_card_structure_dark.png");
+    else structure = await Canvas.loadImage("./assets/profile_card_structure.png");
+    ctx.drawImage(structure, 0, 0, 854, 480);
+    var background;
+    if (!data.background) background = await Canvas.loadImage("./assets/background_default.png");
+    else background = await Canvas.loadImage("./assets/" + data.background + ".png");
+    ctx.drawImage(background, 0, 0, 854, 160);
+    const avatar = await Canvas.loadImage(user.avatarURL({format: "png", size: 128}));
+    ctx.drawImage(avatar, 82, 103, 136, 136);
+    var font = "SF Pro Text";
+    ctx.font = "bold 32px " + font;
+    if (theme == "dark") ctx.fillStyle = '#ffffff';
+    else ctx.fillStyle = '#000000';
+    ctx.textAlign = "center";
+    ctx.fillText(user.username, 148, 295, 266, 40);
+    ctx.font = "22px " + font;
+    ctx.fillStyle = '#adadad';
+    ctx.textAlign = "center";
+    ctx.fillText("#" + user.discriminator, 148, 325, 266, 40);
+    const coinIcon = await Canvas.loadImage("./assets/coin_icon.png");
+    ctx.drawImage(coinIcon, 33, 365, 42, 42);
+    ctx.font = "24px " + font;
+    if (theme == "dark") ctx.fillStyle = '#ffffff';
+    else ctx.fillStyle = '#000000';
+    ctx.textAlign = "left";
+    ctx.fillText(parseInt(decrypt(client.economyManager[user.id].coins)).toLocaleString(), 90, 395, 194, 40);
+    const messageIcon = await Canvas.loadImage("./assets/message_icon.png");
+    ctx.drawImage(messageIcon, 33, 415, 42, 42);
+    ctx.fillText((client.economyManager[user.id].messagePoints) ? parseInt(decrypt(client.economyManager[user.id].messagePoints)).toLocaleString() : "0", 90, 445, 194, 40);
+    ctx.font = "bold 26px " + font;
+    ctx.fillText(user.username + "'s Biography:", 314, 216, 498, 40);
+    ctx.textAlign = "right";
+    ctx.font = "18px " + font;
+    ctx.fillText("User's ID: " + user.id, 822, 460, 400, 40);
+    ctx.textAlign = "left";
+    ctx.font = "20px " + font;
+    var bio = "No biography was set.";
+    if (data.bio) bio = data.bio;
+    ctx.fillText(bio, 314, 246, 498, 184);
+
+
+    message.channel.send('', {
+        files: [{
+            attachment: canvas.toBuffer(),
+            name: 'profile.png'
+        }]
+    });
 }
 
 module.exports.run = async (client, message, args) => {
@@ -20,7 +68,7 @@ module.exports.run = async (client, message, args) => {
         if (client.economyManager[message.author.id]) {
             if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
             try {
-                bal(client, message, args, message.author);
+                prof(client, message, args, message.author);
                 return;
             }
             catch (err) {
@@ -36,7 +84,7 @@ module.exports.run = async (client, message, args) => {
                         if (client.economyManager[message.author.id] != undefined) {
                             if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
                             try {
-                                bal(client, message, args, message.author);
+                                prof(client, message, args, message.author);
                                 return;
                             }
                             catch (err) {
@@ -47,7 +95,10 @@ module.exports.run = async (client, message, args) => {
                         else {
                             try {
                                 client.economyManager[message.author.id] = {
-                                    coins: encrypt("500")
+                                    coins: encrypt("500"),
+                                    background: "background_default",
+                                    theme: "dark",
+                                    bio: ""
                                 };
                                 request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                                     type: "add",
@@ -58,7 +109,7 @@ module.exports.run = async (client, message, args) => {
                                     if (!error && response.statusCode == 200 && body.includes("Success")) {
                                         if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
                                         try {
-                                            bal(client, message, args, message.author);
+                                            prof(client, message, args, message.author);
                                             return;
                                         }
                                         catch (err) {
@@ -90,7 +141,7 @@ module.exports.run = async (client, message, args) => {
         if (client.economyManager[message.mentions.users.first().id]) {
             if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply("Cannot get the coins information.");
             try {
-                bal(client, message, args, message.mentions.users.first());
+                prof(client, message, args, message.mentions.users.first());
                 return;
             }
             catch (err) {
@@ -106,7 +157,7 @@ module.exports.run = async (client, message, args) => {
                         if (client.economyManager[message.mentions.users.first().id] != undefined) {
                             if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply("Cannot get the coins information.");
                             try {
-                                bal(client, message, args, message.mentions.users.first());
+                                prof(client, message, args, message.mentions.users.first());
                                 return;
                             }
                             catch (err) {
@@ -117,7 +168,10 @@ module.exports.run = async (client, message, args) => {
                         else {
                             try {
                                 client.economyManager[message.mentions.users.first().id] = {
-                                    coins: encrypt("500")
+                                    coins: encrypt("500"),
+                                    background: "background_default",
+                                    theme: "dark",
+                                    bio: ""
                                 };
                                 request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                                     type: "add",
@@ -128,7 +182,7 @@ module.exports.run = async (client, message, args) => {
                                     if (!error && response.statusCode == 200 && body.includes("Success")) {
                                         if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply("Cannot get the coins information.");
                                         try {
-                                            bal(client, message, args, message.mentions.users.first());
+                                            prof(client, message, args, message.mentions.users.first());
                                             return;
                                         }
                                         catch (err) {
@@ -159,11 +213,11 @@ module.exports.run = async (client, message, args) => {
 }
 
 module.exports.config = {
-    name: "balance",
-    description: "View your current balance",
-    usage: require("../config.json").prefix + "balance",
+    name: "profile",
+    description: "View your profile card",
+    usage: require("../config.json").prefix + "profile",
     accessableby: "Members",
     aliases: [],
-    category: "💰 Economy",
+    category: "👥 User information",
     dmAvailable: true
 }

@@ -14,6 +14,10 @@ module.exports = async (client, message) => {
     if (message.channel.type == "text") {
         if (client.economyManager[message.author.id] && !client.messageCountdown[message.author.id] || client.messageCountdown[message.author.id] < 5 && !message.channel.name.toLowerCase().includes("bot")) {
             try {
+                if (!client.economyManager[message.author.id].messagePoints) client.economyManager[message.author.id].messagePoints = encrypt("0");
+                var messagePoints = decrypt(client.economyManager[message.author.id].messagePoints);
+                messagePoints++;
+                client.economyManager[message.author.id].messagePoints = encrypt(messagePoints.toString());
                 if (client.messageCountdown[message.author.id] == undefined) client.messageCountdown[message.author.id] = 0;
                 var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                 coins += 5;

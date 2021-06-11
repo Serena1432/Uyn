@@ -76,7 +76,7 @@ module.exports.run = async (client, message, args) => {
     if (command.config.aliases && command.config.aliases.length) data.push(`**Aliases:** ${command.config.aliases.join(', ')}`);
     if (command.config.description) data.push(`**Description:** ${command.config.description}`);
     if (command.config.usage) data.push(`**Uses:** \`${command.config.usage}\``);
-    data.push("**Can be used on a DM channel:** " + command.config.dmAvailable ? "Yes" : "No");
+    data.push("**Can be used on a DM channel:** " + ((command.config.dmAvailable) ? "Yes" : "No"));
 
     var embed = new Discord.MessageEmbed()
         .setAuthor(`${command.config.name}`)
