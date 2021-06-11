@@ -16,9 +16,9 @@
 You can use the `u!help (command)` command to get information about a specific command!
 
 ### 👥 User information:
-account, avatar, developer, owner
+account, avatar, developer, owner, profile, setbio, settheme
 
-### 💰 Economy
+### 💰 Economy:
 addrole, balance, cash, daily, gbuy, give, gshop, hourly, money, monthly, weekly
 
 ### 😊 Just for fun:

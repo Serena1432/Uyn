@@ -2,6 +2,9 @@
 
 # Uyn BOT Changelogs
 
+### June 11, 2021
+* Added the profile command.
+
 ### June 9, 2021
 * Fixed some serious bugs on the open-sourced repo.
 * Added the economy system and some gambling commands.
