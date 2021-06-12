@@ -1,0 +1,65 @@
+[
+    {
+        "code": "afbi",
+        "name": "Anime Festival",
+        "type": "background",
+        "background_image": "pan0280_background_1",
+        "description": "An anime festival image for your profile banner.\nSubmitted by Pan#0280.",
+        "price": "50000",
+        "price_type": "currency"
+    },
+    {
+        "code": "bfbi",
+        "name": "Big Fish & Begonia",
+        "type": "background",
+        "background_image": "pan0280_background_2",
+        "description": "An big fish & begonia image for your profile banner.\nSubmitted by Pan#0280.",
+        "price": "50000",
+        "price_type": "currency"
+    },
+    {
+        "code": "cpbi",
+        "name": "Anime Couples",
+        "type": "background",
+        "background_image": "pan0280_background_3",
+        "description": "An anime couple image for your profile banner.\nSubmitted by Pan#0280.",
+        "price": "50000",
+        "price_type": "currency"
+    },
+    {
+        "code": "acbi",
+        "name": "Anime City",
+        "type": "background",
+        "background_image": "pan0280_background_4",
+        "description": "An anime city image for your profile banner.\nSubmitted by Pan#0280.",
+        "price": "50000",
+        "price_type": "currency"
+    },
+    {
+        "code": "asbi",
+        "name": "Anime Shop",
+        "type": "background",
+        "background_image": "pan0280_background_5",
+        "description": "An anime shop image for your profile banner.\nSubmitted by Pan#0280.",
+        "price": "50000",
+        "price_type": "currency"
+    },
+    {
+        "code": "skbi",
+        "name": "Anime Sakura",
+        "type": "background",
+        "background_image": "pan0280_background_6",
+        "description": "An anime sakura image for your profile banner.\nSubmitted by Pan#0280.",
+        "price": "50000",
+        "price_type": "currency"
+    },
+    {
+        "code": "bbbi",
+        "name": "Barbara",
+        "type": "background",
+        "background_image": "pan0280_background_7",
+        "description": "Barbara (Genshin Impact)'s image for your profile banner.\nSubmitted by Pan#0280.",
+        "price": "50000",
+        "price_type": "currency"
+    }
+]

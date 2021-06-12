@@ -2,6 +2,9 @@
 
 # Uyn BOT Changelogs
 
+### June 12, 2021
+* Added the BOT's shop, inventory and profile banner changing system.
+
 ### June 11, 2021
 * Added the profile command.
 

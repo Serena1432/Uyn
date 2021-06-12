@@ -19,7 +19,7 @@ You can use the `u!help (command)` command to get information about a specific c
 account, avatar, developer, owner, profile, setbio, settheme
 
 ### 💰 Economy:
-addrole, balance, cash, daily, gbuy, give, gshop, hourly, money, monthly, weekly
+addrole, balance, buy, cash, daily, gbuy, gdelete, give, gshop, hourly, inv, inventory, money, monthly, preview, shop, use, weekly
 
 ### 😊 Just for fun:
 arrest, cert, coffindance, covid19, gay, img, les, number, poll, quote, reverse, roll, say, trap, trash
