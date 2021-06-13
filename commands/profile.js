@@ -23,7 +23,7 @@ async function prof(client, message, args, user) {
     ctx.drawImage(background, 0, 0, 854, 160);
     const avatar = await Canvas.loadImage(user.avatarURL({format: "png", size: 128}));
     ctx.drawImage(avatar, 82, 103, 136, 136);
-    var font = "SF Pro Text";
+    var font = "Baloo 2";
     ctx.font = "bold 32px " + font;
     if (theme == "dark") ctx.fillStyle = '#ffffff';
     else ctx.fillStyle = '#000000';
