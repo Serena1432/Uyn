@@ -2,23 +2,35 @@ const Discord = require("discord.js");
 const fs = require('fs');
 const request = require("request");
 const {encrypt, decrypt} = require("../utils/crypto.js");
-var captcha = require("nodejs-captcha");
+const svgCaptcha = require("svg-captcha");
+const {svg2png} = require("svg-png-converter");
 
 function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function weekly(client, message, args) {
+async function weekly(client, message, args) {
     if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
         try {
             if (!client.economyManager[message.author.id].weeklyCountdown || client.economyManager[message.author.id].weeklyCountdown < (new Date()).getTime()) {
+                if (args[0] == "refresh") client.captchas.weekly[message.author.id] = undefined;
                 if (!client.captchas.weekly[message.author.id]) {
-                    var newCaptcha = captcha();
-                    client.captchas.weekly[message.author.id] = newCaptcha.value;
-                    var base64Image = newCaptcha.image;
-                    console.log("data:image/png;base64," + base64Image);
-                    return message.channel.send("Please type the command `weekly (captcha code)` to claim the reward:", {files: [
-                        {attachment: new Buffer.from(base64Image.split(",")[1], "base64"), name: "captcha.png"}
+                    var captcha = svgCaptcha.create({
+                        size: 6,
+                        noise: 5,
+                        color: true,
+                        background: "#404040",
+                        width: 200,
+                        height: 67
+                    });
+                    client.captchas.weekly[message.author.id] = captcha.text;
+                    var data = await svg2png({ 
+                        input: captcha.data, 
+                        encoding: 'buffer', 
+                        format: 'png'
+                    });
+                    return message.channel.send("Please type the command `weekly (captcha code)` to claim the reward:\nUse the `weekly refresh` command to generate a new captcha code.", {files: [
+                        {attachment: data, name: "captcha.png"}
                     ]});
                 }
                 else if (!args[0]) return message.reply("Please enter the captcha code!");

@@ -13,7 +13,8 @@
     "dotenv": "8.2.0",
     "express": "4.16.2",
     "ms": "^2.1.2",
-    "nodejs-captcha": "0.0.6",
-    "request": "2.88.2"
+    "request": "2.88.2",
+    "svg-captcha": "^1.4.0",
+    "svg-png-converter": "0.0.9"
   }
 }
