@@ -9,5 +9,5 @@ module.exports.config = {
     accessableby: "Members",
     aliases: [],
     category: "💰 Economy",
-    dmAvailable: false
+    dmAvailable: true
 }
