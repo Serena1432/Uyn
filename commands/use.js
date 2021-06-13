@@ -39,7 +39,11 @@ function use(client, message, args) {
                     data: JSON.stringify(client.economyManager[message.author.id])
                 }}, function(error, response, body) {
                     if (!error && response.statusCode == 200 && body.includes("Success")) {
-                        return message.reply("Successfully changed your profile banner image into **" + item.name + "**.\nUse the command `use bgdf` to change your profile banner image into the default one.");
+                        const embed = {
+                            color: Math.floor(Math.random() * 16777215),
+                            description: "**Disclaimer:** Neither the developer nor the submitter is the real creator of these banner images. All of the rights belong to their respective creators or owners."
+                        };
+                        return message.reply("Successfully changed your profile banner image into **" + item.name + "**.\nUse the command `use bgdf` to change your profile banner image into the default one.", {embed: embed});
                     }
                     else {
                         client.economyManager[message.author.id].background = formerBackground;

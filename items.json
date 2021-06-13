@@ -61,5 +61,59 @@
         "description": "Barbara (Genshin Impact)'s image for your profile banner.\nSubmitted by Pan#0280.",
         "price": "50000",
         "price_type": "currency"
+    },
+    {
+        "code": "cbbi",
+        "name": "Anime Cherry Blossom",
+        "type": "background",
+        "background_image": "pan0280_background_8",
+        "description": "An anime cherry blossom image for your profile banner.\nSubmitted by Pan#0280.",
+        "price": "50000",
+        "price_type": "currency"
+    },
+    {
+        "code": "acbi2",
+        "name": "Anime City 2",
+        "type": "background",
+        "background_image": "pan0280_background_9",
+        "description": "The second anime city image for your profile banner.\nSubmitted by Pan#0280.",
+        "price": "50000",
+        "price_type": "currency"
+    },
+    {
+        "code": "assbi",
+        "name": "Anime Sunset",
+        "type": "background",
+        "background_image": "pan0280_background_10",
+        "description": "An anime sunset image for your profile banner.\nSubmitted by Pan#0280.",
+        "price": "50000",
+        "price_type": "currency"
+    },
+    {
+        "code": "assbi2",
+        "name": "Anime Sunset 2",
+        "type": "background",
+        "background_image": "pan0280_background_11",
+        "description": "The second anime sunset image for your profile banner.\nSubmitted by Pan#0280.",
+        "price": "50000",
+        "price_type": "currency"
+    },
+    {
+        "code": "albi",
+        "name": "Anime Clouds",
+        "type": "background",
+        "background_image": "pan0280_background_12",
+        "description": "An anime clouds image for your profile banner.\nSubmitted by Pan#0280.",
+        "price": "50000",
+        "price_type": "currency"
+    },
+    {
+        "code": "awbi",
+        "name": "Anime Waterfall",
+        "type": "background",
+        "background_image": "pan0280_background_13",
+        "description": "An anime waterfall image for your profile banner.\nSubmitted by Pan#0280.",
+        "price": "50000",
+        "price_type": "currency"
     }
 ]

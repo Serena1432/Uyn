@@ -3,6 +3,12 @@
 # Uyn BOT Changelogs
 
 ### June 12, 2021
+* Added some profile banner images.
+* Changed the profile main font.
+* Changed the captcha system in the reward-claiming commands
+* Added the RAM and CPU Usage in the `stats` command.
+
+### June 12, 2021
 * Added the BOT's shop, inventory and profile banner changing system.
 
 ### June 11, 2021
