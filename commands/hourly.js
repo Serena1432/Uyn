@@ -13,7 +13,7 @@ async function hourly(client, message, args) {
         if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
         try {
             if (!client.economyManager[message.author.id].hourlyCountdown || client.economyManager[message.author.id].hourlyCountdown < (new Date()).getTime()) {
-                if (args[0] == "refresh") client.captchas.weekly[message.author.id] = undefined;
+                if (args[0] == "refresh") client.captchas.hourly[message.author.id] = undefined;
                 if (!client.captchas.hourly[message.author.id]) {
                     var captcha = svgCaptcha.create({
                         size: 6,
