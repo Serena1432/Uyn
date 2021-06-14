@@ -17,9 +17,9 @@ async function daily(client, message, args) {
                 if (!client.captchas.daily[message.author.id]) {
                     var captcha = svgCaptcha.create({
                         size: 6,
-                        noise: 5,
+                        noise: 2,
                         color: true,
-                        background: "#404040",
+                        background: "#f0f0f0",
                         width: 200,
                         height: 67
                     });
