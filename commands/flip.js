@@ -47,8 +47,27 @@ function flip(client, message, args) {
                         if (!error && response.statusCode == 200 && body.includes("Success")) {
                             var resultText = "heads";
                             if (hotRand == 2) resultText = "tails";
-                            if (hotRand == hot) msg.edit("**" + message.author.username + "** choose **" + emojiText + " " + args[0] + "** for **🪙 " + args[1] + " Uyncoins**...\nand get **" + args[0] + "**\n**" + message.author.username + "** won **🪙 " + args[1] + " Uyncoins**!");
-                            else msg.edit("**" + message.author.username + "** choose **" + emojiText + " " + args[0] + "** for **🪙 " + args[1] + " Uyncoins**...\nand get **" + resultText + "** instead...\n**" + message.author.username + "** lost **🪙 " + args[1] + " Uyncoins**...");
+                            const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                            let result = "";
+                            for (let i = 0; i < 32; i++) {
+                                result += characters.charAt(Math.floor(Math.random() * characters.length));
+                            }
+                            if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                                .setColor(Math.floor(Math.random() * 16777215))
+                                .setAuthor(message.author.username + " has just " + ((hotRand == hot) ? "won" : "lost") + " " + args[1] + " " + client.config.currency + " because of the flip command.", message.author.avatarURL({size: 128}))
+                                .setTimestamp()
+                            );
+                            else console.log("Cannot get the log channel.");
+                            if (hotRand == hot) msg.edit("**" + message.author.username + "** choose **" + emojiText + " " + args[0] + "** for **🪙 " + args[1] + " Uyncoins**...\nand get **" + args[0] + "**\n**" + message.author.username + "** won **🪙 " + args[1] + " Uyncoins**!", new Discord.MessageEmbed()
+                                .setColor(Math.floor(Math.random() * 16777215))
+                                .setDescription("The Transaction ID is " + result + ".\nYou should remember this ID and send it to the BOT developer if something wrong happened.")
+                                .setTimestamp()
+                            );
+                            else msg.edit("**" + message.author.username + "** choose **" + emojiText + " " + args[0] + "** for **🪙 " + args[1] + " Uyncoins**...\nand get **" + resultText + "** instead...\n**" + message.author.username + "** lost **🪙 " + args[1] + " Uyncoins**...", new Discord.MessageEmbed()
+                                .setColor(Math.floor(Math.random() * 16777215))
+                                .setDescription("The Transaction ID is " + result + ".\nYou should remember this ID and send it to the BOT developer if something wrong happened.")
+                                .setTimestamp()
+                            );
                         } else {
                             coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                             if (hotRand == hot) coins -= parseInt(args[1]);

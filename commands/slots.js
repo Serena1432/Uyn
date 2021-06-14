@@ -34,18 +34,20 @@ function slots(client, message, args) {
                             slots3 = slots[slotsi3];
                             msg.edit(slots1 + "|" + slots2 + "|" + slots3 + "| **" + message.author.username + "** bets **" + args[0] + " " + client.config.currency + "**...");
                             var resultText = "",
-                                coinValue;
+                                coinValue, res = 1;
                             var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                             if (slotsi1 == 5 && slotsi2 == 5 && slotsi3 == 5) {
-                                coins += parseInt(args[0]) * 10;
+                                coinValue = parseInt(args[0]) * 10;
                                 resultText = "and won **" + coinValue + " " + client.config.currency + "**!";
                             } else if (slotsi1 == slotsi2 && slotsi2 == slotsi3) {
-                                coins += parseInt(args[0]) * random(1, 7);
+                                coinValue = parseInt(args[0]) * random(1, 7);
                                 resultText = "and won **" + coinValue + " " + client.config.currency + "**!";
                             } else {
-                                coins -= parseInt(args[0]);
+                                coinValue = 0 - parseInt(args[0]);
                                 resultText = "and lost it all...";
+                                res = 0;
                             }
+                            coins += coinValue;
                             client.economyManager[message.author.id].coins = encrypt(coins.toString());
                             request.post({
                                 url: process.env.php_server_url + "/EconomyManager.php",
@@ -57,7 +59,22 @@ function slots(client, message, args) {
                                 }
                             }, function(error, response, body) {
                                 if (!error && response.statusCode == 200 && body.includes("Success")) {
-                                    msg.edit(slots1 + "|" + slots2 + "|" + slots3 + "| **" + message.author.username + "** bets **" + args[0] + "" + client.config.currency + "**...\n" + resultText);
+                                    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                                    let result = "";
+                                    for (let i = 0; i < 32; i++) {
+                                        result += characters.charAt(Math.floor(Math.random() * characters.length));
+                                    }
+                                    if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                                        .setColor(Math.floor(Math.random() * 16777215))
+                                        .setAuthor(message.author.username + " has just " + ((res == 1) ? "won" : "lost") + " " + Math.abs(coinValue) + " " + client.config.currency + " because of the flip command.", message.author.avatarURL({size: 128}))
+                                        .setTimestamp()
+                                    );
+                                    else console.log("Cannot get the log channel.");
+                                    msg.edit(slots1 + "|" + slots2 + "|" + slots3 + "| **" + message.author.username + "** bets **" + args[0] + "" + client.config.currency + "**...\n" + resultText, new Discord.MessageEmbed()
+                                        .setColor(Math.floor(Math.random() * 16777215))
+                                        .setDescription("The Transaction ID is " + result + ".\nYou should remember this ID and send it to the BOT developer if something wrong happened.")
+                                        .setTimestamp()
+                                    );
                                 } else {
                                     coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                                     if (slotsi1 == 5 && slotsi2 == 5 && slotsi3 == 5) {
