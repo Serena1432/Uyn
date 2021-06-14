@@ -66,7 +66,7 @@ function slots(client, message, args) {
                                     }
                                     if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
                                         .setColor(Math.floor(Math.random() * 16777215))
-                                        .setAuthor(message.author.username + " has just " + ((res == 1) ? "won" : "lost") + " " + Math.abs(coinValue) + " " + client.config.currency + " because of the flip command.", message.author.avatarURL({size: 128}))
+                                        .setAuthor(message.author.username + " has just " + ((res == 1) ? "won" : "lost") + " " + Math.abs(coinValue) + " " + client.config.currency + " because of the slots command.", message.author.avatarURL({size: 128}))
                                         .setTimestamp()
                                     );
                                     else console.log("Cannot get the log channel.");
