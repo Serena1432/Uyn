@@ -19,7 +19,7 @@ async function hourly(client, message, args) {
                         size: 6,
                         noise: 2,
                         color: true,
-                        background: "#f0f0f0",
+                        background: "#9e9d9d",
                         width: 200,
                         height: 67
                     });
