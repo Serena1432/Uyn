@@ -77,13 +77,7 @@ function slots(client, message, args) {
                                     );
                                 } else {
                                     coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
-                                    if (slotsi1 == 5 && slotsi2 == 5 && slotsi3 == 5) {
-                                        coins -= parseInt(args[0]) * 10;
-                                    } else if (slotsi1 == slotsi2 && slotsi2 == slotsi3) {
-                                        coins -= parseInt(args[0]) * random(1, 7);
-                                    } else {
-                                        coins += parseInt(args[0]);
-                                    }
+                                    coins -= coinValue;
                                     client.economyManager[message.author.id].coins = encrypt(coins.toString());
                                     console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
                                     return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
