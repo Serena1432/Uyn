@@ -30,13 +30,24 @@ function gbuy(client, message, args) {
                         }}, function(error, response, body) {
                             if (!error && response.statusCode == 200 && body.includes("Success")) {
                                 message.member.roles.add(role, "Bought the role from the server shop").then(r => {
+                                    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                                    let result = "";
+                                    for (let i = 0; i < 32; i++) {
+                                        result += characters.charAt(Math.floor(Math.random() * characters.length));
+                                    }
+                                    if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                                        .setColor(Math.floor(Math.random() * 16777215))
+                                        .setAuthor(message.author.username + " has just bought \"" + role.name + "\" role for " + client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].price + " " + client.config.currency + " from the \"" + message.guild.name + "\" server shop.", message.author.avatarURL({size: 128}))
+                                        .setTimestamp()
+                                    );
+                                    else console.log("Cannot get the log channel.");
                                     const embed = {
                                         color: role.hexColor,
                                         author: {
                                             name: "Succesfully bought the " + role.name + " role.",
                                             icon_url: message.guild.iconURL({size: 128})
                                         },
-                                        description: "**Description:**\n" + client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].description,
+                                        description: "**Description:**\n" + client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].description + "\n**Transaction ID:**\n" + result + "\nYou should remember this ID and send this to the BOT developer if something wrong happened.",
                                         timestamp: new Date()
                                     };
                                     message.channel.send({

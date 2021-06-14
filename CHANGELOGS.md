@@ -2,7 +2,10 @@
 
 # Uyn BOT Changelogs
 
-### June 12, 2021
+### June 14, 2021
+* Added the buying logs and transaction ID to message and some buying commands.
+
+### June 13, 2021
 * Added some profile banner images.
 * Changed the profile main font.
 * Changed the captcha system in the reward-claiming commands

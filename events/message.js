@@ -29,7 +29,17 @@ module.exports = async (client, message) => {
                     data: JSON.stringify(client.economyManager[message.author.id])
                 }}, function(error, response, body) {
                     if (!error && response.statusCode == 200 && body.includes("Success")) {
-                      console.log("Succesfully updated " + message.author.tag + "'s coins into " + coins.toString() + ".");
+                        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                        let result = "";
+                        for (let i = 0; i < 32; i++) {
+                            result += characters.charAt(Math.floor(Math.random() * characters.length));
+                        }
+                        if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**ID:** " + result, new Discord.MessageEmbed()
+                            .setColor(Math.floor(Math.random() * 16777215))
+                            .setAuthor(message.author.username + " has just rewarded 5 " + client.config.currency + " and 1 Message Point because of chatting.", message.author.avatarURL({size: 128}))
+                            .setTimestamp()
+                        );
+                        else console.log("Cannot get the log channel.");
                     }
                     else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
                 });

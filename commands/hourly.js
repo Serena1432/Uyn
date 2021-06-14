@@ -48,8 +48,22 @@ async function hourly(client, message, args) {
                     data: JSON.stringify(client.economyManager[message.author.id])
                 }}, function(error, response, body) {
                     if (!error && response.statusCode == 200 && body.includes("Success")) {
-                        console.log(message.author.tag + " has just been rewarded " + hourlyCoins.toString() + " Uyncoins!");
-                        message.channel.send("Here is your hourly reward: **" + hourlyCoins.toString() + " " + client.config.currency + "**!");
+                        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                        let result = "";
+                        for (let i = 0; i < 32; i++) {
+                            result += characters.charAt(Math.floor(Math.random() * characters.length));
+                        }
+                        if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                            .setColor(Math.floor(Math.random() * 16777215))
+                            .setAuthor(message.author.username + " has just rewarded " + hourlyCoins + " " + client.config.currency + ".", message.author.avatarURL({size: 128}))
+                            .setTimestamp()
+                        );
+                        else console.log("Cannot get the log channel.");
+                        message.channel.send("Here is your hourly reward: **" + hourlyCoins.toString() + " " + client.config.currency + "**!", new Discord.MessageEmbed()
+                            .setColor(Math.floor(Math.random() * 16777215))
+                            .setDescription("The Transaction ID is " + result + ".\nYou should remember this ID and send it to the BOT developer if something wrong happened.")
+                            .setTimestamp()
+                        );
                     }
                     else {
                         client.economyManager[message.author.id].hourlyCountdown = undefined;
