@@ -53,6 +53,19 @@ function gbuy(client, message, args) {
                                     message.channel.send({
                                         embed: embed
                                     });
+                                }).catch(err => {
+                                    console.log(err);
+                                    coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
+                                    coins += parseInt(client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].price);
+                                    client.economyManager[message.author.id].coins = encrypt(coins.toString());
+                                    request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
+                                        type: "update",
+                                        token: process.env.php_server_token,
+                                        id: message.author.id,
+                                        data: JSON.stringify(client.economyManager[message.author.id])
+                                    }}, function(error, response, body) {
+                                        message.reply("An error has occurred while buying the role! Please try again!");
+                                    });
                                 });
                             }
                             else {
