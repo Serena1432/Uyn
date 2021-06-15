@@ -115,5 +115,23 @@
         "description": "An anime waterfall image for your profile banner.\nSubmitted by Pan#0280.",
         "price": "50000",
         "price_type": "currency"
+    },
+    {
+        "code": "abbi",
+        "name": "Anime Bridge",
+        "type": "background",
+        "background_image": "6886_background_1",
+        "description": "An anime bridge image for your profile banner.\nSubmitted by ||(っ´▽`)っ||#6886.",
+        "price": "1000",
+        "price_type": "message_points"
+    },
+    {
+        "code": "abbi2",
+        "name": "Anime Bridge 2",
+        "type": "background",
+        "background_image": "chika1649_background_1",
+        "description": "The second anime bridge image for your profile banner.\nSubmitted by ʕっ•ᴥ•ʔっ#1649.",
+        "price": "1000",
+        "price_type": "message_points"
     }
 ]
