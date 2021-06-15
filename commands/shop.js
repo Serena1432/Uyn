@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args) => {
         if (items.length == 0) return message.reply("There aren't any items in the BOT's shop!");
         var n = 0;
         if (args[0]) n = parseInt(args[0]) - 1;
-        var descText = "`\n-------------------------------------------------------------\n| Code   | Item name                     | Price            |\n-------------------------------------------------------------";
+        var descText = "`-------------------------------------------------------------\n| Code   | Item name                     | Price            |\n-------------------------------------------------------------";
         if (n * 10 > items.length - 1) return message.reply("There aren't any more items in the BOT's shop!");
         for (var i = n * 10; i < n * 10 + 10; i++) {
             if (items[i]) {
