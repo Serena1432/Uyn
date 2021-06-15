@@ -2,6 +2,9 @@
 
 # Uyn BOT Changelogs
 
+### June 15, 2021
+* Minimized the `shop`, `inventory` and `gshop` commands.
+
 ### June 14, 2021
 * Added the buying logs and transaction ID to message and some buying commands.
 

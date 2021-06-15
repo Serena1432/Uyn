@@ -17,24 +17,34 @@ function inventory(client, message, args) {
         if (client.economyManager[message.author.id].inventory.length == 0) return message.reply("You don't have anything in the inventory!");
         var n = 0;
         if (args[0]) n = parseInt(args[0]) - 1;
-        var descText = "";
-        if (n * 3 > client.economyManager[message.author.id].inventory.length - 1) return message.reply("There aren't any more items in you inventory!");
-        for (var i = n * 3; i < n * 3 + 3; i++) {
+        var descText = "`\n------------------------------------------\n| Code   | Item name                     |\n------------------------------------------";
+        if (n * 10 > client.economyManager[message.author.id].inventory.length - 1) return message.reply("There aren't any more items in you inventory!");
+        for (var i = n * 10; i < n * 10 + 10; i++) {
             if (client.economyManager[message.author.id].inventory[i]) {
-                for (var j = 0; j < items.length; j++) {
-                    if (items[j].code == client.economyManager[message.author.id].inventory[i]) {
-                        var item = items[j];
-                        switch (item.type) {
-                            case "background": {
-                                descText += "**`" + item.code + "` \"" + item.name + "\" banner image**\n**Description:**\n" + item.description + "\n\nUse the `preview " + item.code + "` command to preview this banner image.\nUse the `use " + item.code + "` command to buy this item.\n\n";;
-                                break;
-                            }
-                        }
-                    }
-                }
+				for (var j = 0; j < items.length; j++) {
+					if (items[j].code == client.economyManager[message.author.id].inventory[i]) {
+						var item = items[j];
+						switch (item.type) {
+							case "background": {
+								var name = "\"" + item.name + "\" Banner Image";
+								descText += "\n| " + item.code;
+								for (var k = 0; k < 6 - item.code.length; k++) descText += " ";
+								if (name.length <= 29) {
+									descText += " | " + name;
+									for (var k = 0; k < 29 - name.length; k++) descText += " ";
+								}
+								else descText += " | " + name.substr(0, 26) + "...";
+								descText += " |";
+								break;
+							}
+						}
+						descText += "\n------------------------------------------";
+					}
+				}
             } else break;
         }
-        if ((n + 1) * 3 <= client.economyManager[message.author.id].inventory.length - 1) descText += "Use the `inventory " + (n + 2) + "` command to get to the next page.";
+        descText += "`\nUse the `preview <code>` command to preview a banner image.\nUse the `use <code>` command to use an item.\n";
+        if ((n + 1) * 10 <= client.economyManager[message.author.id].inventory.length - 1) descText += "Use the `inventory " + (n + 2) + "` command to get to the next page.";
         const embed = {
             color: Math.floor(Math.random() * 16777214) + 1,
             author: {

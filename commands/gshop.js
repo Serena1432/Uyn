@@ -14,18 +14,33 @@ module.exports.run = async (client, message, args) => {
                 if (!client.economyManager[message.guild.id] || client.economyManager[message.guild.id].roles.length == 0) return message.reply("Your server doesn't have anything in the shop!");
                 var n = 0;
                 if (args[0]) n = parseInt(args[0]) - 1;
-                var descText = "";
-                if (n * 3 > client.economyManager[message.guild.id].roles.length - 1) return message.reply("There aren't any more items in the server shop!");
-                for (var i = n * 3; i < n * 3 + 3; i++) {
+                var descText = "`-------------------------------------------------------------\n| ID     | Item name                     | Price            |\n-------------------------------------------------------------";
+                if (n * 10 > client.economyManager[message.guild.id].roles.length - 1) return message.reply("There aren't any more items in the server shop!");
+                for (var i = n * 10; i < n * 10 + 10; i++) {
                     if (client.economyManager[message.guild.id].roles[i]) {
                         var role = message.guild.roles.cache.get(client.economyManager[message.guild.id].roles[i].id);
                         if (role) {
-                            descText += "**" + (i + 1) + ". \"" + role.name + "\" role**\n**Description:**\n" + client.economyManager[message.guild.id].roles[i].description + "\n**Price:** " + client.economyManager[message.guild.id].roles[i].price.toString() + " " + client.config.currency + "\nUse the `gbuy " + (i + 1) + "` command to buy this item.\n\n";
+                            var name = "\"" + role.name + "\" role";
+                            descText += "\n| " + (i + 1);
+                            for (var j = 0; j < 6 - (i+1).toString().length; j++) descText += " ";
+                            if (name.length <= 29) {
+                                descText += " | " + name;
+                                for (var j = 0; j < 29 - name.length; j++) descText += " ";
+                            }
+                            else descText += " | " + name.substr(0, 26) + "...";
+                            var price = client.economyManager[message.guild.id].roles[i].price + client.config.currency;
+                            if (price.length <= 16) {
+                                descText += " | " + price;
+                                for (var j = 0; j < 16 - price.length; j++) descText += " ";
+                            }
+                            else descText += " | " + price.substr(0, 13) + "...";
+                            descText += " |\n-------------------------------------------------------------";
                         }
                     }
                     else break;
                 }
-                if ((n + 1) * 3 <= client.economyManager[message.guild.id].roles.length - 1) descText += "Use the `gshop " + (n + 2) + "` command to get to the next page.";
+                descText += "`\n\nUse the `gbuy <id>` command to buy an item.";
+                if ((n + 1) * 10 <= client.economyManager[message.guild.id].roles.length - 1) descText += "\nUse the `gshop " + (n + 2) + "` command to get to the next page.";
                 const embed = {
                     color: Math.floor(Math.random() * 16777214) + 1,
                     author: {
