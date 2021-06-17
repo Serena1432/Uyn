@@ -1,6 +1,7 @@
 const express = require("express");
 const request = require("request");
 const app = express();
+const fs = require("fs");
 
 function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -13,6 +14,15 @@ module.exports = (client) => {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.send("true");
+    });
+    app.get("/:page", (req, res) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        if (fs.existsSync("./web/" + req.params.page + ".js")) {
+            const page = require("../web/" + req.params.page + ".js");
+            page.run(client, req, res);
+        }
+        else res.send("UynWebPageError: This page command does not exist: " + req.params.page)
     });
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));

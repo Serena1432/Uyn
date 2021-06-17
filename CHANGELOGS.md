@@ -2,6 +2,9 @@
 
 # Uyn BOT Changelogs
 
+### June 18, 2021
+* Added a BOT API for the BOT website.
+
 ### June 15, 2021
 * Minimized the `shop`, `inventory` and `gshop` commands.
 
