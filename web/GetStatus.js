@@ -1,7 +1,7 @@
 const request = require("request");
 const reqTime = new Date();
 
-module.exports.run = function(client, req, res) {
+module.exports.get = function(client, req, res) {
     let totalSeconds = (client.uptime / 1000);
     let days = Math.floor(totalSeconds / 86400);
     let hours = Math.floor(totalSeconds / 3600);

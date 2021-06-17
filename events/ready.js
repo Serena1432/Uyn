@@ -10,6 +10,8 @@ module.exports = (client) => {
     const server = app.listen(process.env.PORT || 3000, () => {
         console.log(`Express running → PORT ${server.address().port}`);
     });
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
     app.get("/", (req, res) => {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -20,12 +22,21 @@ module.exports = (client) => {
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         if (fs.existsSync("./web/" + req.params.page + ".js")) {
             const page = require("../web/" + req.params.page + ".js");
-            page.run(client, req, res);
+            if (!page.get) return res.status(405).send(JSON.stringify({code: 405, error: "405: Method Not Allowed"}));
+            page.get(client, req, res);
         }
         else res.send("UynWebPageError: This page command does not exist: " + req.params.page)
     });
-    app.use(express.json());
-    app.use(express.urlencoded({ extended: true }));
+    app.post("/:page", (req, res) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        if (fs.existsSync("./web/" + req.params.page + ".js")) {
+            const page = require("../web/" + req.params.page + ".js");
+            if (!page.post) return res.status(405).send(JSON.stringify({code: 405, error: "405: Method Not Allowed"}));
+            page.post(client, req, res);
+        }
+        else res.send("UynWebPageError: This page command does not exist: " + req.params.page)
+    });
     app.post('/VoteReceiver', (req, res) => {
         if (process.env.dbl_vote_authorization) {
             if (req.headers.authorization != process.env.dbl_vote_authorization) return res.status(401).send("Invalid authorization token");
