@@ -20,6 +20,7 @@ module.exports = (client) => {
     app.get("/:page", (req, res) => {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        res.header("Content-Type", "application/json");
         if (fs.existsSync("./web/" + req.params.page + ".js")) {
             const page = require("../web/" + req.params.page + ".js");
             if (!page.get) return res.status(405).send(JSON.stringify({code: 405, error: "405: Method Not Allowed"}));
@@ -30,6 +31,7 @@ module.exports = (client) => {
     app.post("/:page", (req, res) => {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        res.header("Content-Type", "application/json");
         if (fs.existsSync("./web/" + req.params.page + ".js")) {
             const page = require("../web/" + req.params.page + ".js");
             if (!page.post) return res.status(405).send(JSON.stringify({code: 405, error: "405: Method Not Allowed"}));

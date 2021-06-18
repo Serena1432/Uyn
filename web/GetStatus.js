@@ -2,7 +2,6 @@ const request = require("request");
 
 module.exports.get = function(client, req, res) {
     try {
-        res.header("Content-Type", "application/json");
         var reqTime = new Date();
         let totalSeconds = (client.uptime / 1000);
         let days = Math.floor(totalSeconds / 86400);
