@@ -47,7 +47,7 @@ module.exports = (client) => {
             user.send("Thank you for voting me " + user.username + "!\n(Note: This Vote Message feature is still in development; maybe a Voting Reward will coming soon if this BOT is completely developed)");
             res.send("Success!");
         }
-        else res.status(401).send("ERROR: Cannot find the 'dbl_vote_authorization' environment variable; please add it and try again");
+        else res.status(400).send("ERROR: Cannot find the 'dbl_vote_authorization' environment variable; please add it and try again");
     })
     console.log(`Ready as ${client.user.tag} to server in ${client.channels.cache.size} channels on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users.`);
     client.users.fetch(client.config.ownerId[0]).then((user) => {
