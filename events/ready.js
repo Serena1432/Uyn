@@ -25,7 +25,7 @@ module.exports = (client) => {
             if (!page.get) return res.status(405).send(JSON.stringify({code: 405, error: "405: Method Not Allowed"}));
             page.get(client, req, res);
         }
-        else res.send("UynWebPageError: This page command does not exist: " + req.params.page)
+        else res.status(400).send(JSON.stringify({code: 400, error_type: "UynWebPageError", error: "This page command doesn't exist: " + req.params.page}));
     });
     app.post("/:page", (req, res) => {
         res.header("Access-Control-Allow-Origin", "*");
@@ -35,7 +35,7 @@ module.exports = (client) => {
             if (!page.post) return res.status(405).send(JSON.stringify({code: 405, error: "405: Method Not Allowed"}));
             page.post(client, req, res);
         }
-        else res.send("UynWebPageError: This page command does not exist: " + req.params.page)
+        else res.status(400).send(JSON.stringify({code: 400, error_type: "UynWebPageError", error: "This page command doesn't exist: " + req.params.page}));
     });
     app.post('/VoteReceiver', (req, res) => {
         if (process.env.dbl_vote_authorization) {
