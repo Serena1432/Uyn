@@ -30,6 +30,8 @@ module.exports = (client) => {
     });
     app.post("/:page", (req, res) => {
         res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET, POST");
+        res.header("Access-Control-Allow-Headers", "Authorization, Content-Type");
         res.header("Content-Type", "application/json");
         if (fs.existsSync("./web/" + req.params.page + ".js")) {
             const page = require("../web/" + req.params.page + ".js");
