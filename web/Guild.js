@@ -34,6 +34,15 @@ module.exports.get = async function(client, req, res) {
         if (!guild) return res.status(404).send(JSON.stringify({code: 404, error: "Cannot get the Guild object. Maybe you entered an invalid Guild ID or the BOT hasn't joined this guild yet."}));
         var member = guild.member(id);
         if (!member) return res.status(404).send(JSON.stringify({code: 404, error: "Cannot get the member information. Are you trying to view information of a guild that you haven't joined?"}));
+		if (client.economyManager[guild.id].roles) {
+			for (var i = 0; i < client.economyManager[guild.id].roles.length; i++) {
+				var role = message.guild.roles.cache.find(client.economyManager[guild.id].roles[i].id);
+				if (role) {
+					client.economyManager[guild.id].roles[i].color = role.hexColor;
+					client.economyManager[guild.id].roles[i].name = role.name;
+				}
+			}
+		}
         res.send(JSON.stringify({
             id: guild.id,
             name: guild.name,
@@ -45,6 +54,7 @@ module.exports.get = async function(client, req, res) {
                 tag: guild.owner.user.tag,
                 avatar_url: guild.owner.user.avatarURL({size: 2048, format: "png", dynamic: true}),
             },
+            member_count: guild.memberCount,
             is_owner: (id == guild.owner.user.id) ? true : false,
             permissions: {
                 CREATE_INSTANT_INVITE: (member.hasPermission("CREATE_INSTANT_INVITE")) ? true : false,
