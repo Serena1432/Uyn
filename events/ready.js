@@ -39,6 +39,11 @@ module.exports = (client) => {
         }
         else res.status(400).send(JSON.stringify({code: 400, error_type: "UynWebPageError", error: "This page command doesn't exist: " + req.params.page}));
     });
+    app.options("/:page", (req, res) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        res.send("true");
+    });
     app.post('/VoteReceiver', (req, res) => {
         if (process.env.dbl_vote_authorization) {
             if (req.headers.authorization != process.env.dbl_vote_authorization) return res.status(401).send("Invalid authorization token");
