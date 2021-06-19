@@ -33,10 +33,18 @@ module.exports.get = async function(client, req, res) {
         if (client.economyManager[id]) {
             if (!client.economyManager[id].coins) return res.status(500).send(JSON.stringify({code: 500, error: "Cannot get the coins information."}));
             try {
-                var economy = client.economyManager[id];
-                economy.coins = parseInt(decrypt(client.economyManager[id].coins));
-                economy.message_points = parseInt(decrypt(client.economyManager[id].messagePoints));
-                economy.messagePoints = undefined;
+                var economy = {
+                    coins: parseInt(decrypt(client.economyManager[id].coins)),
+                    message_points: parseInt(decrypt(client.economyManager[id].messagePoints)),
+                    hourly_countdown: client.economyManager[id].hourlyCountdown,
+                    daily_countdown: client.economyManager[id].dailyCountdown,
+                    weekly_countdown: client.economyManager[id].weeklyCountdown,
+                    monthly_countdown: client.economyManager[id].monthlyCountdown,
+                    biography: client.economyManager[id].bio || "",
+                    theme: client.economyManager[id].theme || "dark",
+                    inventory: client.economyManager[id].inventory || [],
+                    background: client.economyManager[id].background || "background_default"
+                };
                 return res.send(economy);
             }
             catch (err) {
@@ -52,10 +60,18 @@ module.exports.get = async function(client, req, res) {
                         if (client.economyManager[id] != undefined) {
                             if (!client.economyManager[id].coins) return res.status(500).send(JSON.stringify({code: 500, error: "Cannot get the coins information."}));
                             try {
-                                var economy = client.economyManager[id];
-                                economy.coins = parseInt(decrypt(client.economyManager[id].coins));
-                                economy.message_points = parseInt(decrypt(client.economyManager[id].messagePoints));
-                                economy.messagePoints = undefined;
+                                var economy = {
+                                    coins: parseInt(decrypt(client.economyManager[id].coins)),
+                                    message_points: parseInt(decrypt(client.economyManager[id].messagePoints)),
+                                    hourly_countdown: client.economyManager[id].hourlyCountdown,
+                                    daily_countdown: client.economyManager[id].dailyCountdown,
+                                    weekly_countdown: client.economyManager[id].weeklyCountdown,
+                                    monthly_countdown: client.economyManager[id].monthlyCountdown,
+                                    biography: client.economyManager[id].bio || "",
+                                    theme: client.economyManager[id].theme || "dark",
+                                    inventory: client.economyManager[id].inventory || [],
+                                    background: client.economyManager[id].background || "background_default"
+                                };
                                 return res.send(economy);
                             }
                             catch (err) {
@@ -77,10 +93,18 @@ module.exports.get = async function(client, req, res) {
                                     if (!error && response.statusCode == 200 && body.includes("Success")) {
                                         if (!client.economyManager[id].coins) return res.status(500).send(JSON.stringify({code: 500, error: "Cannot get the coins information."}));
                                         try {
-                                            var economy = client.economyManager[id];
-                                            economy.coins = parseInt(decrypt(client.economyManager[id].coins));
-                                            economy.message_points = parseInt(decrypt(client.economyManager[id].messagePoints));
-                                            economy.messagePoints = undefined;
+                                            var economy = {
+                                                coins: parseInt(decrypt(client.economyManager[id].coins)),
+                                                message_points: parseInt(decrypt(client.economyManager[id].messagePoints)),
+                                                hourly_countdown: client.economyManager[id].hourlyCountdown,
+                                                daily_countdown: client.economyManager[id].dailyCountdown,
+                                                weekly_countdown: client.economyManager[id].weeklyCountdown,
+                                                monthly_countdown: client.economyManager[id].monthlyCountdown,
+                                                biography: client.economyManager[id].bio || "",
+                                                theme: client.economyManager[id].theme || "dark",
+                                                inventory: client.economyManager[id].inventory || [],
+                                                background: client.economyManager[id].background || "background_default"
+                                            };
                                             return res.send(economy);
                                         }
                                         catch (err) {
