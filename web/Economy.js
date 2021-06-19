@@ -34,8 +34,8 @@ module.exports.get = async function(client, req, res) {
             if (!client.economyManager[id].coins) return res.status(500).send(JSON.stringify({code: 500, error: "Cannot get the coins information."}));
             try {
                 var economy = client.economyManager[id];
-                economy.coins = parseInt(decrypt(economy.coins));
-                economy.message_points = parseInt(decrypt(economy.messagePoints));
+                economy.coins = parseInt(decrypt(client.economyManager[id].coins));
+                economy.message_points = parseInt(decrypt(client.economyManager[id].messagePoints));
                 economy.messagePoints = undefined;
                 return res.send(economy);
             }
