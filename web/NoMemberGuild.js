@@ -8,16 +8,7 @@ module.exports.get = async function(client, req, res) {
         res.send(JSON.stringify({
             id: guild.id,
             name: guild.name,
-            icon_url: guild.iconURL({size: 2048, format: "png", dynamic: true}),
-            owner: {
-                id: guild.owner.user.id,
-                name: guild.owner.user.username,
-                discriminator: guild.owner.user.discriminator,
-                tag: guild.owner.user.tag,
-                avatar_url: guild.owner.user.avatarURL({size: 2048, format: "png", dynamic: true}),
-            },
-            roles: (client.economyManager[req.query.id]) ? (client.economyManager[req.query.id].roles || []) : [],
-            prefix: (client.customPrefixes) ? (client.customPrefixes[req.query.id] || client.config.prefix) : client.config.prefix
+            icon_url: guild.iconURL({size: 2048, format: "png", dynamic: true})
         }));
     }
     catch (err) {
