@@ -36,7 +36,7 @@ module.exports.get = async function(client, req, res) {
         if (!member) return res.status(404).send(JSON.stringify({code: 404, error: "Cannot get the member information. Are you trying to view information of a guild that you haven't joined?"}));
 		if (client.economyManager[guild.id].roles) {
 			for (var i = 0; i < client.economyManager[guild.id].roles.length; i++) {
-				var role = message.guild.roles.cache.find(client.economyManager[guild.id].roles[i].id);
+				var role = guild.roles.cache.find(client.economyManager[guild.id].roles[i].id);
 				if (role) {
 					client.economyManager[guild.id].roles[i].color = role.hexColor;
 					client.economyManager[guild.id].roles[i].name = role.name;
