@@ -14,12 +14,12 @@ module.exports = (client) => {
     app.use(express.urlencoded({ extended: true }));
     app.get("/", (req, res) => {
         res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        res.header("Access-Control-Allow-Headers", "Authorization, Content-Type");
         res.send("true");
     });
     app.get("/:page", (req, res) => {
         res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        res.header("Access-Control-Allow-Headers", "Authorization, Content-Type");
         res.header("Content-Type", "application/json");
         if (fs.existsSync("./web/" + req.params.page + ".js")) {
             const page = require("../web/" + req.params.page + ".js");
@@ -30,8 +30,6 @@ module.exports = (client) => {
     });
     app.post("/:page", (req, res) => {
         res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Methods", "GET, POST");
-        res.header("Access-Control-Allow-Headers", "Authorization, Content-Type");
         res.header("Content-Type", "application/json");
         if (fs.existsSync("./web/" + req.params.page + ".js")) {
             const page = require("../web/" + req.params.page + ".js");
@@ -42,7 +40,8 @@ module.exports = (client) => {
     });
     app.options("/:page", (req, res) => {
         res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        res.header("Access-Control-Allow-Methods", "GET, POST");
+        res.header("Access-Control-Allow-Headers", "Authorization, Content-Type");
         res.send("true");
     });
     app.post('/VoteReceiver', (req, res) => {
