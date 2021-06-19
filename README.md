@@ -1,4 +1,4 @@
-![Uyn logo](https://i.imgur.com/1UHPT0e.png)
+![Uyn logo](https://i.imgur.com/ZUlHOwY.png)
 
 # [Invite this BOT](https://discord.com/oauth2/authorize?client_id=850900162930802729&scope=bot&permissions=271707254)
 

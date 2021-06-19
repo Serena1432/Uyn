@@ -34,7 +34,7 @@ module.exports.get = async function(client, req, res) {
         if (!guild) return res.status(404).send(JSON.stringify({code: 404, error: "Cannot get the Guild object. Maybe you entered an invalid Guild ID or the BOT hasn't joined this guild yet."}));
         var member = guild.member(id);
         if (!member) return res.status(404).send(JSON.stringify({code: 404, error: "Cannot get the member information. Are you trying to view information of a guild that you haven't joined?"}));
-		if (client.economyManager[guild.id].roles) {
+		if (client.economyManager[guild.id] && client.economyManager[guild.id].roles) {
 			for (var i = 0; i < client.economyManager[guild.id].roles.length; i++) {
 				var role = guild.roles.cache.get(client.economyManager[guild.id].roles[i].id);
 				if (role) {
