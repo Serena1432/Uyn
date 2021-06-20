@@ -17,8 +17,8 @@ function inventory(client, message, args) {
         if (client.economyManager[message.author.id].inventory.length == 0) return message.reply("You don't have anything in the inventory!");
         var n = 0;
         if (args[0]) n = parseInt(args[0]) - 1;
-        var descText = "`-----------------------------------------\n| Code   | Item name                     |\n------------------------------------------";
-        if (n * 10 > client.economyManager[message.author.id].inventory.length - 1) return message.reply("There aren't any more items in you inventory!");
+        var descText = "`------------------------------------------\n| Code   | Item name                     |\n------------------------------------------";
+        if (n * 10 > client.economyManager[message.author.id].inventory.length - 1) return message.reply("There aren't any more items in your inventory!");
         for (var i = n * 10; i < n * 10 + 10; i++) {
             if (client.economyManager[message.author.id].inventory[i]) {
 				for (var j = 0; j < items.length; j++) {
