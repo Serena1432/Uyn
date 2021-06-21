@@ -30,7 +30,7 @@ function waifu(client, message, args) {
                     for (var k = 0; k < 29 - name.length; k++) descText += " ";
                 }
                 else descText += " | " + name.substr(0, 26) + "...";
-                var level = waifu.level + " (" + waifu.exp + "/" + waifu.max_exp + ")";
+                var level = waifu.level + " (" + waifu.exp + "/" + parseInt(waifu.max_exp) + ")";
                 if (level.length <= 11) {
                     descText += " | " + level;
                     for (var k = 0; k < 11 - level.length; k++) descText += " ";

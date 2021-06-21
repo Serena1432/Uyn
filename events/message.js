@@ -22,6 +22,23 @@ module.exports = async (client, message) => {
                 var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                 coins += 5;
                 client.economyManager[message.author.id].coins = encrypt(coins.toString());
+                if (client.economyManager[message.author.id].waifus) {
+                    for (var i = 0; i < client.economyManager[message.author.id].waifus.length; i++) {
+                        var waifu = client.economyManager[message.author.id].waifus[i], exp = 5;
+                        while (exp > 0) {
+                            if (parseInt(waifu.max_exp) - waifu.exp > exp) {
+                                waifu.exp += exp;
+                                exp = 0;
+                            }
+                            else {
+                                exp -= parseInt(waifu.max_exp) - waifu.exp;
+                                waifu.level++;
+                                waifu.exp = 0;
+                                waifu.max_exp = parseInt(waifu.base_exp * (1 + 0.15 * (waifu.level - 1)));
+                            }
+                        }
+                    }
+                }
                 request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                     type: "update",
                     token: process.env.php_server_token,
