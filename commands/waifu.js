@@ -23,8 +23,8 @@ function waifu(client, message, args) {
             if (client.economyManager[message.author.id].waifus[i]) {
                 var waifu = client.economyManager[message.author.id].waifus[i];
                 var name = "[" + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "] " + waifu.name + " (" + waifu.anime + ")";
-                descText += "\n| " + (i + 1).toString();
-                for (var k = 0; k < 6 - (i + 1).toString().length; k++) descText += " ";
+                descText += "\n| " + waifu.id.toString();
+                for (var k = 0; k < 6 - waifu.id.toString().length; k++) descText += " ";
                 if (name.length <= 29) {
                     descText += " | " + name;
                     for (var k = 0; k < 29 - name.length; k++) descText += " ";
@@ -101,5 +101,5 @@ module.exports.config = {
     accessableby: "Members",
     aliases: [],
     category: "👧 Waifu/Husbando Collection",
-    dmAvailable: false
+    dmAvailable: true
 }

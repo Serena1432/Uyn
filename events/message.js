@@ -25,6 +25,10 @@ module.exports = async (client, message) => {
                 if (client.economyManager[message.author.id].waifus) {
                     for (var i = 0; i < client.economyManager[message.author.id].waifus.length; i++) {
                         var waifu = client.economyManager[message.author.id].waifus[i], exp = 5;
+                        if (!waifu.id) {
+                            if (client.economyManager[message.author.id].waifus.length > 1 && client.economyManager[message.author.id].waifus[i - 1].id) waifu.id = client.economyManager[message.author.id].waifus[i - 1].id + 1;
+                            else waifu.id = 1;
+                        }
                         while (exp > 0) {
                             if (parseInt(waifu.max_exp) - waifu.exp > exp) {
                                 waifu.exp += exp;

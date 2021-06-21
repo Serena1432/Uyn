@@ -58,6 +58,7 @@ function roll(client, message, args) {
                 type = "Waifu";
             }
             client.economyManager[message.author.id].waifus.push({
+                id: (client.economyManager[message.author.id].waifus[length - 1] && client.economyManager[message.author.id].waifus[length - 1].id) ? client.economyManager[message.author.id].waifus[length - 1].id + 1 : 1,
                 name: waifu.name,
                 anime: waifu.anime,
                 image_url: waifu.image_url,
@@ -164,5 +165,5 @@ module.exports.config = {
     accessableby: "Members",
     aliases: [],
     category: "👧 Waifu/Husbando Collection",
-    dmAvailable: false
+    dmAvailable: true
 }

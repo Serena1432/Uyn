@@ -12,8 +12,11 @@ function info(client, message, args) {
     try {
         if (!args[0]) return message.reply("Please type a waifu ID!");
         if (isNaN(args[0])) return message.reply("The waifu ID must be a number!");
-        if (!client.economyManager[message.author.id].waifus[parseInt(args[0]) - 1]) return message.reply("Invalid waifu ID!");
-        var waifu = client.economyManager[message.author.id].waifus[parseInt(args[0]) - 1];
+        var has = false, waifu;
+        for (var i = 0; i < client.economyManager[message.author.id].waifus.length; i++) {
+            if (client.economyManager[message.author.id].waifus[i].id == args[0]) waifu = client.economyManager[message.author.id].waifus[i];
+        }
+        if (!waifu) return message.reply("Invalid waifu ID!");
         message.channel.send(new Discord.MessageEmbed()
         .setAuthor(waifu.name + " (" + waifu.anime + ")", message.author.avatarURL({size: 128, dynamic: true}))
         .setColor(Math.floor(Math.random() * 16777215))
@@ -72,5 +75,5 @@ module.exports.config = {
     accessableby: "Members",
     aliases: [],
     category: "👧 Waifu/Husbando Collection",
-    dmAvailable: false
+    dmAvailable: true
 }
