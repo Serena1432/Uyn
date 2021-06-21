@@ -12,9 +12,12 @@ function info(client, message, args) {
     try {
         if (!args[0]) return message.reply("Please type a waifu ID!");
         if (isNaN(args[0])) return message.reply("The waifu ID must be a number!");
-        var has = false, waifu;
+        var waifu;
         for (var i = 0; i < client.economyManager[message.author.id].waifus.length; i++) {
-            if (client.economyManager[message.author.id].waifus[i].id == args[0]) waifu = client.economyManager[message.author.id].waifus[i];
+            if (client.economyManager[message.author.id].waifus[i].id == args[0]) {
+                waifu = client.economyManager[message.author.id].waifus[i];
+                break;
+            }
         }
         if (!waifu) return message.reply("Invalid waifu ID!");
         message.channel.send(new Discord.MessageEmbed()
@@ -24,7 +27,7 @@ function info(client, message, args) {
             {name: "Rarity:", value: waifu.rarity.replace("Super Super Rare", "Specially Super Rare"), inline: true},
             {name: "Level:", value: waifu.level, inline: true},
             {name: "Current EXP:", value: waifu.exp + "/" + parseInt(waifu.max_exp), inline: true},
-            {name: "HP:", value: parseInt(waifu.base_hp * (1 + 0.1375 * waifu.level)).toLocaleString(), inline: true},
+            {name: "HP:", value: parseInt(waifu.base_hp * (1 + 0.05 * waifu.level)).toLocaleString(), inline: true},
             {name: "Attack:", value: parseInt(waifu.base_atk * (1 + 0.075 * waifu.level)).toLocaleString(), inline: true},
             {name: "Defense:", value: parseInt(waifu.base_def * (1 + 0.085 * waifu.level)).toLocaleString(), inline: true}
         )

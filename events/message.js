@@ -249,7 +249,7 @@ module.exports = async (client, message) => {
     args.splice(0, 1);
   
     // Grab the command data from the client.commands Enmap
-    const cmd = client.commands.get(command);
+    const cmd = client.commands.get(command) || client.commands.find(c => c.aliases && c.aliases.includes(command));
   
     // If that command doesn't exist, silently exit and do nothing
     if (!cmd) return;
