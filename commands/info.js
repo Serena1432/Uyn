@@ -20,7 +20,7 @@ function info(client, message, args) {
         .addFields(
             {name: "Rarity:", value: waifu.rarity, inline: true},
             {name: "Level:", value: waifu.level, inline: true},
-            {name: "Current EXP:", value: waifu.exp + "/" + waifu.max_exp, inline: true},
+            {name: "Current EXP:", value: waifu.exp + "/" + parseInt(waifu.max_exp), inline: true},
             {name: "HP:", value: parseInt(waifu.base_hp * (1 + 0.1375 * waifu.level)).toLocaleString(), inline: true},
             {name: "Attack:", value: parseInt(waifu.base_atk * (1 + 0.075 * waifu.level)).toLocaleString(), inline: true},
             {name: "Defense:", value: parseInt(waifu.base_def * (1 + 0.085 * waifu.level)).toLocaleString(), inline: true}
