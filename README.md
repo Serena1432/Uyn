@@ -64,6 +64,7 @@ prefix
 This BOT is being ran using Heroku, Node.JS, PHP and MySQL. I made it without any cost so I am not sure about the BOT security very much.
 
 Btw, the main BOT is now syncing with THIS repository ;)
+
 ![Uyn repo syncing](https://i.imgur.com/v2PUXCW.png)
 
 ### App requirements:
