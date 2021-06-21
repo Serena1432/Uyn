@@ -14,7 +14,7 @@ function roll(client, message, args) {
             if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
             if (!client.economyManager[message.author.id].waifus.length >= 75) return message.reply("You have exceeded the maximum limit of waifus in an account!")
             var random = Math.random(), waifu, length = client.economyManager[message.author.id].waifus.length, rarity, type;
-            if (random < 0.6) {
+            if (random < 0.8) {
                 rarity = "Normal";
                 if (Math.random() <= 0.5) {
                     waifu = client.waifus.normal[Math.floor(Math.random() * client.waifus.normal.length)];
@@ -25,7 +25,7 @@ function roll(client, message, args) {
                     type = "Husbando";
                 }
             }
-            else if (random >= 0.6 && random < 0.8) {
+            else if (random >= 0.8 && random < 0.9) {
                 rarity = "Rare";
                 if (Math.random() <= 0.5) {
                     waifu = client.waifus.rare[Math.floor(Math.random() * client.waifus.rare.length)];
@@ -36,7 +36,7 @@ function roll(client, message, args) {
                     type = "Husbando";
                 }
             }
-            else if (random >= 0.8 && random < 0.9) {
+            else if (random >= 0.9 && random < 0.95) {
                 rarity = "Super Rare";
                 if (Math.random() <= 0.5) {
                     waifu = client.waifus.srare[Math.floor(Math.random() * client.waifus.srare.length)];
@@ -47,7 +47,7 @@ function roll(client, message, args) {
                     type = "Husbando";
                 }
             }
-            else if (random >= 0.9 && random < 0.975) {
+            else if (random >= 0.95 && random < 0.98) {
                 waifu = client.waifus.ssrare[Math.floor(Math.random() * client.waifus.ssrare.length)];
                 rarity = "Super Super Rare";
                 type = "Waifu";

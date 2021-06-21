@@ -11,17 +11,18 @@ function waifu(client, message, args) {
     if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
     if (client.economyManager[message.author.id].waifus.length == 0) return message.channel.send(new Discord.MessageEmbed()
     .setAuthor(message.author.tag, message.author.avatarURL({size: 128, dynamic: true}))
+    .setColor(Math.floor(Math.random() * 16777215))
     .setDescription("You don't have any waifus/husbandos.")
     .setTimestamp());
     try {
         var n = 0;
         if (args[0]) n = parseInt(args[0]) - 1;
-        var descText = "`------------------------------------------\n| ID     | Waifu/husbando name           |\n------------------------------------------";
+        var descText = "`--------------------------------------------------------\n| ID     | Waifu/husbando name           | Level       |\n--------------------------------------------------------";
         if (n * 10 > client.economyManager[message.author.id].waifus.length - 1) return message.reply("You don't have any more waifus/husbandos!");
         for (var i = n * 10; i < n * 10 + 10; i++) {
             if (client.economyManager[message.author.id].waifus[i]) {
                 var waifu = client.economyManager[message.author.id].waifus[i];
-                var name = "[" + waifu.rarity + "]" + waifu.name + " (" + waifu.anime + ")";
+                var name = "[" + waifu.rarity + "] " + waifu.name + " (" + waifu.anime + ")";
                 descText += "\n| " + (i + 1).toString();
                 for (var k = 0; k < 6 - (i + 1).toString().length; k++) descText += " ";
                 if (name.length <= 29) {
@@ -29,7 +30,13 @@ function waifu(client, message, args) {
                     for (var k = 0; k < 29 - name.length; k++) descText += " ";
                 }
                 else descText += " | " + name.substr(0, 26) + "...";
-                descText += " |\n------------------------------------------";
+                var level = waifu.level + " (" + waifu.exp + "/" + waifu.max_exp + ")";
+                if (level.length <= 11) {
+                    descText += " | " + level;
+                    for (var k = 0; k < 11 - level.length; k++) descText += " ";
+                }
+                else descText += " | " + level.substr(0, 8) + "...";
+                descText += " |\n--------------------------------------------------------";
             } else break;
         }
         descText += "`\n\nUse the `info <id>` command to view the information of a waifu/husbando.";
