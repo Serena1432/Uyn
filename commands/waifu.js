@@ -22,7 +22,7 @@ function waifu(client, message, args) {
         for (var i = n * 10; i < n * 10 + 10; i++) {
             if (client.economyManager[message.author.id].waifus[i]) {
                 var waifu = client.economyManager[message.author.id].waifus[i];
-                var name = "[" + waifu.rarity + "] " + waifu.name + " (" + waifu.anime + ")";
+                var name = "[" + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "] " + waifu.name + " (" + waifu.anime + ")";
                 descText += "\n| " + (i + 1).toString();
                 for (var k = 0; k < 6 - (i + 1).toString().length; k++) descText += " ";
                 if (name.length <= 29) {

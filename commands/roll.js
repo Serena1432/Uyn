@@ -49,7 +49,7 @@ function roll(client, message, args) {
             }
             else if (random >= 0.95 && random < 0.98) {
                 waifu = client.waifus.ssrare[Math.floor(Math.random() * client.waifus.ssrare.length)];
-                rarity = "Super Super Rare";
+                rarity = "Specially Super Rare";
                 type = "Waifu";
             }
             else {

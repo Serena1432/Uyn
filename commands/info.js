@@ -18,7 +18,7 @@ function info(client, message, args) {
         .setAuthor(waifu.name + " (" + waifu.anime + ")", message.author.avatarURL({size: 128, dynamic: true}))
         .setColor(Math.floor(Math.random() * 16777215))
         .addFields(
-            {name: "Rarity:", value: waifu.rarity, inline: true},
+            {name: "Rarity:", value: waifu.rarity.replace("Super Super Rare", "Specially Super Rare"), inline: true},
             {name: "Level:", value: waifu.level, inline: true},
             {name: "Current EXP:", value: waifu.exp + "/" + parseInt(waifu.max_exp), inline: true},
             {name: "HP:", value: parseInt(waifu.base_hp * (1 + 0.1375 * waifu.level)).toLocaleString(), inline: true},

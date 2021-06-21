@@ -2,6 +2,9 @@
 
 # Uyn BOT Changelogs
 
+### June 20, 2021
+* Added the Waifu Collecting System.
+
 ### June 18, 2021
 * Added a BOT API for the BOT website.
 
