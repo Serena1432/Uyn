@@ -318,7 +318,7 @@ function info(client, message, args) {
 											}
 											if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**ID:** " + result, new Discord.MessageEmbed()
 												.setColor(Math.floor(Math.random() * 16777215))
-												.setAuthor(message.mentions.users.first().username + " has just " + (res == "lose" ? "won" : "lost") + " " + (maxLevel * 25) + " because of winning a battle.", message.mentions.users.first().avatarURL({size: 128}))
+												.setAuthor(message.mentions.users.first().username + " has just " + (res == "lose" ? "won" : "lost") + " " + (maxLevel * 25) + " because of " + (res == "lose" ? "winning" : "losing") + " a battle.", message.mentions.users.first().avatarURL({size: 128}))
 												.setTimestamp()
 											);
 											else console.log("Cannot get the log channel.");
