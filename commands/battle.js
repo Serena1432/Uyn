@@ -224,7 +224,7 @@ function info(client, message, args) {
 					else if (playerUtb == playerTeam.members.length) {
 						res = "lose";
 						end = true;
-						embed.setFooter((message.mentions.users.size ? message.mentions.users.first().username : "The enemy") + " is the winner!\nYou lost " + (maxLevel * 25) + " " + client.config.currency + (message.mentions.users.size ? (" and the enemy got " + (maxLevel * 25) + " " + client.config.currency + " and " + (maxLevel * 5) + " EXP...") : ""));
+						embed.setFooter((message.mentions.users.size ? message.mentions.users.first().username : "The enemy") + " is the winner!\nYou lost " + (maxLevel * 25) + " " + client.config.currency + (message.mentions.users.size ? (" and " + message.mentions.users.first().username + " got " + (maxLevel * 25) + " " + client.config.currency + " and " + (maxLevel * 5) + " EXP...") : ""));
 						clearInterval(interval);
 					}
 					else if (enemyUtb == enemyTeam.members.length) {
