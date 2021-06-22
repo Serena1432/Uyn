@@ -100,7 +100,7 @@ function info(client, message, args) {
 						rarity = "Ultra Rare";
 						type = "Waifu";
 					}
-					var level = Math.floor(Math.random() * parseInt(maxLevel / 2)) + maxLevel - parseInt(maxLevel / 5);
+					var level = Math.floor(Math.random() * parseInt(maxLevel / 4)) + maxLevel - parseInt(maxLevel / 8);
 					enemyTeam.members.push({
 						name: waifu.name,
 						base_hp: waifu.base_hp,
