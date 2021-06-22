@@ -144,14 +144,8 @@ function info(client, message, args) {
 			}
 			maxLevel = 0;
 			client.countdown[message.author.id] = (new Date()).getTime() + 15000;
-			for (var i = 0; i < client.economyManager[message.mentions.users.first().id].team.members.length; i++) {
-				var waifu;
-				for (var j = 0; j < client.economyManager[message.mentions.users.first().id].waifus.length; j++) {
-					if (client.economyManager[message.mentions.users.first().id].waifus[j].id == client.economyManager[message.mentions.users.first().id].team.members[i]) {
-						waifu = client.economyManager[message.mentions.users.first().id].waifus[j];
-						break;
-					}
-				}
+			for (var i = 0; i < enemyTeam.members.length; i++) {
+				var waifu = enemyTeam.members[i];
 				maxLevel = Math.max(waifu.level, maxLevel);
 			}
 			var playerTeamText = "", enemyTeamText = "";
