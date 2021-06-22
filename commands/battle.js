@@ -224,13 +224,13 @@ function info(client, message, args) {
 					else if (playerUtb == playerTeam.members.length) {
 						res = "lose";
 						end = true;
-						embed.setFooter((message.mentions.users.size ? message.mentions.users.first().username : "The enemy") + " is the winner!\nYou lost " + (maxLevel * 25) + " " + client.config.currency + (message.mentions.users.size ? (" and the enemy got " + (maxLevel * 25) + " " + client.config.currency + " and " + (maxLevel * 12) + " EXP...") : ""));
+						embed.setFooter((message.mentions.users.size ? message.mentions.users.first().username : "The enemy") + " is the winner!\nYou lost " + (maxLevel * 25) + " " + client.config.currency + (message.mentions.users.size ? (" and the enemy got " + (maxLevel * 25) + " " + client.config.currency + " and " + (maxLevel * 5) + " EXP...") : ""));
 						clearInterval(interval);
 					}
 					else if (enemyUtb == enemyTeam.members.length) {
 						res = "win";
 						end = true;
-						embed.setFooter("You are the winner! Congratulations!\nYou got " + (maxLevel * 25) + " " + client.config.currency + " and your team got " + (maxLevel * 12) + " EXP!\n" + (message.mentions.users.size ? (message.mentions.users.first().username + " has lost " + (maxLevel * 25) + " " + client.config.currency + "!") : ""));
+						embed.setFooter("You are the winner! Congratulations!\nYou got " + (maxLevel * 25) + " " + client.config.currency + " and your team got " + (maxLevel * 5) + " EXP!\n" + (message.mentions.users.size ? (message.mentions.users.first().username + " has lost " + (maxLevel * 25) + " " + client.config.currency + "!") : ""));
 						clearInterval(interval);
 					}
 					if (!end && enemyUtb != enemyTeam.members.length || res == "draw") msg.edit(embed);
@@ -240,7 +240,7 @@ function info(client, message, args) {
 						else coins -= maxLevel * 25;
 						client.economyManager[message.author.id].coins = encrypt(coins.toString());
 						if (res == "win") {
-							var rExp = maxLevel * 12;
+							var rExp = maxLevel * 5;
 							for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
 								var waifu;
 								for (var j = 0; j < client.economyManager[message.author.id].waifus.length; j++) {
@@ -273,7 +273,7 @@ function info(client, message, args) {
 							if (!error && response.statusCode == 200 && body.includes("Success")) {
 								if (message.mentions.users.size) {
 									if (res == "lose") {
-										var rExp = maxLevel * 12;
+										var rExp = maxLevel * 5;
 										for (var i = 0; i < client.economyManager[message.mentions.users.first().id].team.members.length; i++) {
 											var waifu;
 											for (var j = 0; j < client.economyManager[message.mentions.users.first().id].waifus.length; j++) {
