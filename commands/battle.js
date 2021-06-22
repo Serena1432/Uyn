@@ -149,25 +149,6 @@ function info(client, message, args) {
         .setTimestamp(), end = false;
         message.channel.send(embed).then(msg => {
             var interval = setInterval(function() {
-                for (var i = 0; i < playerTeam.members.length; i++) {
-                    var enemy, enemyIndex, enemyMinDef = 9999, player = playerTeam.members[i];
-                    if (!player.utb) {
-                        for (var j = 0; j < enemyTeam.members.length; j++) {
-                            if (!enemyTeam.members[j].utb && enemyTeam.members[j].base_def < enemyMinDef) {
-                                enemyIndex = j;
-                                enemyMinDef = enemyTeam.members[j].base_def;
-                            }
-                        }
-                        enemy = enemyTeam.members[enemyIndex];
-                        var damage = (Math.floor(Math.random() * 10) + parseInt(player.base_atk * (1 + 0.075 * player.level)) - parseInt(enemy.base_def * (1 + 0.085 * enemy.level)) - 5) * 7;
-                        if (damage < 0) damage = Math.floor(Math.random() * 10) + 1;
-                        if (damage < enemy.current_hp) enemy.current_hp -= damage;
-                        else {
-                            enemy.current_hp = 0;
-                            enemy.utb = true;
-                        }
-                    }
-                }
                 for (var i = 0; i < enemyTeam.members.length; i++) {
                     var player, playerIndex, playerMinDef = 9999, enemy = enemyTeam.members[i];
                     if (!enemy.utb) {
@@ -178,12 +159,31 @@ function info(client, message, args) {
                             }
                         }
                         player = playerTeam.members[playerIndex];
-                        var damage = (Math.floor(Math.random() * 10) + parseInt(enemy.base_atk * (1 + 0.075 * enemy.level)) - parseInt(player.base_def * (1 + 0.085 * player.level)) - 5) * 7;
-                        if (damage < 0) damage = Math.floor(Math.random() * 10) + 1;
+                        var damage = (Math.floor(Math.random() * 10) + parseInt(enemy.base_atk * (1 + 0.075 * enemy.level)) - parseInt(player.base_def * (1 + 0.085 * player.level)) - 5) * 10;
+                        if (damage <= 0) damage = Math.floor(Math.random() * 10) + 1;
                         if (damage < player.current_hp) player.current_hp -= damage;
                         else {
                             player.current_hp = 0;
                             player.utb = true;
+                        }
+                    }
+                }
+                for (var i = 0; i < playerTeam.members.length; i++) {
+                    var enemy, enemyIndex, enemyMinDef = 9999, player = playerTeam.members[i];
+                    if (!player.utb) {
+                        for (var j = 0; j < enemyTeam.members.length; j++) {
+                            if (!enemyTeam.members[j].utb && enemyTeam.members[j].base_def < enemyMinDef) {
+                                enemyIndex = j;
+                                enemyMinDef = enemyTeam.members[j].base_def;
+                            }
+                        }
+                        enemy = enemyTeam.members[enemyIndex];
+                        var damage = (Math.floor(Math.random() * 10) + parseInt(player.base_atk * (1 + 0.075 * player.level)) - parseInt(enemy.base_def * (1 + 0.085 * enemy.level)) - 5) * 10;
+                        if (damage <= 0) damage = Math.floor(Math.random() * 10) + 1;
+                        if (damage < enemy.current_hp) enemy.current_hp -= damage;
+                        else {
+                            enemy.current_hp = 0;
+                            enemy.utb = true;
                         }
                     }
                 }
