@@ -141,6 +141,17 @@ function info(client, message, args) {
                 });
             }
         }
+		maxLevel = 0;
+        for (var i = 0; i < client.economyManager[message.mentions.users.first().id].team.members.length; i++) {
+            var waifu;
+            for (var j = 0; j < client.economyManager[message.mentions.users.first().id].waifus.length; j++) {
+                if (client.economyManager[message.mentions.users.first().id].waifus[j].id == client.economyManager[message.mentions.users.first().id].team.members[i]) {
+                    waifu = client.economyManager[message.mentions.users.first().id].waifus[j];
+                    break;
+                }
+            }
+            maxLevel = Math.max(waifu.level, maxLevel);
+        }
         var playerTeamText = "", enemyTeamText = "";
         for (var i = 0; i < playerTeam.members.length; i++) {
             playerTeamText += "**" + playerTeam.members[i].name + "** (Lv." + playerTeam.members[i].level + ")\n**HP:** " + playerTeam.members[i].current_hp.toLocaleString() + "/" + parseInt(playerTeam.members[i].base_hp * (1 + 0.05 * playerTeam.members[i].level)).toLocaleString() + "\n\n";
