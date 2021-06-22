@@ -151,7 +151,7 @@ function info(client, message, args) {
         var embed = new Discord.MessageEmbed()
         .setAuthor(message.author.username + "'s battle against " + (message.mentions.users.size ? message.mentions.users.first().username : "a random enemy"), message.author.avatarURL({size: 128, dynamic: true}))
         .setDescription("If the BOT doesn't update the battle status for a long time, that means the BOT has been restarted during the battle.\nAt that time, please use the command again.")
-        .addFields({name: playerTeam.name, value: playerTeamText, inline: true}, {name: enemyTeam.name, value: enemyTeamText, inline: true}, )
+        .addFields({name: playerTeam.name, value: playerTeamText, inline: true}, {name: enemyTeam.name, value: enemyTeamText, inline: true})
         .setTimestamp(), end = false;
         message.channel.send(embed).then(msg => {
             var interval = setInterval(function() {
@@ -206,7 +206,7 @@ function info(client, message, args) {
                 embed = new Discord.MessageEmbed()
                 .setAuthor(message.author.username + "'s battle against " + (message.mentions.users.size ? message.mentions.users.first().username : "a random enemy"), message.author.avatarURL({size: 128, dynamic: true}))
                 .setDescription("If the BOT doesn't update the battle status for a long time, that means the BOT has been restarted during the battle.\nAt that time, please use the command again.")
-                .addFields({name: playerTeam.name, value: playerTeamText, inline: true}, {name: enemyTeam.name, value: enemyTeamText, inline: true}, )
+                .addFields({name: playerTeam.name, value: playerTeamText, inline: true}, {name: enemyTeam.name, value: enemyTeamText, inline: true})
                 .setTimestamp();
                 if (playerUtb == playerTeam.members.length && enemyUtb == enemyTeam.members.length) {
                     res = "draw";
