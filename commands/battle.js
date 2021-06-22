@@ -190,9 +190,9 @@ function info(client, message, args) {
                 if (!end && enemyUtb != enemyTeam.members.length) msg.edit(embed);
                 else {
                     var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
-                    coins += maxLevel * 50;
+                    coins += maxLevel * 25;
                     client.economyManager[message.author.id].coins = encrypt(coins.toString());
-                    var rExp = maxLevel * 15;
+                    var rExp = maxLevel * 5;
                     for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
                         var waifu;
                         for (var j = 0; j < client.economyManager[message.author.id].waifus.length; j++) {
