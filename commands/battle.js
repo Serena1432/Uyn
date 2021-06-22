@@ -129,10 +129,13 @@ function info(client, message, args) {
         message.channel.send(embed).then(msg => {
             var interval = setInterval(function() {
                 for (var i = 0; i < playerTeam.members.length; i++) {
-                    var enemy, enemyIndex, player = playerTeam.members[i];
+                    var enemy, enemyIndex, enemyMinDef = 9999, player = playerTeam.members[i];
                     if (!player.utb) {
                         for (var j = 0; j < enemyTeam.members.length; j++) {
-                            if (!enemyTeam.members[j].utb) enemyIndex = j;
+                            if (!enemyTeam.members[j].utb && enemyTeam.members[j].base_def < enemyMinDef) {
+                                enemyIndex = j;
+                                enemyMinDef = enemyTeam.members[j].base_def;
+                            }
                         }
                         enemy = enemyTeam.members[enemyIndex];
                         var damage = (Math.floor(Math.random() * 10) + parseInt(player.base_atk * (1 + 0.075 * player.level)) - parseInt(enemy.base_def * (1 + 0.085 * enemy.level)) - 5) * 7;
