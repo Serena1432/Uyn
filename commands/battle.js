@@ -114,7 +114,27 @@ function info(client, message, args) {
             }
         }
         else {
-            return message.reply("Battling with other user isn't supported yet!");
+            if (message.mentions.users.first().bot) return message.reply("You cannot battle with a BOT!");
+            if (!client.economyManager[message.author.id].team || client.economyManager[message.author.id].team.members.length == 0) return message.reply("The mentioned user doesn't have any team!")
+            for (var i = 0; i < client.economyManager[message.mentions.users.first().id].team.members.length; i++) {
+                var waifu;
+                for (var j = 0; j < client.economyManager[message.mentions.users.first().id].waifus.length; j++) {
+                    if (client.economyManager[message.mentions.users.first().id].waifus[j].id == client.economyManager[message.mentions.users.first().id].team.members[i]) {
+                        waifu = client.economyManager[message.mentions.users.first().id].waifus[j];
+                        break;
+                    }
+                }
+                enemyTeam.members.push({
+                    name: waifu.name,
+                    base_hp: waifu.base_hp,
+                    base_atk: waifu.base_atk,
+                    base_def: waifu.base_def,
+                    base_exp: waifu.base_exp,
+                    level: waifu.level,
+                    current_hp: parseInt(waifu.base_hp * (1 + 0.05 * waifu.level)),
+                    rarity: rarity
+                });
+            }
         }
         var playerTeamText = "", enemyTeamText = "";
         for (var i = 0; i < playerTeam.members.length; i++) {
@@ -140,12 +160,12 @@ function info(client, message, args) {
                         }
                         enemy = enemyTeam.members[enemyIndex];
                         var damage = (Math.floor(Math.random() * 10) + parseInt(player.base_atk * (1 + 0.075 * player.level)) - parseInt(enemy.base_def * (1 + 0.085 * enemy.level)) - 5) * 7;
-                        if (damage > 0)
-                            if (damage < enemy.current_hp) enemy.current_hp -= damage;
-                            else {
-                                enemy.current_hp = 0;
-                                enemy.utb = true;
-                            }
+                        if (damage < 0) damage = Math.floor(Math.random() * 10) + 1;
+                        if (damage < enemy.current_hp) enemy.current_hp -= damage;
+                        else {
+                            enemy.current_hp = 0;
+                            enemy.utb = true;
+                        }
                     }
                 }
                 for (var i = 0; i < enemyTeam.members.length; i++) {
@@ -159,12 +179,12 @@ function info(client, message, args) {
                         }
                         player = playerTeam.members[playerIndex];
                         var damage = (Math.floor(Math.random() * 10) + parseInt(enemy.base_atk * (1 + 0.075 * enemy.level)) - parseInt(player.base_def * (1 + 0.085 * player.level)) - 5) * 7;
-                        if (damage > 0)
-                            if (damage < player.current_hp) player.current_hp -= damage;
-                            else {
-                                player.current_hp = 0;
-                                player.utb = true;
-                            }
+                        if (damage < 0) damage = Math.floor(Math.random() * 10) + 1;
+                        if (damage < player.current_hp) player.current_hp -= damage;
+                        else {
+                            player.current_hp = 0;
+                            player.utb = true;
+                        }
                     }
                 }
                 var playerTeamText = "", enemyTeamText = "", playerUtb = 0, enemyUtb = 0;
