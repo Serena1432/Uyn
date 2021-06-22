@@ -188,7 +188,7 @@ function info(client, message, args) {
                 }
                 else if (enemyUtb == enemyTeam.members.length) {
                     end = true;
-                    embed.setFooter("You are the winner! Congratulations!\nYou got " + (maxLevel * 50) + " " + client.config.currency + " and your team got " + (maxLevel * 15) + " EXP!");
+                    embed.setFooter("You are the winner! Congratulations!\nYou got " + (maxLevel * 25) + " " + client.config.currency + " and your team got " + (maxLevel * 5) + " EXP!");
                     clearInterval(interval);
                 }
                 if (!end && enemyUtb != enemyTeam.members.length) msg.edit(embed);
@@ -233,7 +233,7 @@ function info(client, message, args) {
                             }
                             if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**ID:** " + result, new Discord.MessageEmbed()
                                 .setColor(Math.floor(Math.random() * 16777215))
-                                .setAuthor(message.author.username + " has just rewarded " + (maxLevel * 50) + " " + client.config.currency + " and " + (maxLevel * 15) + " EXP because of winning a battle.", message.author.avatarURL({size: 128}))
+                                .setAuthor(message.author.username + " has just rewarded " + (maxLevel * 25) + " " + client.config.currency + " and " + (maxLevel * 5) + " EXP because of winning a battle.", message.author.avatarURL({size: 128}))
                                 .setTimestamp()
                             );
                             else console.log("Cannot get the log channel.");
