@@ -17,7 +17,7 @@ function info(client, message, args) {
         var enemyTeam = {};
         if (!client.economyManager[message.author.id].team || client.economyManager[message.author.id].team.members.length == 0) return message.reply("You don't have any team!\nUse the `team add <waifu id>` command to add a member to your team!");
         var playerTeam = {
-            name: client.economyManager[message.author.id].team.name,
+            name: client.economyManager[message.author.id].team.name != "" ? client.economyManager[message.author.id].team.name : (message.author.username + "'s team"),
             members: []
         };
         var maxLevel = 0;
@@ -126,7 +126,7 @@ function info(client, message, args) {
                     }
                 }
                 var enemyTeam = {
-                    name: client.economyManager[message.mentions.users.first().id].team.name,
+                    name: client.economyManager[message.mentions.users.first().id].team.name != "" ? client.economyManager[message.mentions.users.first().id].team.name : (message.mentions.users.first().username + "'s team"),
                     members: []
                 };
                 enemyTeam.members.push({
