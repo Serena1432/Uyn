@@ -32,7 +32,7 @@ function info(client, message, args) {
 				}
 				maxLevel = Math.max(waifu.level, maxLevel);
 			}
-			if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < maxLevel * 25) return message.reply("You need to have at least **" + (maxLevel * 25) + " " + client.config.currency + "** to start a battle!");
+			if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < maxLevel * 8 *  enemyTeam.members.length) return message.reply("You need to have at least **" + (maxLevel * 8 *  enemyTeam.members.length) + " " + client.config.currency + "** to start a battle!");
 			for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
 				var waifu;
 				for (var j = 0; j < client.economyManager[message.author.id].waifus.length; j++) {
@@ -224,23 +224,23 @@ function info(client, message, args) {
 					else if (playerUtb == playerTeam.members.length) {
 						res = "lose";
 						end = true;
-						embed.setFooter((message.mentions.users.size ? message.mentions.users.first().username : "The enemy") + " is the winner!\nYou lost " + (maxLevel * 25) + " " + client.config.currency + (message.mentions.users.size ? (" and " + message.mentions.users.first().username + " got " + (maxLevel * 25) + " " + client.config.currency + " and " + (maxLevel * 5) + " EXP...") : ""));
+						embed.setFooter((message.mentions.users.size ? message.mentions.users.first().username : "The enemy") + " is the winner!\nYou lost " + (maxLevel * 8 *  enemyTeam.members.length) + " " + client.config.currency + (message.mentions.users.size ? (" and " + message.mentions.users.first().username + " got " + (maxLevel * 8 *  enemyTeam.members.length) + " " + client.config.currency + " and " + (maxLevel * 2 *  enemyTeam.members.length) + " EXP...") : ""));
 						clearInterval(interval);
 					}
 					else if (enemyUtb == enemyTeam.members.length) {
 						res = "win";
 						end = true;
-						embed.setFooter("You are the winner! Congratulations!\nYou got " + (maxLevel * 25) + " " + client.config.currency + " and your team got " + (maxLevel * 5) + " EXP!\n" + (message.mentions.users.size ? (message.mentions.users.first().username + " has lost " + (maxLevel * 25) + " " + client.config.currency + "!") : ""));
+						embed.setFooter("You are the winner! Congratulations!\nYou got " + (maxLevel * 8 *  enemyTeam.members.length) + " " + client.config.currency + " and your team got " + (maxLevel * 2 *  enemyTeam.members.length) + " EXP!\n" + (message.mentions.users.size ? (message.mentions.users.first().username + " has lost " + (maxLevel * 8 *  enemyTeam.members.length) + " " + client.config.currency + "!") : ""));
 						clearInterval(interval);
 					}
 					if (!end && enemyUtb != enemyTeam.members.length || res == "draw") msg.edit(embed);
 					else {
 						var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
-						if (res == "win") coins += maxLevel * 25;
-						else coins -= maxLevel * 25;
+						if (res == "win") coins += maxLevel * 8 *  enemyTeam.members.length;
+						else coins -= maxLevel * 8 *  enemyTeam.members.length;
 						client.economyManager[message.author.id].coins = encrypt(coins.toString());
 						if (res == "win") {
-							var rExp = maxLevel * 5;
+							var rExp = maxLevel * 2 *  enemyTeam.members.length;
 							for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
 								var waifu;
 								for (var j = 0; j < client.economyManager[message.author.id].waifus.length; j++) {
@@ -273,7 +273,7 @@ function info(client, message, args) {
 							if (!error && response.statusCode == 200 && body.includes("Success")) {
 								if (message.mentions.users.size) {
 									if (res == "lose") {
-										var rExp = maxLevel * 5;
+										var rExp = maxLevel * 2 *  enemyTeam.members.length;
 										for (var i = 0; i < client.economyManager[message.mentions.users.first().id].team.members.length; i++) {
 											var waifu;
 											for (var j = 0; j < client.economyManager[message.mentions.users.first().id].waifus.length; j++) {
@@ -299,10 +299,10 @@ function info(client, message, args) {
 									}
 									var coins = parseInt(decrypt(client.economyManager[message.mentions.users.first().id].coins));
 									if (res == "win") {
-										if ((maxLevel * 25) < coins) coins -= maxLevel * 25;
+										if ((maxLevel * 8 *  enemyTeam.members.length) < coins) coins -= maxLevel * 8 *  enemyTeam.members.length;
 										else coins = 0;
 									}
-									else coins += maxLevel * 25;
+									else coins += maxLevel * 8 *  enemyTeam.members.length;
 									client.economyManager[message.mentions.users.first().id].coins = encrypt(coins.toString());
 									request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
 										type: "update",
@@ -318,7 +318,7 @@ function info(client, message, args) {
 											}
 											if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**ID:** " + result, new Discord.MessageEmbed()
 												.setColor(Math.floor(Math.random() * 16777215))
-												.setAuthor(message.mentions.users.first().username + " has just " + (res == "lose" ? "won" : "lost") + " " + (maxLevel * 25) + " because of " + (res == "lose" ? "winning" : "losing") + " a battle.", message.mentions.users.first().avatarURL({size: 128}))
+												.setAuthor(message.mentions.users.first().username + " has just " + (res == "lose" ? "won" : "lost") + " " + (maxLevel * 8 *  enemyTeam.members.length) + " because of " + (res == "lose" ? "winning" : "losing") + " a battle.", message.mentions.users.first().avatarURL({size: 128}))
 												.setTimestamp()
 											);
 											else console.log("Cannot get the log channel.");
@@ -338,7 +338,7 @@ function info(client, message, args) {
 									}
 									if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**ID:** " + result, new Discord.MessageEmbed()
 										.setColor(Math.floor(Math.random() * 16777215))
-										.setAuthor(message.author.username + " has just " + (res == "win" ? "won" : "lost") + " " + (maxLevel * 25) + " because of winning a battle.", message.author.avatarURL({size: 128}))
+										.setAuthor(message.author.username + " has just " + (res == "win" ? "won" : "lost") + " " + (maxLevel * 8 *  enemyTeam.members.length) + " because of winning a battle.", message.author.avatarURL({size: 128}))
 										.setTimestamp()
 									);
 									else console.log("Cannot get the log channel.");
