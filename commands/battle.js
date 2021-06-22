@@ -271,18 +271,79 @@ function info(client, message, args) {
 							data: JSON.stringify(client.economyManager[message.author.id])
 						}}, function(error, response, body) {
 							if (!error && response.statusCode == 200 && body.includes("Success")) {
-								const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-								let result = "";
-								for (let i = 0; i < 32; i++) {
-									result += characters.charAt(Math.floor(Math.random() * characters.length));
+								if (message.mentions.users.size) {
+									if (res == "lose") {
+										var rExp = maxLevel * 12;
+										for (var i = 0; i < client.economyManager[message.mentions.users.first().id].team.members.length; i++) {
+											var waifu;
+											for (var j = 0; j < client.economyManager[message.mentions.users.first().id].waifus.length; j++) {
+												if (client.economyManager[message.mentions.users.first().id].waifus[j].id == client.economyManager[message.mentions.users.first().id].team.members[i]) {
+													waifu = client.economyManager[message.mentions.users.first().id].waifus[j];
+													break;
+												}
+											}
+											var exp = rExp;
+											while (exp > 0) {
+												if (parseInt(waifu.max_exp) - waifu.exp > exp) {
+													waifu.exp += exp;
+													exp = 0;
+												}
+												else {
+													exp -= parseInt(waifu.max_exp) - waifu.exp;
+													waifu.level++;
+													waifu.exp = 0;
+													waifu.max_exp = parseInt(waifu.base_exp * (1 + 0.15 * (waifu.level - 1)));
+												}
+											}
+										}
+									}
+									var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
+									if (res == "win") {
+										if (maxLevel * 25 > coins) coins -= maxLevel * 25;
+										else coins = 0;
+									}
+									else coins += maxLevel * 25;
+									client.economyManager[message.author.id].coins = encrypt(coins.toString());
+									request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
+										type: "update",
+										token: process.env.php_server_token,
+										id: message.mentions.users.first().id,
+										data: JSON.stringify(client.economyManager[message.mentions.users.first().id])
+									}}, function(error, response, body) {
+										if (!error && response.statusCode == 200 && body.includes("Success")) {
+											const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+											let result = "";
+											for (let i = 0; i < 32; i++) {
+												result += characters.charAt(Math.floor(Math.random() * characters.length));
+											}
+											if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**ID:** " + result, new Discord.MessageEmbed()
+												.setColor(Math.floor(Math.random() * 16777215))
+												.setAuthor(message.mentions.users.first().username + " has just " + (res == "lose" ? "won" : "lost") + " " + (maxLevel * 25) + " because of winning a battle.", message.mentions.users.first().avatarURL({size: 128}))
+												.setTimestamp()
+											);
+											else console.log("Cannot get the log channel.");
+											msg.edit(embed);
+										}
+										else {
+											console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
+											return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+										}
+									});
 								}
-								if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**ID:** " + result, new Discord.MessageEmbed()
-									.setColor(Math.floor(Math.random() * 16777215))
-									.setAuthor(message.author.username + " has just " + (res == "win" ? "won" : "lost") + " " + (maxLevel * 25) + " because of winning a battle.", message.author.avatarURL({size: 128}))
-									.setTimestamp()
-								);
-								else console.log("Cannot get the log channel.");
-								msg.edit(embed);
+								else {
+									const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+									let result = "";
+									for (let i = 0; i < 32; i++) {
+										result += characters.charAt(Math.floor(Math.random() * characters.length));
+									}
+									if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**ID:** " + result, new Discord.MessageEmbed()
+										.setColor(Math.floor(Math.random() * 16777215))
+										.setAuthor(message.author.username + " has just " + (res == "win" ? "won" : "lost") + " " + (maxLevel * 25) + " because of winning a battle.", message.author.avatarURL({size: 128}))
+										.setTimestamp()
+									);
+									else console.log("Cannot get the log channel.");
+									msg.edit(embed);
+								}
 							}
 							else {
 								console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
