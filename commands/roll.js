@@ -8,7 +8,7 @@ function random(min, max) {
 }
 
 function roll(client, message, args) {
-    if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < 1000) return message.reply("Insufficent balance!");
+    if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < 500) return message.reply("Insufficent balance!");
     if (!client.countdown[message.author.id] || client.countdown[message.author.id] < (new Date()).getTime()) {
         try {
             if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
@@ -72,7 +72,7 @@ function roll(client, message, args) {
                 rarity: rarity
             });
             var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
-            coins -= 1000;
+            coins -= 500;
             client.economyManager[message.author.id].coins = encrypt(coins.toString());
             request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                 type: "update",
@@ -89,17 +89,17 @@ function roll(client, message, args) {
                     }
                     if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
                         .setColor(Math.floor(Math.random() * 16777215))
-                        .setAuthor(message.author.username + " has just lost 1000 Uyncoins for rolling a waifu/husbando.", message.author.avatarURL({size: 128}))
+                        .setAuthor(message.author.username + " has just spent 500 Uyncoins for rolling a waifu/husbando.", message.author.avatarURL({size: 128}))
                         .setTimestamp()
                     );
-                    message.channel.send("**" + message.author.username + "** spent **1000 " + client.config.currency + "** and rolled a " + rarity + " " + type + ":", new Discord.MessageEmbed()
+                    message.channel.send("**" + message.author.username + "** spent **500 " + client.config.currency + "** and rolled a " + rarity + " " + type + ":", new Discord.MessageEmbed()
                     .setDescription("**" + waifu.name + "**\n" + waifu.anime)
                     .setImage(waifu.image_url)
                     .setTimestamp());
                 }
                 else {
                     coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
-                    coins += 1000;
+                    coins += 500;
                     client.economyManager[message.author.id].coins = encrypt(coins.toString());
                     client.economyManager[message.author.id].waifus.splice(length, 1);
                     console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
