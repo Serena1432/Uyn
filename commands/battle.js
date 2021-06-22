@@ -224,13 +224,13 @@ function info(client, message, args) {
 					else if (playerUtb == playerTeam.members.length) {
 						res = "lose";
 						end = true;
-						embed.setFooter((message.mentions.users.size ? message.mentions.users.first().username : "The enemy") + " is the winner!\nYou lost " + (maxLevel * 25) + " " + client.config.currency + "...");
+						embed.setFooter((message.mentions.users.size ? message.mentions.users.first().username : "The enemy") + " is the winner!\nYou lost " + (maxLevel * 25) + " " + client.config.currency + " and the enemy got " + (maxLevel * 25) + " " + client.config.currency + " and " + (maxLevel * 12) + " EXP...");
 						clearInterval(interval);
 					}
 					else if (enemyUtb == enemyTeam.members.length) {
 						res = "win";
 						end = true;
-						embed.setFooter("You are the winner! Congratulations!\nYou got " + (maxLevel * 25) + " " + client.config.currency + " and your team got " + (maxLevel * 12) + " EXP!");
+						embed.setFooter("You are the winner! Congratulations!\nYou got " + (maxLevel * 25) + " " + client.config.currency + " and your team got " + (maxLevel * 12) + " EXP!\n" + (message.mentions.users.size ? message.mentions.users.first().username : "The enemy") + " has lost " + (maxLevel * 25) + " " + client.config.currency + "!");
 						clearInterval(interval);
 					}
 					if (!end && enemyUtb != enemyTeam.members.length || res == "draw") msg.edit(embed);
