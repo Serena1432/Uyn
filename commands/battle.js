@@ -223,7 +223,7 @@ function info(client, message, args) {
                 else if (enemyUtb == enemyTeam.members.length) {
                     res = "win";
                     end = true;
-                    embed.setFooter("You are the winner! Congratulations!\nYou got " + (maxLevel * 25) + " " + client.config.currency + " and your team got " + (maxLevel * 5) + " EXP!");
+                    embed.setFooter("You are the winner! Congratulations!\nYou got " + (maxLevel * 25) + " " + client.config.currency + " and your team got " + (maxLevel * 12) + " EXP!");
                     clearInterval(interval);
                 }
                 if (!end && enemyUtb != enemyTeam.members.length || res == "draw") msg.edit(embed);
@@ -233,7 +233,7 @@ function info(client, message, args) {
                     else coins -= maxLevel * 25;
                     client.economyManager[message.author.id].coins = encrypt(coins.toString());
                     if (res == "win") {
-                        var rExp = maxLevel * 5;
+                        var rExp = maxLevel * 12;
                         for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
                             var waifu;
                             for (var j = 0; j < client.economyManager[message.author.id].waifus.length; j++) {
