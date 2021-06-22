@@ -115,7 +115,8 @@ function info(client, message, args) {
         }
         else {
             if (message.mentions.users.first().bot) return message.reply("You cannot battle with a BOT!");
-            if (!client.economyManager[message.author.id].team || client.economyManager[message.author.id].team.members.length == 0) return message.reply("The mentioned user doesn't have any team!")
+            if (message.mentions.users.first().id == message.author.id) return message.reply("You cannot battle with yourself!");
+            if (!client.economyManager[message.mentions.users.first().id].team || client.economyManager[message.mentions.users.first().id].team.members.length == 0) return message.reply("The mentioned user doesn't have any team!")
             for (var i = 0; i < client.economyManager[message.mentions.users.first().id].team.members.length; i++) {
                 var waifu;
                 for (var j = 0; j < client.economyManager[message.mentions.users.first().id].waifus.length; j++) {
@@ -124,6 +125,10 @@ function info(client, message, args) {
                         break;
                     }
                 }
+                var enemyTeam = {
+                    name: client.economyManager[message.mentions.users.first().id].team.name,
+                    members: []
+                };
                 enemyTeam.members.push({
                     name: waifu.name,
                     base_hp: waifu.base_hp,
