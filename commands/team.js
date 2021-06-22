@@ -103,7 +103,7 @@ function info(client, message, args) {
                         message.channel.send(new Discord.MessageEmbed()
                         .setAuthor(message.author.tag, message.author.avatarURL({size: 128, dynamic: true}))
                         .setColor(Math.floor(Math.random() * 16777215))
-                        .setDescription("Successfully rename your team into " + newName + ".")
+                        .setDescription("Successfully renamed your team into " + newName + ".")
                         .setTimestamp());
                     }
                     else {
