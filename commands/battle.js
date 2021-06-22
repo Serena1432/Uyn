@@ -297,13 +297,13 @@ function info(client, message, args) {
 											}
 										}
 									}
-									var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
+									var coins = parseInt(decrypt(client.economyManager[message.mentions.users.first().id].coins));
 									if (res == "win") {
 										if (maxLevel * 25 > coins) coins -= maxLevel * 25;
 										else coins = 0;
 									}
 									else coins += maxLevel * 25;
-									client.economyManager[message.author.id].coins = encrypt(coins.toString());
+									client.economyManager[message.mentions.users.first().id].coins = encrypt(coins.toString());
 									request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
 										type: "update",
 										token: process.env.php_server_token,
