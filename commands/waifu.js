@@ -40,7 +40,7 @@ function waifu(client, message, args) {
             } else break;
         }
         descText += "`\n\nUse the `info <id>` command to view the information of a waifu/husbando.";
-        if ((n + 1) * 10 <= client.economyManager[message.author.id].waifus.length - 1) descText += "Use the `waifu " + (n + 2) + "` command to get to the next page.";
+        if ((n + 1) * 10 <= client.economyManager[message.author.id].waifus.length - 1) descText += "\nUse the `waifu " + (n + 2) + "` command to get to the next page.";
         const embed = {
             color: Math.floor(Math.random() * 16777214) + 1,
             author: {
