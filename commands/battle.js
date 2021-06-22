@@ -299,7 +299,7 @@ function info(client, message, args) {
 									}
 									var coins = parseInt(decrypt(client.economyManager[message.mentions.users.first().id].coins));
 									if (res == "win") {
-										if (maxLevel * 25 > coins) coins -= maxLevel * 25;
+										if ((maxLevel * 25) < coins) coins -= maxLevel * 25;
 										else coins = 0;
 									}
 									else coins += maxLevel * 25;
