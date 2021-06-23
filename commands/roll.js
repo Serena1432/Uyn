@@ -12,7 +12,7 @@ function roll(client, message, args) {
     if (!client.countdown[message.author.id] || client.countdown[message.author.id] < (new Date()).getTime()) {
         try {
             if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
-            //if (client.economyManager[message.author.id].waifus.length >= 50) return message.reply("You have exceeded the maximum limit of waifus in an account!")
+            if (client.economyManager[message.author.id].waifus.length >= 50) return message.reply("You have exceeded the maximum limit of waifus in an account!")
             var random = Math.random(), waifu, length = client.economyManager[message.author.id].waifus.length, rarity, type;
             if (random < 0.85) {
                 rarity = "Normal";
