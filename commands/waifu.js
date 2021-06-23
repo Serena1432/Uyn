@@ -9,56 +9,103 @@ function random(min, max) {
 
 function waifu(client, message, args) {
     if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
-    if (client.economyManager[message.author.id].waifus.length == 0) return message.channel.send(new Discord.MessageEmbed()
-    .setAuthor(message.author.tag, message.author.avatarURL({size: 128, dynamic: true}))
-    .setColor(Math.floor(Math.random() * 16777215))
-    .setDescription("You don't have any waifus/husbandos.")
-    .setTimestamp());
-    try {
-        var n = 0;
-        if (args[0]) n = parseInt(args[0]) - 1;
-        var descText = "`--------------------------------------------------------\n| ID     | Waifu/husbando name           | Level       |\n--------------------------------------------------------";
-        if (n * 10 > client.economyManager[message.author.id].waifus.length - 1) return message.reply("You don't have any more waifus/husbandos!");
-        for (var i = n * 10; i < n * 10 + 10; i++) {
-            if (client.economyManager[message.author.id].waifus[i]) {
-                var waifu = client.economyManager[message.author.id].waifus[i];
-                var name = "[" + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "] " + waifu.name + " (" + waifu.anime + ")";
-                descText += "\n| " + waifu.id.toString();
-                for (var k = 0; k < 6 - waifu.id.toString().length; k++) descText += " ";
-                if (name.length <= 29) {
-                    descText += " | " + name;
-                    for (var k = 0; k < 29 - name.length; k++) descText += " ";
-                }
-                else descText += " | " + name.substr(0, 26) + "...";
-                var level = waifu.level + " (" + waifu.exp + "/" + parseInt(waifu.max_exp) + ")";
-                if (level.length <= 11) {
-                    descText += " | " + level;
-                    for (var k = 0; k < 11 - level.length; k++) descText += " ";
-                }
-                else descText += " | " + level.substr(0, 8) + "...";
-                descText += " |\n--------------------------------------------------------";
-            } else break;
+    if (!args[0] || !isNaN(args[0])) {
+        if (client.economyManager[message.author.id].waifus.length == 0) return message.channel.send(new Discord.MessageEmbed()
+        .setAuthor(message.author.tag, message.author.avatarURL({size: 128, dynamic: true}))
+        .setColor(Math.floor(Math.random() * 16777215))
+        .setDescription("You don't have any waifus/husbandos.")
+        .setTimestamp());
+        try {
+            var n = 0;
+            if (args[0]) n = parseInt(args[0]) - 1;
+            var descText = "`--------------------------------------------------------\n| ID     | Waifu/husbando name           | Level       |\n--------------------------------------------------------";
+            if (n * 10 > client.economyManager[message.author.id].waifus.length - 1) return message.reply("You don't have any more waifus/husbandos!");
+            for (var i = n * 10; i < n * 10 + 10; i++) {
+                if (client.economyManager[message.author.id].waifus[i]) {
+                    var waifu = client.economyManager[message.author.id].waifus[i];
+                    var name = "[" + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "] " + waifu.name + " (" + waifu.anime + ")";
+                    descText += "\n| " + waifu.id.toString();
+                    for (var k = 0; k < 6 - waifu.id.toString().length; k++) descText += " ";
+                    if (name.length <= 29) {
+                        descText += " | " + name;
+                        for (var k = 0; k < 29 - name.length; k++) descText += " ";
+                    }
+                    else descText += " | " + name.substr(0, 26) + "...";
+                    var level = waifu.level + " (" + waifu.exp + "/" + parseInt(waifu.max_exp) + ")";
+                    if (level.length <= 11) {
+                        descText += " | " + level;
+                        for (var k = 0; k < 11 - level.length; k++) descText += " ";
+                    }
+                    else descText += " | " + level.substr(0, 8) + "...";
+                    descText += " |\n--------------------------------------------------------";
+                } else break;
+            }
+            descText += "`\n\nUse the `info <id>` command to view the information of a waifu/husbando.\nUse the `waifu <name>` command to search for waifus/husbando that have a specific name.";
+            if ((n + 1) * 10 <= client.economyManager[message.author.id].waifus.length - 1) descText += "\nUse the `waifu " + (n + 2) + "` command to get to the next page.";
+            const embed = {
+                color: Math.floor(Math.random() * 16777214) + 1,
+                author: {
+                    name: message.author.username + "'s waifus/husbandos",
+                    icon_url: message.author.avatarURL({
+                        size: 128
+                    })
+                },
+                description: descText,
+                timestamp: new Date()
+            };
+            message.channel.send({
+                embed: embed
+            });
         }
-        descText += "`\n\nUse the `info <id>` command to view the information of a waifu/husbando.";
-        if ((n + 1) * 10 <= client.economyManager[message.author.id].waifus.length - 1) descText += "\nUse the `waifu " + (n + 2) + "` command to get to the next page.";
-        const embed = {
-            color: Math.floor(Math.random() * 16777214) + 1,
-            author: {
-                name: message.author.username + "'s waifus/husbandos",
-                icon_url: message.author.avatarURL({
-                    size: 128
-                })
-            },
-            description: descText,
-            timestamp: new Date()
-        };
-        message.channel.send({
-            embed: embed
-        });
+        catch (err) {
+            console.error(err);
+            return message.reply("An unexpected error occurred.");
+        }
     }
-    catch (err) {
-        console.error(err);
-        return message.reply("An unexpected error occurred.");
+    else {
+        try {
+            var length = 0, descText = "`--------------------------------------------------------\n| ID     | Waifu/husbando name           | Level       |\n--------------------------------------------------------";
+            for (var i = 0; i < client.economyManager[message.author.id].waifus.length; i++) {
+                if (client.economyManager[message.author.id].waifus[i].name.toLowerCase().includes(args.join(" ").toLowerCase()) && length < 10) {
+                    length++;
+                    var waifu = client.economyManager[message.author.id].waifus[i];
+                    var name = "[" + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "] " + waifu.name + " (" + waifu.anime + ")";
+                    descText += "\n| " + waifu.id.toString();
+                    for (var k = 0; k < 6 - waifu.id.toString().length; k++) descText += " ";
+                    if (name.length <= 29) {
+                        descText += " | " + name;
+                        for (var k = 0; k < 29 - name.length; k++) descText += " ";
+                    }
+                    else descText += " | " + name.substr(0, 26) + "...";
+                    var level = waifu.level + " (" + waifu.exp + "/" + parseInt(waifu.max_exp) + ")";
+                    if (level.length <= 11) {
+                        descText += " | " + level;
+                        for (var k = 0; k < 11 - level.length; k++) descText += " ";
+                    }
+                    else descText += " | " + level.substr(0, 8) + "...";
+                    descText += " |\n--------------------------------------------------------";
+                }
+            }
+            descText += "`\n\nThis message only shows 10 first results. To reduce the search results please search using the full name.\nUse the `info <id>` command to view the information of a waifu/husbando.";
+            const embed = {
+                color: Math.floor(Math.random() * 16777214) + 1,
+                author: {
+                    name: message.author.username + "'s waifus/husbandos that contain the " + args.join(" ") + " name",
+                    icon_url: message.author.avatarURL({
+                        size: 128
+                    })
+                },
+                description: descText,
+                timestamp: new Date()
+            };
+            message.channel.send({
+                embed: embed
+            });
+        }
+        catch (err) {
+            console.error(err);
+            return message.reply("An unexpected error occurred.");
+        }
     }
 }
 
