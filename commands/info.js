@@ -74,7 +74,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "info",
     description: "Get the information about a waifu/husbando",
-    usage: require("../config.json").prefix + "info",
+    usage: require("../config.json").prefix + "info <id>",
     accessableby: "Members",
     aliases: [],
     category: "👧 Waifu/Husbando Collection",

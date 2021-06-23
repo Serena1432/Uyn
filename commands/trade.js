@@ -8,6 +8,7 @@ function random(min, max) {
 }
 
 function trade(client, message, args) {
+    if (client.divorce[message.author.id]) return message.reply("You are currently in a divorce, please cancel or complete it first!");
     if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
     try {
         if (!client.trades[message.author.id] && message.mentions.users.size) {
