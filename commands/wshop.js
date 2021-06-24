@@ -21,14 +21,14 @@ function waifu(client, message, args) {
             .setDescription(descText)
             .setTimestamp();
             var n = 0;
-            if (n * 5 > client.economyManager["6746"].waifus.length - 1) return message.reply("There aren't have any more waifus/husbandos in the shop!");
-            for (var i = n * 5; i < n * 5 + 5; i++) {
+            if (n * 6 > client.economyManager["6746"].waifus.length - 1) return message.reply("There aren't have any more waifus/husbandos in the shop!");
+            for (var i = n * 6; i < n * 6 + 6; i++) {
                 if (client.economyManager["6746"].waifus[i]) {
                     var waifu = client.economyManager["6746"].waifus[i];
-                    embed.addField((i + 1) + ". " + waifu.name, "**Rarity:** " + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "\n**Level:** " + waifu.level + "\n**Seller:** " + (client.users.cache.get(waifu.seller) ? client.users.cache.get(waifu.seller).tag : "Unknown") + "\n**Price:** " + waifu.price + " " + client.config.currency);
+                    embed.addField((i + 1) + ". " + waifu.name, "**Rarity:** " + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "\n**Level:** " + waifu.level + "\n**Seller:** " + (client.users.cache.get(waifu.seller) ? client.users.cache.get(waifu.seller).tag : "Unknown") + "\n**Price:** " + waifu.price + " " + client.config.currency, true);
                 } else break;
             }
-            if ((n + 1) * 5 <= client.economyManager["6746"].waifus.length - 1) descText += "\nUse the `wshop " + (n + 2) + "` command to get to the next page.";
+            if ((n + 1) * 6 <= client.economyManager["6746"].waifus.length - 1) descText += "\nUse the `wshop " + (n + 2) + "` command to get to the next page.";
             message.channel.send(embed);
         }
         catch (err) {
