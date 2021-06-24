@@ -12,53 +12,24 @@ function waifu(client, message, args) {
     if (!args[0] || !isNaN(args[0])) {
         if (client.economyManager["6746"].waifus.length == 0) return message.reply("There aren't any waifus/husbandos in the BOT's public shop!");
         try {
+            var descText = "Use the `wbuy <id>` command to buy a waifu/husbando.\nUse the `wshop <name>` command to search for waifus/husbando that have a specific name.";
+            var embed = new Discord.MessageEmbed()
+            .setAuthor(client.user.username + " BOT's public shop", client.user.avatarURL({
+                size: 128
+            }))
+            .setColor(Math.floor(Math.random() * 16777215))
+            .setDescription(descText)
+            .setTimestamp();
             var n = 0;
-            if (args[0]) n = parseInt(args[0]) - 1;
-            var descText = "`-----------------------------------------------------------\n| ID     | Waifu/husbando name           | Price          |\n-----------------------------------------------------------";
-            if (n * 10 > client.economyManager["6746"].waifus.length - 1) return message.reply("There aren't have any more waifus/husbandos in the shop!");
-            for (var i = n * 10; i < n * 10 + 10; i++) {
+            if (n * 5 > client.economyManager["6746"].waifus.length - 1) return message.reply("There aren't have any more waifus/husbandos in the shop!");
+            for (var i = n * 5; i < n * 5 + 5; i++) {
                 if (client.economyManager["6746"].waifus[i]) {
                     var waifu = client.economyManager["6746"].waifus[i];
-                    var name = "[Lv." + waifu.level + "] [" + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "] " + waifu.name + " (" + waifu.anime + ")";
-                    descText += "\n| " + waifu.id.toString();
-                    for (var k = 0; k < 6 - waifu.id.toString().length; k++) descText += " ";
-                    if (name.length <= 29) {
-                        descText += " | " + name;
-                        for (var k = 0; k < 29 - name.length; k++) descText += " ";
-                    }
-                    else descText += " | " + name.substr(0, 26) + "...";
-                    var price = waifu.price + " " + client.config.currency;
-                    if (price.length <= 14) {
-                        descText += " | " + price;
-                        for (var k = 0; k < 14 - price.length; k++) descText += " ";
-                    }
-                    else descText += " | " + price.substr(0, 11) + "...";
-                    descText += " |\n|       ";
-                    var seller = "Seller: " + (client.users.cache.get(waifu.seller) ? client.users.cache.get(waifu.seller).tag : "Unknown");
-                    if (seller.length <= 29) {
-                        descText += " | " + seller;
-                        for (var k = 0; k < 29 - seller.length; k++) descText += " ";
-                    }
-                    else descText += " | " + seller.substr(0, 26) + "...";
-                    descText += " |                |\n-----------------------------------------------------------";
+                    embed.addField((i + 1) + ". " + waifu.name, "**Rarity:** " + waifu.rarity + "\n**Level:** " + waifu.level + "\n**Seller:** " + (client.users.cache.get(waifu.seller) ? client.users.cache.get(waifu.seller).tag : "Unknown") + "\n**Price:** " + waifu.price + " " + client.config.currency);
                 } else break;
             }
-            descText += "`\n\nUse the `wbuy <id>` command to buy a waifu/husbando.\nUse the `wshop <name>` command to search for waifus/husbando that have a specific name.";
-            if ((n + 1) * 10 <= client.economyManager["6746"].waifus.length - 1) descText += "\nUse the `wshop " + (n + 2) + "` command to get to the next page.";
-            const embed = {
-                color: Math.floor(Math.random() * 16777214) + 1,
-                author: {
-                    name: client.user.username + " BOT's public shop",
-                    icon_url: client.user.avatarURL({
-                        size: 128
-                    })
-                },
-                description: descText,
-                timestamp: new Date()
-            };
-            message.channel.send({
-                embed: embed
-            });
+            if ((n + 1) * 5 <= client.economyManager["6746"].waifus.length - 1) descText += "\nUse the `wshop " + (n + 2) + "` command to get to the next page.";
+            message.channel.send(embed);
         }
         catch (err) {
             console.error(err);
@@ -67,50 +38,21 @@ function waifu(client, message, args) {
     }
     else {
         try {
-            var length = 0, descText = "`-----------------------------------------------------------\n| ID     | Waifu/husbando name           | Price          |\n-----------------------------------------------------------";
+            var embed = new Discord.MessageEmbed()
+            .setAuthor(client.user.username + " BOT's public shop that contains the \"" + args.join(" ") + "\" name", client.user.avatarURL({
+                size: 128
+            }))
+            .setColor(Math.floor(Math.random() * 16777215))
+            .setDescription("This message only shows 10 first results. To reduce the search results please search using the full name.\nUse the `wbuy <id>` command to buy a waifu/husbando.")
+            .setTimestamp();
             for (var i = 0; i < client.economyManager["6746"].waifus.length; i++) {
                 if (client.economyManager["6746"].waifus[i].name.toLowerCase().includes(args.join(" ").toLowerCase()) && length < 10) {
                     length++;
                     var waifu = client.economyManager["6746"].waifus[i];
-                    var name = "[Lv." + waifu.level + "] [" + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "] " + waifu.name + " (" + waifu.anime + ")";
-                    descText += "\n| " + waifu.id.toString();
-                    for (var k = 0; k < 6 - waifu.id.toString().length; k++) descText += " ";
-                    if (name.length <= 29) {
-                        descText += " | " + name;
-                        for (var k = 0; k < 29 - name.length; k++) descText += " ";
-                    }
-                    else descText += " | " + name.substr(0, 26) + "...";
-                    var price = waifu.price + " " + client.config.currency;
-                    if (price.length <= 14) {
-                        descText += " | " + price;
-                        for (var k = 0; k < 14 - price.length; k++) descText += " ";
-                    }
-                    else descText += " | " + price.substr(0, 11) + "...";
-                    descText += " |\n|       ";
-                    var seller = "Seller: " + (client.users.cache.get(waifu.seller) ? client.users.cache.get(waifu.seller).tag : "Unknown");
-                    if (seller.length <= 29) {
-                        descText += " | " + seller;
-                        for (var k = 0; k < 29 - seller.length; k++) descText += " ";
-                    }
-                    else descText += " | " + seller.substr(0, 26) + "...";
-                    descText += " |                |\n-----------------------------------------------------------";
+                    embed.addField((i + 1) + ". " + waifu.name, "**Rarity:** " + waifu.rarity + "\n**Level:** " + waifu.level + "\n**Seller:** " + (client.users.cache.get(waifu.seller) ? client.users.cache.get(waifu.seller).tag : "Unknown") + "\n**Price:** " + waifu.price + " " + client.config.currency);
                 }
             }
-            descText += "`\n\nThis message only shows 10 first results. To reduce the search results please search using the full name.\nUse the `wbuy <id>` command to buy a waifu/husbando.";
-            const embed = {
-                color: Math.floor(Math.random() * 16777214) + 1,
-                author: {
-                    name: message.author.username + "'s waifus/husbandos that contain the " + args.join(" ") + " name",
-                    icon_url: message.author.avatarURL({
-                        size: 128
-                    })
-                },
-                description: descText,
-                timestamp: new Date()
-            };
-            message.channel.send({
-                embed: embed
-            });
+            message.channel.send(embed);
         }
         catch (err) {
             console.error(err);

@@ -73,18 +73,18 @@ function use(client, message, args) {
                 if (!waifu) return message.reply("Invalid Waifu ID!");
                 eval("client.economyManager[message.author.id].leveling_tickets." + item.code + " -= quantity");
                 var exp = item.exp_points * quantity;
-                    while (exp > 0) {
-                        if (parseInt(waifu.max_exp) - waifu.exp > exp) {
-                            waifu.exp += exp;
-                            exp = 0;
-                        }
-                        else {
-                            exp -= parseInt(waifu.max_exp) - waifu.exp;
-                            waifu.level++;
-                            waifu.exp = 0;
-                            waifu.max_exp = parseInt(waifu.base_exp * (1 + 0.15 * (waifu.level - 1)));
-                        }
+                while (exp > 0) {
+                    if (parseInt(waifu.max_exp) - waifu.exp > exp) {
+                        waifu.exp += exp;
+                        exp = 0;
                     }
+                    else {
+                        exp -= parseInt(waifu.max_exp) - waifu.exp;
+                        waifu.level++;
+                        waifu.exp = 0;
+                        waifu.max_exp = parseInt(waifu.base_exp * (1 + 0.15 * (waifu.level - 1)));
+                    }
+                }
                 request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                     type: "update",
                     token: process.env.php_server_token,

@@ -9,6 +9,7 @@ function random(min, max) {
 
 function info(client, message, args) {
     if (!client.countdown[message.author.id] || client.countdown[message.author.id] < (new Date()).getTime()) {
+		if (!client.economyManager[message.author.id].streaks) client.economyManager[message.author.id].streaks = 0;
 		if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
 		if (!client.economyManager[message.author.id].team) client.economyManager[message.author.id].team = {
 			name: "",
@@ -224,23 +225,31 @@ function info(client, message, args) {
 					else if (playerUtb == playerTeam.members.length) {
 						res = "lose";
 						end = true;
-						embed.setFooter((message.mentions.users.size ? message.mentions.users.first().username : "The opponent") + " is the winner!\nYou lost " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length) + " " + client.config.currency + (message.mentions.users.size ? (" and " + message.mentions.users.first().username + " got " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length) + " " + client.config.currency + " and " + parseInt(5 * (2 + maxLevel * 0.15) *  opponentTeam.members.length) + " EXP...") : ""));
+						embed.setFooter((message.mentions.users.size ? message.mentions.users.first().username : "The opponent") + " is the winner!\nYou lost " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.25)) + " " + client.config.currency + (message.mentions.users.size ? (" and " + message.mentions.users.first().username + " got " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.25)) + " " + client.config.currency + " and " + parseInt(5 * (2 + maxLevel * 0.15) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.25)) + " EXP") : "") + "...\nYou lost your streak of " + (client.economyManager[message.author.id].streaks) + "wins...");
+						client.economyManager[message.author.id].streaks = 0;
 						clearInterval(interval);
 					}
 					else if (opponentUtb == opponentTeam.members.length) {
+						client.economyManager[message.author.id].streaks++;
 						res = "win";
 						end = true;
-						embed.setFooter("You are the winner! Congratulations!\nYou got " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length) + " " + client.config.currency + " and your team got " + parseInt(5 * (2 + maxLevel * 0.15) *  opponentTeam.members.length) + " EXP!\n" + (message.mentions.users.size ? (message.mentions.users.first().username + " has lost " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length) + " " + client.config.currency + "!") : ""));
+						var ticketGift = "";
+						if (client.economyManager[message.author.id].streaks % 10 == 0) {
+							var random = Math.floor(Math.random() * 3) + 1;
+							eval("if (!client.economyManager[message.author.id].leveling_tickets.lvt" + random + ") client.economyManager[message.author.id].leveling_tickets.lvt" + random + " = 1; else client.economyManager[message.author.id].leveling_tickets.lvt" + random + "++;");
+							ticketText += "\nYou also got a Leveling Ticket " + random + "★!";
+						}
+						embed.setFooter("You are the winner! Congratulations!\nYou got " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.25)) + " " + client.config.currency + " and your team got " + parseInt(5 * (2 + maxLevel * 0.15) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.25)) + " EXP!\n" + (message.mentions.users.size ? (message.mentions.users.first().username + " has lost " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.25)) + " " + client.config.currency + "!") : "") + "\nYou are in " + (client.economyManager[message.author.id].streaks) + "win streak(s)!" + ticketGift);
 						clearInterval(interval);
 					}
 					if (!end && opponentUtb != opponentTeam.members.length || res == "draw") msg.edit(embed);
 					else {
 						var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
-						if (res == "win") coins += parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length);
-						else coins -= parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length);
+						if (res == "win") coins += parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.25));
+						else coins -= parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.25));
 						client.economyManager[message.author.id].coins = encrypt(coins.toString());
 						if (res == "win") {
-							var rExp = parseInt(5 * (2 + maxLevel * 0.15) *  opponentTeam.members.length);
+							var rExp = parseInt(5 * (2 + maxLevel * 0.15) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.25));
 							for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
 								var waifu;
 								for (var j = 0; j < client.economyManager[message.author.id].waifus.length; j++) {
@@ -273,7 +282,7 @@ function info(client, message, args) {
 							if (!error && response.statusCode == 200 && body.includes("Success")) {
 								if (message.mentions.users.size) {
 									if (res == "lose") {
-										var rExp = parseInt(5 * (2 + maxLevel * 0.15) *  opponentTeam.members.length);
+										var rExp = parseInt(5 * (2 + maxLevel * 0.15) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.25));
 										for (var i = 0; i < client.economyManager[message.mentions.users.first().id].team.members.length; i++) {
 											var waifu;
 											for (var j = 0; j < client.economyManager[message.mentions.users.first().id].waifus.length; j++) {
@@ -299,10 +308,10 @@ function info(client, message, args) {
 									}
 									var coins = parseInt(decrypt(client.economyManager[message.mentions.users.first().id].coins));
 									if (res == "win") {
-										if (parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length) < coins) coins -= parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length);
+										if (parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.25)) < coins) coins -= parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.25));
 										else coins = 0;
 									}
-									else coins += parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length);
+									else coins += parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.25));
 									client.economyManager[message.mentions.users.first().id].coins = encrypt(coins.toString());
 									request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
 										type: "update",
@@ -318,7 +327,7 @@ function info(client, message, args) {
 											}
 											if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**ID:** " + result, new Discord.MessageEmbed()
 												.setColor(Math.floor(Math.random() * 16777215))
-												.setAuthor(message.mentions.users.first().username + " has just " + (res == "lose" ? "won" : "lost") + " " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length) + " because of " + (res == "lose" ? "winning" : "losing") + " a battle.", message.mentions.users.first().avatarURL({size: 128}))
+												.setAuthor(message.mentions.users.first().username + " has just " + (res == "lose" ? "won" : "lost") + " " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.25)) + " because of " + (res == "lose" ? "winning" : "losing") + " a battle.", message.mentions.users.first().avatarURL({size: 128}))
 												.setTimestamp()
 											);
 											else console.log("Cannot get the log channel.");
@@ -338,7 +347,7 @@ function info(client, message, args) {
 									}
 									if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**ID:** " + result, new Discord.MessageEmbed()
 										.setColor(Math.floor(Math.random() * 16777215))
-										.setAuthor(message.author.username + " has just " + (res == "win" ? "won" : "lost") + " " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length) + " because of winning a battle.", message.author.avatarURL({size: 128}))
+										.setAuthor(message.author.username + " has just " + (res == "win" ? "won" : "lost") + " " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.25)) + " because of winning a battle.", message.author.avatarURL({size: 128}))
 										.setTimestamp()
 									);
 									else console.log("Cannot get the log channel.");

@@ -39,7 +39,7 @@ function buy(client, message, args, item) {
     var length = client.economyManager[message.author.id].inventory.length;
     if (item.type == "leveling_ticket") {
         if (!client.economyManager[message.author.id].leveling_tickets) client.economyManager[message.author.id].leveling_tickets = {};
-        eval("if (!client.economyManager[message.author.id].leveling_tickets." + item.code + ") client.economyManager[message.author.id].leveling_tickets." + item.code + " = 1; else client.economyManager[message.author.id].leveling_tickets." + item.code + " += (args[1] ? parseInt(args[1]) : 1);");
+        eval("if (!client.economyManager[message.author.id].leveling_tickets." + item.code + ") client.economyManager[message.author.id].leveling_tickets." + item.code + " = (args[1] ? parseInt(args[1]) : 1); else client.economyManager[message.author.id].leveling_tickets." + item.code + " += (args[1] ? parseInt(args[1]) : 1);");
     }
     else client.economyManager[message.author.id].inventory.push(item.code);
     request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
@@ -56,7 +56,7 @@ function buy(client, message, args, item) {
             }
             if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
                 .setColor(Math.floor(Math.random() * 16777215))
-                .setAuthor(message.author.username + " has just bought \"" + item.name + "\" item from the shop for " + item.price + " " + inv.type + ".", message.author.avatarURL({size: 128}))
+                .setAuthor(message.author.username + " has just bought " + (args[1] ? parseInt(args[1]) : "a") + " \"" + item.name + "\" item" + (parseInt(args[1]) > 1 ? "s" : "") + " from the shop for " + item.price + " " + inv.type + ".", message.author.avatarURL({size: 128}))
                 .setTimestamp()
             );
             else console.log("Cannot get the log channel.");
