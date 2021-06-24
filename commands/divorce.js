@@ -9,6 +9,7 @@ function random(min, max) {
 
 function info(client, message, args) {
     if (client.trades[message.author.id]) return message.reply("You are currently in a trade, please end or complete it first!");
+    if (client.sell[message.author.id]) return message.reply("You are currently selling a waifu, please end or complete it first!");
     if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
     try {
         if (!client.divorce[message.author.id]) {
