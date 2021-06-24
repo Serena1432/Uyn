@@ -64,7 +64,7 @@ function info(client, message, args) {
                         }
                     }
                     client.divorce[message.author.id] = undefined;
-                    var divorceValue = parseInt(1000 * rarityValue * (1 + (0.075 * level)));
+                    var divorceValue = parseInt(500 * rarityValue * (1 + (0.075 * level)));
                     var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                     coins += divorceValue;
                     client.economyManager[message.author.id].coins = encrypt(coins.toString());
