@@ -224,13 +224,13 @@ function info(client, message, args) {
 					else if (playerUtb == playerTeam.members.length) {
 						res = "lose";
 						end = true;
-						embed.setFooter((message.mentions.users.size ? message.mentions.users.first().username : "The opponent") + " is the winner!\nYou lost " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length) + " " + client.config.currency + (message.mentions.users.size ? (" and " + message.mentions.users.first().username + " got " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length) + " " + client.config.currency + " and " + parseInt(2 * (2 + maxLevel * 0.6) *  opponentTeam.members.length) + " EXP...") : ""));
+						embed.setFooter((message.mentions.users.size ? message.mentions.users.first().username : "The opponent") + " is the winner!\nYou lost " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length) + " " + client.config.currency + (message.mentions.users.size ? (" and " + message.mentions.users.first().username + " got " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length) + " " + client.config.currency + " and " + parseInt((2 + maxLevel * 0.6) *  opponentTeam.members.length) + " EXP...") : ""));
 						clearInterval(interval);
 					}
 					else if (opponentUtb == opponentTeam.members.length) {
 						res = "win";
 						end = true;
-						embed.setFooter("You are the winner! Congratulations!\nYou got " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length) + " " + client.config.currency + " and your team got " + parseInt(2 * (2 + maxLevel * 0.6) *  opponentTeam.members.length) + " EXP!\n" + (message.mentions.users.size ? (message.mentions.users.first().username + " has lost " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length) + " " + client.config.currency + "!") : ""));
+						embed.setFooter("You are the winner! Congratulations!\nYou got " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length) + " " + client.config.currency + " and your team got " + parseInt((2 + maxLevel * 0.6) *  opponentTeam.members.length) + " EXP!\n" + (message.mentions.users.size ? (message.mentions.users.first().username + " has lost " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length) + " " + client.config.currency + "!") : ""));
 						clearInterval(interval);
 					}
 					if (!end && opponentUtb != opponentTeam.members.length || res == "draw") msg.edit(embed);
@@ -240,7 +240,7 @@ function info(client, message, args) {
 						else coins -= parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length);
 						client.economyManager[message.author.id].coins = encrypt(coins.toString());
 						if (res == "win") {
-							var rExp = parseInt(2 * (2 + maxLevel * 0.6) *  opponentTeam.members.length);
+							var rExp = parseInt((2 + maxLevel * 0.6) *  opponentTeam.members.length);
 							for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
 								var waifu;
 								for (var j = 0; j < client.economyManager[message.author.id].waifus.length; j++) {
@@ -273,7 +273,7 @@ function info(client, message, args) {
 							if (!error && response.statusCode == 200 && body.includes("Success")) {
 								if (message.mentions.users.size) {
 									if (res == "lose") {
-										var rExp = parseInt(2 * (2 + maxLevel * 0.6) *  opponentTeam.members.length);
+										var rExp = parseInt((2 + maxLevel * 0.6) *  opponentTeam.members.length);
 										for (var i = 0; i < client.economyManager[message.mentions.users.first().id].team.members.length; i++) {
 											var waifu;
 											for (var j = 0; j < client.economyManager[message.mentions.users.first().id].waifus.length; j++) {
