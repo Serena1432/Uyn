@@ -22,8 +22,13 @@ function use(client, message, args) {
         }
         if (!item) return message.reply("Invalid item code!");
         var has = false;
-        for (var i = 0; i < client.economyManager[message.author.id].inventory.length; i++) {
-            if (client.economyManager[message.author.id].inventory[i] == args[0]) has = true;
+        if (item.type == "leveling_ticket") {
+            eval("if (client.economyManager[message.author.id].leveling_tickets." + item.code + ") has = true");
+        }
+        else {
+            for (var i = 0; i < client.economyManager[message.author.id].inventory.length; i++) {
+                if (client.economyManager[message.author.id].inventory[i] == args[0]) has = true;
+            }
         }
         if (!has) return message.reply("You don't have this item in the inventory!");
         switch (item.type) {
@@ -50,6 +55,66 @@ function use(client, message, args) {
                         console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
                         return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
                     }
+                });
+                break;
+            }
+            case "leveling_ticket": {
+                if (!args[1]) return message.reply("Please type a waifu ID!");
+                if (isNaN(args[1])) return message.reply("The waifu ID must be a number!");
+                if (args[2] && isNaN(args[2])) return message.reply("The quantity must be a number!");
+                var waifu, quantity = args[2] ? parseInt(args[2]) : 1;
+                if (eval("client.economyManager[message.author.id].leveling_tickets." + item.code) < quantity) return message.reply("You don't have enough tickets!");
+                for (var i = 0; i < client.economyManager[message.author.id].waifus.length; i++) {
+                    if (client.economyManager[message.author.id].waifus[i].id == args[1]) {
+                        waifu = client.economyManager[message.author.id].waifus[i];
+                        break;
+                    }
+                }
+                if (!waifu) return message.reply("Invalid Waifu ID!");
+                eval("client.economyManager[message.author.id].leveling_tickets." + item.code + " -= quantity");
+                var exp = item.exp_points * quantity;
+                    while (exp > 0) {
+                        if (parseInt(waifu.max_exp) - waifu.exp > exp) {
+                            waifu.exp += exp;
+                            exp = 0;
+                        }
+                        else {
+                            exp -= parseInt(waifu.max_exp) - waifu.exp;
+                            waifu.level++;
+                            waifu.exp = 0;
+                            waifu.max_exp = parseInt(waifu.base_exp * (1 + 0.15 * (waifu.level - 1)));
+                        }
+                    }
+                request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
+                    type: "update",
+                    token: process.env.php_server_token,
+                    id: message.author.id,
+                    data: JSON.stringify(client.economyManager[message.author.id])
+                }}, function(error, response, body) {
+                    if (!error && response.statusCode == 200 && body.includes("Success")) {
+                        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                        let result = "";
+                        for (let i = 0; i < 32; i++) {
+                            result += characters.charAt(Math.floor(Math.random() * characters.length));
+                        }
+                        if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**ID:** " + result, new Discord.MessageEmbed()
+                            .setColor(Math.floor(Math.random() * 16777215))
+                            .setAuthor(message.author.username + " has just leveled up his/her waifu using a leveling ticket.", message.author.avatarURL({size: 128}))
+                            .setTimestamp()
+                        );
+                        else console.log("Cannot get the log channel.");
+                        const embed = {
+                            color: Math.floor(Math.random() * 16777215),
+                            author: {
+                                name: message.author.tag,
+                                icon_url: message.author.avatarURL({size: 128})
+                            },
+                            description: "You just used " + (quantity > 1 ? quantity : "a") + " " + item.name + " and your **" + waifu.name + "** got " + (item.exp_points * quantity).toLocaleString() + " EXP.\n\n**Transaction ID:**\n" + result + "\nYou should remember this ID and send this to the BOT developer if something wrong happened.",
+                            timestamp: new Date()
+                        };
+                        message.channel.send({embed: embed});
+                    }
+                    else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
                 });
                 break;
             }

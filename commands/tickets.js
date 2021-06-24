@@ -12,53 +12,20 @@ function random(min, max) {
 
 function inventory(client, message, args) {
     try {
+        var embed = new Discord.MessageEmbed()
+        .setAuthor(message.author.username + "'s available tickets", message.author.avatarURL({size: 128, dynamic: true}))
+        .setDescription("Use the `use <code> <waifu ID> <quantity>` command to use a leveling ticket.\nUse the `roll <code>` command to use a gacha ticket.")
+        .setColor(Math.floor(Math.random() * 1677215))
+        .setTimestamp();
         var items = require("../items.json");
-        if (!client.economyManager[message.author.id].inventory) client.economyManager[message.author.id].inventory = [];
-        if (client.economyManager[message.author.id].inventory.length == 0) return message.reply("You don't have anything in the inventory!");
-        var n = 0;
-        if (args[0]) n = parseInt(args[0]) - 1;
-        var descText = "`------------------------------------------\n| Code   | Item name                     |\n------------------------------------------";
-        if (n * 10 > client.economyManager[message.author.id].inventory.length - 1) return message.reply("There aren't any more items in your inventory!");
-        for (var i = n * 10; i < n * 10 + 10; i++) {
-            if (client.economyManager[message.author.id].inventory[i]) {
-				for (var j = 0; j < items.length; j++) {
-					if (items[j].code == client.economyManager[message.author.id].inventory[i]) {
-						var item = items[j];
-						switch (item.type) {
-							case "background": {
-								var name = "\"" + item.name + "\" Banner Image";
-								descText += "\n| " + item.code;
-								for (var k = 0; k < 6 - item.code.length; k++) descText += " ";
-								if (name.length <= 29) {
-									descText += " | " + name;
-									for (var k = 0; k < 29 - name.length; k++) descText += " ";
-								}
-								else descText += " | " + name.substr(0, 26) + "...";
-								descText += " |";
-								break;
-							}
-						}
-						descText += "\n------------------------------------------";
-					}
-				}
-            } else break;
+        if (!client.economyManager[message.author.id].leveling_tickets) client.economyManager[message.author.id].leveling_tickets = {};
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            if (item.type == "leveling_ticket" || item.type == "gacha_ticket") {
+                embed.addField("(" + item.code + ") " + item.name, "**Available:** " + eval("client.economyManager[message.author.id].leveling_tickets." + item.code + " ? client.economyManager[message.author.id].leveling_tickets." + item.code + ".toString() : '0'"), true);
+            }
         }
-        descText += "`\nUse the `preview <code>` command to preview a banner image.\nUse the `use <code>` command to use an item.\nUse the `tickets` command to view all of your bought tickets.\n";
-        if ((n + 1) * 10 <= client.economyManager[message.author.id].inventory.length - 1) descText += "Use the `inventory " + (n + 2) + "` command to get to the next page.";
-        const embed = {
-            color: Math.floor(Math.random() * 16777214) + 1,
-            author: {
-                name: message.author.username + "'s inventory",
-                icon_url: message.author.avatarURL({
-                    size: 128
-                })
-            },
-            description: descText,
-            timestamp: new Date()
-        };
-        message.channel.send({
-            embed: embed
-        });
+        message.channel.send(embed);
     }
     catch (err) {
         console.error(err);
@@ -117,9 +84,9 @@ module.exports.run = async (client, message, args) => {
 }
 
 module.exports.config = {
-    name: "inventory",
-    description: "View your inventory",
-    usage: require("../config.json").prefix + "inventory <page>",
+    name: "tickets",
+    description: "List of your available tickets",
+    usage: require("../config.json").prefix + "tickets <page>",
     accessableby: "Members",
     aliases: [],
     category: "💰 Economy",

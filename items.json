@@ -1,11 +1,56 @@
 [
     {
+        "code": "lvt1",
+        "name": "Leveling Ticket 1★",
+        "type": "leveling_ticket",
+        "description": "A small leveling ticket that gives 100 EXP to your waifu/husbando.",
+        "exp_points": 100,
+        "price": 5000,
+        "price_type": "currency"
+    },
+    {
+        "code": "lvt2",
+        "name": "Leveling Ticket 2★",
+        "type": "leveling_ticket",
+        "exp_points": 500,
+        "description": "A medium leveling ticket that gives 500 EXP to your waifu/husbando.",
+        "price": 25000,
+        "price_type": "currency"
+    },
+    {
+        "code": "lvt3",
+        "name": "Leveling Ticket 3★",
+        "type": "leveling_ticket",
+        "description": "A medium leveling ticket that gives 1000 EXP to your waifu/husbando.",
+        "exp_points": 1000,
+        "price": 50000,
+        "price_type": "currency"
+    },
+    {
+        "code": "lvt4",
+        "name": "Leveling Ticket 4★",
+        "type": "leveling_ticket",
+        "description": "A large leveling ticket that gives 5000 EXP to your waifu/husbando.",
+        "exp_points": 5000,
+        "price": 250000,
+        "price_type": "currency"
+    },
+    {
+        "code": "lvt5",
+        "name": "Leveling Ticket 5★",
+        "type": "leveling_ticket",
+        "description": "A very large leveling ticket that gives 10000 EXP to your waifu/husbando.",
+        "exp_points": 10000,
+        "price": 500000,
+        "price_type": "currency"
+    },
+    {
         "code": "afbi",
         "name": "Anime Festival",
         "type": "background",
         "background_image": "pan0280_background_1",
         "description": "An anime festival image for your profile banner.\nSubmitted by Pan#0280.",
-        "price": "50000",
+        "price": 50000,
         "price_type": "currency"
     },
     {
@@ -14,7 +59,7 @@
         "type": "background",
         "background_image": "pan0280_background_2",
         "description": "An big fish & begonia image for your profile banner.\nSubmitted by Pan#0280.",
-        "price": "50000",
+        "price": 50000,
         "price_type": "currency"
     },
     {
@@ -23,7 +68,7 @@
         "type": "background",
         "background_image": "pan0280_background_3",
         "description": "An anime couple image for your profile banner.\nSubmitted by Pan#0280.",
-        "price": "50000",
+        "price": 50000,
         "price_type": "currency"
     },
     {
@@ -32,7 +77,7 @@
         "type": "background",
         "background_image": "pan0280_background_4",
         "description": "An anime city image for your profile banner.\nSubmitted by Pan#0280.",
-        "price": "50000",
+        "price": 50000,
         "price_type": "currency"
     },
     {
@@ -41,7 +86,7 @@
         "type": "background",
         "background_image": "pan0280_background_5",
         "description": "An anime shop image for your profile banner.\nSubmitted by Pan#0280.",
-        "price": "50000",
+        "price": 50000,
         "price_type": "currency"
     },
     {
@@ -50,7 +95,7 @@
         "type": "background",
         "background_image": "pan0280_background_6",
         "description": "An anime sakura image for your profile banner.\nSubmitted by Pan#0280.",
-        "price": "50000",
+        "price": 50000,
         "price_type": "currency"
     },
     {
@@ -59,7 +104,7 @@
         "type": "background",
         "background_image": "pan0280_background_7",
         "description": "Barbara (Genshin Impact)'s image for your profile banner.\nSubmitted by Pan#0280.",
-        "price": "50000",
+        "price": 50000,
         "price_type": "currency"
     },
     {
@@ -68,7 +113,7 @@
         "type": "background",
         "background_image": "pan0280_background_8",
         "description": "An anime cherry blossom image for your profile banner.\nSubmitted by Pan#0280.",
-        "price": "50000",
+        "price": 50000,
         "price_type": "currency"
     },
     {
@@ -77,7 +122,7 @@
         "type": "background",
         "background_image": "pan0280_background_9",
         "description": "The second anime city image for your profile banner.\nSubmitted by Pan#0280.",
-        "price": "50000",
+        "price": 50000,
         "price_type": "currency"
     },
     {
@@ -86,7 +131,7 @@
         "type": "background",
         "background_image": "pan0280_background_10",
         "description": "An anime sunset image for your profile banner.\nSubmitted by Pan#0280.",
-        "price": "50000",
+        "price": 50000,
         "price_type": "currency"
     },
     {
@@ -95,7 +140,7 @@
         "type": "background",
         "background_image": "pan0280_background_11",
         "description": "The second anime sunset image for your profile banner.\nSubmitted by Pan#0280.",
-        "price": "50000",
+        "price": 50000,
         "price_type": "currency"
     },
     {
@@ -104,7 +149,7 @@
         "type": "background",
         "background_image": "pan0280_background_12",
         "description": "An anime clouds image for your profile banner.\nSubmitted by Pan#0280.",
-        "price": "50000",
+        "price": 50000,
         "price_type": "currency"
     },
     {
@@ -113,7 +158,7 @@
         "type": "background",
         "background_image": "pan0280_background_13",
         "description": "An anime waterfall image for your profile banner.\nSubmitted by Pan#0280.",
-        "price": "50000",
+        "price": 50000,
         "price_type": "currency"
     },
     {
@@ -122,7 +167,7 @@
         "type": "background",
         "background_image": "6886_background_1",
         "description": "An anime bridge image for your profile banner.\nSubmitted by ||(っ´▽`)っ||#6886.",
-        "price": "1000",
+        "price": 1000,
         "price_type": "message_points"
     },
     {
@@ -131,7 +176,7 @@
         "type": "background",
         "background_image": "chika1649_background_1",
         "description": "The second anime bridge image for your profile banner.\nSubmitted by ʕっ•ᴥ•ʔっ#1649.",
-        "price": "1000",
+        "price": 1000,
         "price_type": "message_points"
     }
 ]

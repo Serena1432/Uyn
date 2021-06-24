@@ -39,6 +39,23 @@ module.exports.run = async (client, message, args) => {
                         descText += " |";
                         break;
                     }
+                    case "leveling_ticket": {
+                        descText += "\n| " + items[i].code;
+                        for (var j = 0; j < 6 - items[i].code.length; j++) descText += " ";
+                        if (items[i].name.length <= 29) {
+                            descText += " | " + items[i].name;
+                            for (var j = 0; j < 29 - items[i].name.length; j++) descText += " ";
+                        }
+                        else descText += " | " + items[i].name.substr(0, 26) + "...";
+                        var price = items[i].price + ((items[i].price_type == "currency") ? client.config.currency : "💬 Message Points");
+                        if (price.length <= 16) {
+                            descText += " | " + price;
+                            for (var j = 0; j < 16 - price.length; j++) descText += " ";
+                        }
+                        else descText += " | " + price.substr(0, 13) + "...";
+                        descText += " |";
+                        break;
+                    }
                 }
                 descText += "\n-------------------------------------------------------------";
             } else break;

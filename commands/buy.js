@@ -26,14 +26,22 @@ function buy(client, message, args, item) {
         inv.cash = parseInt(decrypt(client.economyManager[message.author.id].messagePoints))
     }
     if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
-    if (inv.cash < item.price) return message.reply("Insufficent **" + inv.type + "**!");
+    if (item.type == "leveling_ticket") {
+        if (args[1] && isNaN(args[1])) return message.reply("The quantity must be a number!");
+        if (inv.cash < item.price * (args[1] ? parseInt(args[1]) : 1)) return message.reply("Insufficent **" + inv.type + "**!");
+    }
+    else if (inv.cash < item.price) return message.reply("Insufficent **" + inv.type + "**!");
     var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
     if (item.price_type == "message_points") coins = parseInt(decrypt(client.economyManager[message.author.id].messagePoints));
     coins -= item.price;
     if (item.price_type == "message_points") client.economyManager[message.author.id].messagePoints = encrypt(coins.toString());
     else client.economyManager[message.author.id].coins = encrypt(coins.toString());
     var length = client.economyManager[message.author.id].inventory.length;
-    client.economyManager[message.author.id].inventory.push(item.code);
+    if (item.type == "leveling_ticket") {
+        if (!client.economyManager[message.author.id].leveling_tickets) client.economyManager[message.author.id].leveling_tickets = {};
+        eval("if (!client.economyManager[message.author.id].leveling_tickets." + item.code + ") client.economyManager[message.author.id].leveling_tickets." + item.code + " = 1; else client.economyManager[message.author.id].leveling_tickets." + item.code + " += (args[1] ? parseInt(args[1]) : 1);");
+    }
+    else client.economyManager[message.author.id].inventory.push(item.code);
     request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
         type: "update",
         token: process.env.php_server_token,
@@ -139,7 +147,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.config = {
     name: "buy",
     description: "Buy an item in the BOT's shop",
-    usage: require("../config.json").prefix + "buy <id>",
+    usage: require("../config.json").prefix + "buy <id> <quantity>",
     accessableby: "Members",
     aliases: [],
     category: "💰 Economy",
