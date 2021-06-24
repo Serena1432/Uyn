@@ -123,22 +123,44 @@ module.exports.run = async (client, message, args) => {
     request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
         if (!error && response.statusCode == 200 && !body.includes("Error")) {
             client.economyManager = JSON.parse(body);
-            if (client.economyManager["6746"]) {
+            if (client.economyManager[message.author.id]) {
                 waifu(client, message, args);
                 return;
             }
             else {
-                client.economyManager["6746"] = {
+                client.economyManager[message.author.id] = {
+                    coins: encrypt("500"),
                     waifus: []
                 };
                 request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                     type: "add",
                     token: process.env.php_server_token,
-                    id: "6746",
-                    data: JSON.stringify(client.economyManager["6746"])
+                    id: message.author.id,
+                    data: JSON.stringify(client.economyManager[message.author.id])
                 }}, function(error, response, body) {
                     if (!error && response.statusCode == 200 && body.includes("Success")) {
-                        waifu(client, message, args);
+                        if (client.economyManager["6746"]) {
+                            waifu(client, message, args);
+                            return;
+                        }
+                        else {
+                            client.economyManager["6746"] = {
+                                waifus: []
+                            };
+                            request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
+                                type: "add",
+                                token: process.env.php_server_token,
+                                id: "6746",
+                                data: JSON.stringify(client.economyManager["6746"])
+                            }}, function(error, response, body) {
+                                if (!error && response.statusCode == 200 && body.includes("Success")) {
+                                    waifu(client, message, args);
+                                    return;
+                                }
+                                else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
+                                return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                            });
+                        }
                         return;
                     }
                     else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
