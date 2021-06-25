@@ -25,11 +25,11 @@ function roll(client, message, args) {
                 ssRareRate = 0.03;
             }
             else if (args[0] == "msgp") {
-                if (parseInt(decrypt(client.economyManager[message.author.id].messagePoints)) < 500) return message.reply("Insufficent balance!");
+                if (parseInt(decrypt(client.economyManager[message.author.id].messagePoints)) < 100) return message.reply("Insufficent 💬 Message Points!");
                 var msgp = parseInt(decrypt(client.economyManager[message.author.id].messagePoints));
                 msgp -= 100;
                 client.economyManager[message.author.id].messagePoints = encrypt(msgp.toString());
-                spent = "500 🪙 Uyncoins";
+                spent = "100 💬 Message Points";
                 normalRate = 0.8;
                 rareRate = 0.1;
                 sRareRate = 0.05;
