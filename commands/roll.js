@@ -23,7 +23,17 @@ function roll(client, message, args) {
                 rareRate = 0.1;
                 sRareRate = 0.05;
                 ssRareRate = 0.03;
-                break;
+            }
+            else if (args[0] == "msgp") {
+                if (parseInt(decrypt(client.economyManager[message.author.id].messagePoints)) < 500) return message.reply("Insufficent balance!");
+                var msgp = parseInt(decrypt(client.economyManager[message.author.id].messagePoints));
+                msgp -= 100;
+                client.economyManager[message.author.id].messagePoints = encrypt(msgp.toString());
+                spent = "500 🪙 Uyncoins";
+                normalRate = 0.8;
+                rareRate = 0.1;
+                sRareRate = 0.05;
+                ssRareRate = 0.03;
             }
             if (random < normalRate) {
                 rarity = "Normal";
