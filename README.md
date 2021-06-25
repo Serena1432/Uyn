@@ -10,7 +10,7 @@
 
 # Welcome to the GitHub Source Code page of the Uyn BOT!
 
-"Uyn" is a BOT that does many miscellaneous things like fun things, moderation things, and so on.
+"Uyn" is a BOT that does many miscellaneous things like waifu/husbando collecting things, fun things, moderation things, and so on.
 
 ## List of commands
 You can use the `u!help (command)` command to get information about a specific command!
@@ -22,7 +22,6 @@ account, avatar, developer, owner, profile, setbio, settheme
 addrole, balance, buy, cash, daily, gbuy, gdelete, give, gshop, hourly, inv, inventory, money, monthly, preview, shop, tickets, use, weekly
 
 ### 📺 Anime/Manga:
-
 anime, character, manga
 
 ### 😊 Just for fun:
@@ -35,7 +34,6 @@ baka, bite, bonk, boop, bully, cry, dance, greet, grin, highfive, hold, hug, hun
 ban, kick, mute, setnickname, unmute, warn
 
 ### 👧 Waifu/Husbando Collection:
-
 battle, dex, divorce, info, roll, search, sell, team, trade, waifu, wbuy, wshop
 
 ### 🚩 Server information:
