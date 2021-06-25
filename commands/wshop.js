@@ -45,6 +45,7 @@ function waifu(client, message, args) {
             .setColor(Math.floor(Math.random() * 16777215))
             .setDescription("This message only shows 10 first results. To reduce the search results please search using the full name.\nUse the `wbuy <id>` command to buy a waifu/husbando.")
             .setTimestamp();
+            var length = 0;
             for (var i = 0; i < client.economyManager["6746"].waifus.length; i++) {
                 if (client.economyManager["6746"].waifus[i].name.toLowerCase().includes(args.join(" ").toLowerCase()) && length < 10) {
                     length++;
