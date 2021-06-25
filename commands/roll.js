@@ -12,7 +12,7 @@ function roll(client, message, args) {
         try {
             var spent = "500 🪙 Uyncoins";
             if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
-            if (client.economyManager[message.author.id].waifus.length >= 50) return message.reply("You have exceeded the maximum limit of waifus in an account! Please remove one and try again!")
+            if (client.economyManager[message.author.id].waifus.length >= 200) return message.reply("You have exceeded the maximum limit of waifus in an account! Please remove one and try again!")
             var random = Math.random(), waifu, length = client.economyManager[message.author.id].waifus.length, rarity, type, normalRate, rareRate, sRareRate, ssRareRate;
             if (!args[0] || args[0] == "uync") {
                 if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < 500) return message.reply("Insufficent balance!");
