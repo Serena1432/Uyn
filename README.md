@@ -19,16 +19,24 @@ You can use the `u!help (command)` command to get information about a specific c
 account, avatar, developer, owner, profile, setbio, settheme
 
 ### 💰 Economy:
-addrole, balance, buy, cash, daily, gbuy, gdelete, give, gshop, hourly, inv, inventory, money, monthly, preview, shop, use, weekly
+addrole, balance, buy, cash, daily, gbuy, gdelete, give, gshop, hourly, inv, inventory, money, monthly, preview, shop, tickets, use, weekly
+
+### 📺 Anime/Manga:
+
+anime, character, manga
 
 ### 😊 Just for fun:
-arrest, cert, coffindance, covid19, gay, img, les, number, poll, quote, reverse, roll, say, trap, trash
+arrest, cert, coffindance, covid19, gay, img, les, number, poll, quote, reverse, say, trap, trash
 
 ### 👋 Interactions:
 baka, bite, bonk, boop, bully, cry, dance, greet, grin, highfive, hold, hug, hungry, kill, kiss, lewd, lick, love, muda, nom, pat, poke, pout, punch, shrug, slap, sleep, smile, smug, snuggle, stare, thinking, thumbsup, tickle, wag, wait, wave
 
 ### ⚙️ Moderations:
 ban, kick, mute, setnickname, unmute, warn
+
+### 👧 Waifu/Husbando Collection:
+
+battle, dex, divorce, info, roll, search, sell, team, trade, waifu, wbuy, wshop
 
 ### 🚩 Server information:
 channels, guild, role
@@ -52,7 +60,7 @@ deletequote, setquote, showquote, togglequote
 You can enable or disable sending the ping-responsing messages in your server by using the `u!togglequote on/off` command.
 
 ### 🤖 BOT information:
-invite, ping, stats
+checkperm, invite, ping, stats
 
 ### 🎲 Gambling:
 flip, slots
