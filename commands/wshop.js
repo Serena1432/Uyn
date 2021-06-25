@@ -13,6 +13,7 @@ function waifu(client, message, args) {
         if (client.economyManager["6746"].waifus.length == 0) return message.reply("There aren't any waifus/husbandos in the BOT's public shop!");
         try {
             var descText = "Use the `wbuy <id>` command to buy a waifu/husbando.\nUse the `wshop <name>` command to search for waifus/husbando that have a specific name.";
+            if ((n + 1) * 6 <= client.economyManager["6746"].waifus.length - 1) descText += "\nUse the `wshop " + (n + 2) + "` command to get to the next page.";
             var embed = new Discord.MessageEmbed()
             .setAuthor(client.user.username + " BOT's public shop", client.user.avatarURL({
                 size: 128
@@ -28,7 +29,6 @@ function waifu(client, message, args) {
                     embed.addField((i + 1) + ". " + waifu.name, "**Rarity:** " + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "\n**Level:** " + waifu.level + "\n**Seller:** " + (client.users.cache.get(waifu.seller) ? client.users.cache.get(waifu.seller).tag : "Unknown") + "\n**Price:** " + waifu.price.toLocaleString() + " " + client.config.currency, true);
                 } else break;
             }
-            if ((n + 1) * 6 <= client.economyManager["6746"].waifus.length - 1) descText += "\nUse the `wshop " + (n + 2) + "` command to get to the next page.";
             message.channel.send(embed);
         }
         catch (err) {
