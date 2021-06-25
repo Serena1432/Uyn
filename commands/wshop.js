@@ -25,7 +25,7 @@ function waifu(client, message, args) {
             for (var i = n * 6; i < n * 6 + 6; i++) {
                 if (client.economyManager["6746"].waifus[i]) {
                     var waifu = client.economyManager["6746"].waifus[i];
-                    embed.addField((i + 1) + ". " + waifu.name, "**Rarity:** " + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "\n**Level:** " + waifu.level + "\n**Seller:** " + (client.users.cache.get(waifu.seller) ? client.users.cache.get(waifu.seller).tag : "Unknown") + "\n**Price:** " + waifu.price + " " + client.config.currency, true);
+                    embed.addField((i + 1) + ". " + waifu.name, "**Rarity:** " + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "\n**Level:** " + waifu.level + "\n**Seller:** " + (client.users.cache.get(waifu.seller) ? client.users.cache.get(waifu.seller).tag : "Unknown") + "\n**Price:** " + waifu.price.toLocaleString() + " " + client.config.currency, true);
                 } else break;
             }
             if ((n + 1) * 6 <= client.economyManager["6746"].waifus.length - 1) descText += "\nUse the `wshop " + (n + 2) + "` command to get to the next page.";
@@ -50,7 +50,7 @@ function waifu(client, message, args) {
                 if (client.economyManager["6746"].waifus[i].name.toLowerCase().includes(args.join(" ").toLowerCase()) && length < 10) {
                     length++;
                     var waifu = client.economyManager["6746"].waifus[i];
-                    embed.addField((i + 1) + ". " + waifu.name, "**Rarity:** " + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "\n**Level:** " + waifu.level + "\n**Seller:** " + (client.users.cache.get(waifu.seller) ? client.users.cache.get(waifu.seller).tag : "Unknown") + "\n**Price:** " + waifu.price + " " + client.config.currency);
+                    embed.addField((i + 1) + ". " + waifu.name, "**Rarity:** " + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "\n**Level:** " + waifu.level + "\n**Seller:** " + (client.users.cache.get(waifu.seller) ? client.users.cache.get(waifu.seller).tag : "Unknown") + "\n**Price:** " + waifu.price.toLocaleString() + " " + client.config.currency);
                 }
             }
             message.channel.send(embed);
