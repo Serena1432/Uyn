@@ -33,7 +33,7 @@ function info(client, message, args) {
 				}
 				maxLevel = Math.max(waifu.level, maxLevel);
 			}
-			if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < 50 * (2 + maxLevel * 0.35)) return message.reply("You need to have at least **" + (50 * (2 + maxLevel * 0.35)) + " " + client.config.currency + "** to start a battle!");
+			if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < 50 * (2 + maxLevel * 0.35)) return message.reply("You need to have at least **" + parseInt(50 * (2 + maxLevel * 0.35)) + " " + client.config.currency + "** to start a battle!");
 			for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
 				var waifu;
 				for (var j = 0; j < client.economyManager[message.author.id].waifus.length; j++) {
