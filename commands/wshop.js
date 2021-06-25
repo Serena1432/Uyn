@@ -20,7 +20,7 @@ function waifu(client, message, args) {
             .setColor(Math.floor(Math.random() * 16777215))
             .setDescription(descText)
             .setTimestamp();
-            var n = parseInt(args[0]) || 0;
+            var n = parseInt(args[0]) - 1 || 0;
             if (n * 6 > client.economyManager["6746"].waifus.length - 1) return message.reply("There aren't have any more waifus/husbandos in the shop!");
             for (var i = n * 6; i < n * 6 + 6; i++) {
                 if (client.economyManager["6746"].waifus[i]) {
