@@ -17,7 +17,7 @@ module.exports.run = async (client, message, args) => {
 	var mutedRole = message.guild.roles.cache.find(role => role.name == "Muted");
 	if (!member.roles.cache.find(role => role.id == mutedRole.id)) return message.reply("This member isn't being muted!");
 	request(process.env.php_server_url + '/MuteManager.php?token=' + process.env.php_server_token + '&type=delete&victim=' + member.user.id + '&server=' + message.guild.id, function(error, response, body) {
-		if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Error")) {
+		if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Connection failed")) {
 			member.roles.remove(mutedRole, "Manual Unmute by " + message.author.tag);
 			message.channel.send({
 				embed: {

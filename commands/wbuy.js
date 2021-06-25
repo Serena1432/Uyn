@@ -100,7 +100,7 @@ function wbuy(client, message, args) {
 module.exports.run = async (client, message, args) => {
     try {
         request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
-            if (!error && response.statusCode == 200 && !body.includes("Error")) {
+            if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
                 client.economyManager = JSON.parse(body);
                 if (client.economyManager[message.author.id]) {
                     wbuy(client, message, args);

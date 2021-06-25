@@ -8,13 +8,24 @@ function random(min, max) {
 }
 
 function roll(client, message, args) {
-    if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < 500) return message.reply("Insufficent balance!");
     if (!client.countdown[message.author.id] || client.countdown[message.author.id] < (new Date()).getTime()) {
         try {
+            var spent = "500 🪙 Uyncoins";
             if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
-            if (client.economyManager[message.author.id].waifus.length >= 50) return message.reply("You have exceeded the maximum limit of waifus in an account!")
-            var random = Math.random(), waifu, length = client.economyManager[message.author.id].waifus.length, rarity, type;
-            if (random < 0.85) {
+            if (client.economyManager[message.author.id].waifus.length >= 50) return message.reply("You have exceeded the maximum limit of waifus in an account! Please remove one and try again!")
+            var random = Math.random(), waifu, length = client.economyManager[message.author.id].waifus.length, rarity, type, normalRate, rareRate, sRareRate, ssRareRate;
+            if (!args[0] || args[0] == "uync") {
+                if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < 500) return message.reply("Insufficent balance!");
+                var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
+                coins -= 500;
+                client.economyManager[message.author.id].coins = encrypt(coins.toString());
+                normalRate = 0.8;
+                rareRate = 0.1;
+                sRareRate = 0.05;
+                ssRareRate = 0.03;
+                break;
+            }
+            if (random < normalRate) {
                 rarity = "Normal";
                 if (Math.random() <= 0.5) {
                     waifu = client.waifus.normal[Math.floor(Math.random() * client.waifus.normal.length)];
@@ -25,7 +36,7 @@ function roll(client, message, args) {
                     type = "Husbando";
                 }
             }
-            else if (random >= 0.85 && random < 0.9) {
+            else if (random >= normalRate && random < normalRate + rareRate) {
                 rarity = "Rare";
                 if (Math.random() <= 0.5) {
                     waifu = client.waifus.rare[Math.floor(Math.random() * client.waifus.rare.length)];
@@ -36,7 +47,7 @@ function roll(client, message, args) {
                     type = "Husbando";
                 }
             }
-            else if (random >= 0.9 && random < 0.95) {
+            else if (random >= normalRate + rareRate && random < normalRate + rareRate + sRareRate) {
                 rarity = "Super Rare";
                 if (Math.random() <= 0.5) {
                     waifu = client.waifus.srare[Math.floor(Math.random() * client.waifus.srare.length)];
@@ -47,7 +58,7 @@ function roll(client, message, args) {
                     type = "Husbando";
                 }
             }
-            else if (random >= 0.95 && random < 0.98) {
+            else if (random >= normalRate + rareRate + sRareRate && random < normalRate + rareRate + sRareRate + ssRareRate) {
                 waifu = client.waifus.ssrare[Math.floor(Math.random() * client.waifus.ssrare.length)];
                 rarity = "Specially Super Rare";
                 type = "Waifu";
@@ -71,9 +82,6 @@ function roll(client, message, args) {
                 max_exp: waifu.base_exp,
                 rarity: rarity
             });
-            var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
-            coins -= 500;
-            client.economyManager[message.author.id].coins = encrypt(coins.toString());
             request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                 type: "update",
                 token: process.env.php_server_token,
@@ -89,10 +97,10 @@ function roll(client, message, args) {
                     }
                     if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
                         .setColor(Math.floor(Math.random() * 16777215))
-                        .setAuthor(message.author.username + " has just spent 500 Uyncoins for rolling a waifu/husbando.", message.author.avatarURL({size: 128}))
+                        .setAuthor(message.author.username + " has just spent " + spent + " for rolling a waifu/husbando.", message.author.avatarURL({size: 128}))
                         .setTimestamp()
                     );
-                    message.channel.send("**" + message.author.username + "** spent **500 " + client.config.currency + "** and rolled a " + rarity + " " + type + ":", new Discord.MessageEmbed()
+                    message.channel.send("**" + message.author.username + "** spent **" + spent + "** and rolled a " + rarity + " " + type + ":", new Discord.MessageEmbed()
                     .setDescription("**" + waifu.name + "**\n" + waifu.anime)
                     .setImage(waifu.image_url)
                     .setTimestamp());
@@ -128,7 +136,7 @@ function roll(client, message, args) {
 
 module.exports.run = async (client, message, args) => {
     request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
-        if (!error && response.statusCode == 200 && !body.includes("Error")) {
+        if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
             client.economyManager = JSON.parse(body);
             if (client.economyManager[message.author.id]) {
                 roll(client, message, args);

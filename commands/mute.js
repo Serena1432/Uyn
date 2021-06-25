@@ -53,11 +53,11 @@ module.exports.run = async (client, message, args) => {
     if (member.roles.cache.find(role => role.id == mutedRole.id)) return message.reply("This member is already being muted!");
     if (duration) {
         request(process.env.php_server_url + '/MuteManager.php?token=' + process.env.php_server_token + '&type=add&id=' + author.id + '&victim=' + member.user.id + '&server=' + guild.id + "&endtime=" + ((new Date()).getTime() + duration), function(error, response, body) {
-            if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Error")) {
+            if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Connection failed")) {
                 member.roles.add(mutedRole, "Muted by " + author.tag + " - " + reason);
                 setTimeout(function() {
                     request(process.env.php_server_url + '/MuteManager.php?token=' + process.env.php_server_token + '&type=delete&victim=' + member.user.id + '&server=' + guild.id, function(error, response, body) {
-						if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Error")) {
+						if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Connection failed")) {
 							member.roles.remove(mutedRole, "Automatic Unmute");
 							member.user.send({
 								embed: {

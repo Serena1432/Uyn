@@ -9,7 +9,7 @@ function random(min, max) {
 
 module.exports.run = async (client, message, args) => {
         request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
-            if (!error && response.statusCode == 200 && !body.includes("Error")) {
+            if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
                 client.economyManager = JSON.parse(body);
                 if (!client.economyManager[message.guild.id] || client.economyManager[message.guild.id].roles.length == 0) return message.reply("Your server doesn't have anything in the shop!");
                 var n = 0;

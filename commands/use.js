@@ -118,6 +118,10 @@ function use(client, message, args) {
                 });
                 break;
             }
+            case "gacha_ticket": {
+                return message.reply("You cannot use this item by this command!\nUse the `roll <code>` command to use a gacha ticket.");
+                break;
+            }
             default: {
                 message.reply("The usage of another item type isn't supported yet!");
                 break;
@@ -155,7 +159,7 @@ module.exports.run = async (client, message, args) => {
         }
         else {
             request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
-                if (!error && response.statusCode == 200 && !body.includes("Error")) {
+                if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
                     try {
                         client.economyManager = JSON.parse(body);
                         if (client.economyManager[message.author.id] != undefined) {

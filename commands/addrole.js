@@ -12,7 +12,7 @@ module.exports.run = async (client, message, args) => {
     if (!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply("I don't have the Manage Roles permission! Please contact the server admin!");
     if (!client.addRole[message.author.id]) {
         request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
-            if (!error && response.statusCode == 200 && !body.includes("Error")) {
+            if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
                 client.economyManager = JSON.parse(body);
                 try {
                     client.addRole[message.author.id] = {

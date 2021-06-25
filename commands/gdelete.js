@@ -11,7 +11,7 @@ module.exports.run = async (client, message, args) => {
     try {
         if (!message.member.hasPermission("MANAGE_GUILD") && message.author.id != client.config.ownerId[0]) return message.reply("You need the Manage Guild permission to do this!");
         request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
-            if (!error && response.statusCode == 200 && !body.includes("Error")) {
+            if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
                 var formerRoles = client.economyManager[message.guild.id].roles;
                 client.economyManager = JSON.parse(body);
                 if (!client.economyManager[message.guild.id] || client.economyManager[message.guild.id].roles.length == 0) return message.reply("There aren't any items in the server shop!");
