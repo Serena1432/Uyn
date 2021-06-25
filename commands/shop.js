@@ -37,6 +37,7 @@ module.exports.run = async (client, message, args) => {
                         }
                         else descText += " | " + price.substr(0, 13) + "...";
                         descText += " |";
+                        descText += "\n-------------------------------------------------------------";
                         break;
                     }
                     case "leveling_ticket": {
@@ -54,10 +55,10 @@ module.exports.run = async (client, message, args) => {
                         }
                         else descText += " | " + price.substr(0, 13) + "...";
                         descText += " |";
+                        descText += "\n-------------------------------------------------------------";
                         break;
                     }
                 }
-                descText += "\n-------------------------------------------------------------";
             } else break;
         }
         descText += "`\nUse the `preview <code>` command to preview a banner image.\nUse the `buy <code>` command to buy an item.\n";

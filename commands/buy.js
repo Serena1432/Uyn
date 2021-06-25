@@ -96,6 +96,7 @@ module.exports.run = async (client, message, args) => {
             if (items[i].code == args[0]) item = items[i];
         }
         if (!item) return message.reply("Invalid item code!");
+        if (item.type == "gacha_ticket") return message.reply("You can't buy this item!")
         if (client.economyManager[message.author.id]) {
             buy(client, message, args, item);
             return;

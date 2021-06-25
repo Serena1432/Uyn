@@ -12,6 +12,7 @@ function roll(client, message, args) {
         try {
             var spent = "500 🪙 Uyncoins";
             if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
+            if (!client.economyManager[message.author.id].rolling_streaks) client.economyManager[message.author.id].rolling_streaks = 0;
             if (client.economyManager[message.author.id].waifus.length >= 200) return message.reply("You have exceeded the maximum limit of waifus in an account! Please remove one and try again!")
             var random = Math.random(), waifu, length = client.economyManager[message.author.id].waifus.length, rarity, type, normalRate, rareRate, sRareRate, ssRareRate;
             if (!args[0] || args[0] == "uync") {
@@ -34,6 +35,25 @@ function roll(client, message, args) {
                 rareRate = 0.1;
                 sRareRate = 0.05;
                 ssRareRate = 0.03;
+            }
+            else {
+                var item, items = require("../items.json");
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].code == args[0]) {
+                        item = items[i];
+                        break;
+                    }
+                }
+                if (!item) return message.reply("Invalid item ID!");
+                if (item.type != "gacha_ticket") return message.reply("This item isn't a gacha ticket! Please type another code!");
+                if (!client.economyManager[message.author.id].leveling_tickets) client.economyManager[message.author.id].leveling_tickets = {};
+                if (eval("!client.economyManager[message.author.id].leveling_tickets." + item.code)) return message.reply("You don't have this item in your inventory!");
+                eval("!client.economyManager[message.author.id].leveling_tickets." + item.code + "--");
+                spent = "a " + item.name;
+                normalRate = item.normal_rate;
+                rareRate = item.rare_rate;
+                sRareRate = item.srare_rate;
+                ssRareRate = item.ssrare_rate;
             }
             if (random < normalRate) {
                 rarity = "Normal";
@@ -92,6 +112,15 @@ function roll(client, message, args) {
                 max_exp: waifu.base_exp,
                 rarity: rarity
             });
+            client.economyManager[message.author.id].rolling_streaks++;
+            var ticket = "";
+            if (client.economyManager[message.author.id].rolling_streaks == 10) {
+                client.economyManager[message.author.id].rolling_streaks = 0;
+                if (!client.economyManager[message.author.id].leveling_tickets) client.economyManager[message.author.id].leveling_tickets = {};
+                var random = Math.floor(Math.random() * 3) + 1;
+                eval("if (!client.economyManager[message.author.id].leveling_tickets.gtk" + random + ") client.economyManager[message.author.id].leveling_tickets.gtk" + random + " = 1; else client.economyManager[message.author.id].leveling_tickets.gtk" + random + "++;");
+                ticket = "\nYou got a **Gacha Ticket " + random + "★**!";
+            }
             request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                 type: "update",
                 token: process.env.php_server_token,
@@ -110,7 +139,7 @@ function roll(client, message, args) {
                         .setAuthor(message.author.username + " has just spent " + spent + " for rolling a waifu/husbando.", message.author.avatarURL({size: 128}))
                         .setTimestamp()
                     );
-                    message.channel.send("**" + message.author.username + "** spent **" + spent + "** and rolled a " + rarity + " " + type + ":", new Discord.MessageEmbed()
+                    message.channel.send("**" + message.author.username + "** spent **" + spent + "** and rolled a " + rarity + " " + type + ":" + ticket, new Discord.MessageEmbed()
                     .setDescription("**" + waifu.name + "**\n" + waifu.anime)
                     .setImage(waifu.image_url)
                     .setTimestamp());

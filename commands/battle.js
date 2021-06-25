@@ -234,10 +234,13 @@ function info(client, message, args) {
 						res = "win";
 						end = true;
 						var ticketGift = "";
-						if (client.economyManager[message.author.id].streaks % 10 == 0) {
+						if (client.economyManager[message.author.id].streaks % 10 == 0 && !message.mentions.users.size) {
+							if (!client.economyManager[message.author.id].leveling_tickets) client.economyManager[message.author.id].leveling_tickets = {};
 							var random = Math.floor(Math.random() * 3) + 1;
 							eval("if (!client.economyManager[message.author.id].leveling_tickets.lvt" + random + ") client.economyManager[message.author.id].leveling_tickets.lvt" + random + " = 1; else client.economyManager[message.author.id].leveling_tickets.lvt" + random + "++;");
-							ticketText += "\nYou also got a Leveling Ticket " + random + "★!";
+							var random2 = Math.floor(Math.random() * 3) + 1;
+							eval("if (!client.economyManager[message.author.id].leveling_tickets.gtk" + random2 + ") client.economyManager[message.author.id].leveling_tickets.gtk" + random2 + " = 1; else client.economyManager[message.author.id].leveling_tickets.gtk" + random2 + "++;");
+							ticketGift = "\nYou also got a Leveling Ticket " + random + "★ and a Gacha Ticket " + random2 + "★!";
 						}
 						embed.setFooter("You are the winner! Congratulations!\nYou got " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1)) + " " + client.config.currency + " and your team got " + parseInt(5 * (2 + maxLevel * 0.15) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1)) + " EXP!\n" + (message.mentions.users.size ? (message.mentions.users.first().username + " has lost " + parseInt(15 *  (2 + maxLevel * 0.35) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1)) + " " + client.config.currency + "!\n") : "") + "You are in " + (client.economyManager[message.author.id].streaks) + " win streak(s)!" + ticketGift);
 						clearInterval(interval);

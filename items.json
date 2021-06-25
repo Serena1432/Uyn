@@ -45,6 +45,56 @@
         "price_type": "currency"
     },
     {
+        "code": "gtk1",
+        "name": "Gacha Ticket 1★",
+        "type": "gacha_ticket",
+        "description": "A normal gacha ticket that replaces Uyncoins and Message Points.",
+        "normal_rate": 0.8,
+        "rare_rate": 0.1,
+        "srare_rate": 0.05,
+        "ssrare_rate": 0.03
+    },
+    {
+        "code": "gtk2",
+        "name": "Gacha Ticket 2★",
+        "type": "gacha_ticket",
+        "description": "A gacha ticket with increased rolling rate.",
+        "normal_rate": 0.65,
+        "rare_rate": 0.15,
+        "srare_rate": 0.1,
+        "ssrare_rate": 0.05
+    },
+    {
+        "code": "gtk3",
+        "name": "Gacha Ticket 3★",
+        "type": "gacha_ticket",
+        "description": "A gacha ticket with increased rolling rate.",
+        "normal_rate": 0.5,
+        "rare_rate": 0.2,
+        "srare_rate": 0.15,
+        "ssrare_rate": 0.08
+    },
+    {
+        "code": "gtk4",
+        "name": "Gacha Ticket 4★",
+        "type": "gacha_ticket",
+        "description": "A gacha ticket with increased rolling rate.",
+        "normal_rate": 0.4,
+        "rare_rate": 0.25,
+        "srare_rate": 0.175,
+        "ssrare_rate": 0.1
+    },
+    {
+        "code": "gtk5",
+        "name": "Gacha Ticket 5★",
+        "type": "gacha_ticket",
+        "description": "A gacha ticket with increased rolling rate.",
+        "normal_rate": 0.3,
+        "rare_rate": 0.275,
+        "srare_rate": 0.2,
+        "ssrare_rate": 0.125
+    },
+    {
         "code": "afbi",
         "name": "Anime Festival",
         "type": "background",
