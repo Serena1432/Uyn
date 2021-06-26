@@ -23,7 +23,7 @@ function use(client, message, args) {
         if (!item) return message.reply("Invalid item code!");
         var has = false;
         if (item.type == "leveling_ticket") {
-            eval("if (client.economyManager[message.author.id].leveling_tickets." + item.code + ") has = true");
+            if (eval("client.economyManager[message.author.id].leveling_tickets." + item.code)) has = true;
         }
         else {
             for (var i = 0; i < client.economyManager[message.author.id].inventory.length; i++) {
