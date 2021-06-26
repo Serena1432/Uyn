@@ -127,7 +127,7 @@ function roll(client, message, args) {
                 id: message.author.id,
                 data: JSON.stringify(client.economyManager[message.author.id])
             }}, function(error, response, body) {
-                client.countdown[message.author.id] = (new Date()).getTime() + 15000;
+                client.countdown[message.author.id] = (new Date()).getTime() + 5000;
                 if (!error && response.statusCode == 200 && body.includes("Success")) {
                     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
                     let result = "";
