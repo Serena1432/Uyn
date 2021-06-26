@@ -63,7 +63,7 @@ function buy(client, message, args, language, item) {
             const embed = {
                 color: Math.floor(Math.random() * 16777215),
                 author: {
-                    name: language.itemBought.replace("$item", item),
+                    name: language.itemBought.replace("$item", item.name),
                     icon_url: message.author.avatarURL({size: 128})
                 },
                 description: "**" + language.descriptionEmbedField + "**\n" + item.description + "\n**" + language.transactionID + "**\n" + result + "\n" + language.transactionNotice + "",
