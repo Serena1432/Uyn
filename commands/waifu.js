@@ -40,7 +40,7 @@ function waifu(client, message, args) {
                     descText += " |\n--------------------------------------------------------";
                 } else break;
             }
-            descText += "`\n\nUse the `info <id>` command to view the information of a waifu/husbando.\nUse the `waifu <name>` command to search for waifus/husbando that have a specific name.";
+            descText += "`\n\nUse the `info <id>` command to view the information of a waifu/husbando.\nUse the `waifu <name/anime>` command to search for waifus/husbando that have a specific name or appeared in a specific anime.";
             if ((n + 1) * 10 <= client.economyManager[message.author.id].waifus.length - 1) descText += "\nUse the `waifu " + (n + 2) + "` command to get to the next page.";
             const embed = {
                 color: Math.floor(Math.random() * 16777214) + 1,
@@ -66,7 +66,7 @@ function waifu(client, message, args) {
         try {
             var length = 0, descText = "`--------------------------------------------------------\n| ID     | Waifu/husbando name           | Level       |\n--------------------------------------------------------";
             for (var i = 0; i < client.economyManager[message.author.id].waifus.length; i++) {
-                if (client.economyManager[message.author.id].waifus[i].name.toLowerCase().includes(args.join(" ").toLowerCase()) && length < 10) {
+                if ((client.economyManager[message.author.id].waifus[i].name.toLowerCase().includes(args.join(" ").toLowerCase()) || client.economyManager[message.author.id].waifus[i].anime.toLowerCase().includes(args.join(" ").toLowerCase())) && length < 15) {
                     length++;
                     var waifu = client.economyManager[message.author.id].waifus[i];
                     var name = "[" + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "] " + waifu.name + " (" + waifu.anime + ")";
@@ -86,11 +86,11 @@ function waifu(client, message, args) {
                     descText += " |\n--------------------------------------------------------";
                 }
             }
-            descText += "`\n\nThis message only shows 10 first results. To reduce the search results please search using the full name.\nUse the `info <id>` command to view the information of a waifu/husbando.";
+            descText += "`\n\nThis message only shows 15 first results. To reduce the search results please search using the full name.\nUse the `info <id>` command to view the information of a waifu/husbando.";
             const embed = {
                 color: Math.floor(Math.random() * 16777214) + 1,
                 author: {
-                    name: message.author.username + "'s waifus/husbandos that contain the " + args.join(" ") + " name",
+                    name: message.author.username + "'s waifus/husbandos that contain the " + args.join(" ") + " name or anime",
                     icon_url: message.author.avatarURL({
                         size: 128
                     })
