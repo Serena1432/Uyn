@@ -18,7 +18,7 @@ function waifu(client, message, args) {
         try {
             var n = 0;
             if (args[0]) n = parseInt(args[0]) - 1;
-            var descText = "`--------------------------------------------------------\n| ID     | Waifu/husbando name           | Level       |\n--------------------------------------------------------";
+            var descText = "**Your waifu count:** " + client.economyManager[message.author.id].waifus.length + "/200\n`--------------------------------------------------------\n| ID     | Waifu/husbando name           | Level       |\n--------------------------------------------------------";
             if (n * 10 > client.economyManager[message.author.id].waifus.length - 1) return message.reply("You don't have any more waifus/husbandos!");
             for (var i = n * 10; i < n * 10 + 10; i++) {
                 if (client.economyManager[message.author.id].waifus[i]) {
