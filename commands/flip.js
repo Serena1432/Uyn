@@ -17,7 +17,7 @@ function flip(client, message, args, language) {
             if (args[0] != "heads" && args[0] != "tails") return message.reply(language.headOrTails);
             if (message.mentions.users.size && !args[1]) return message.reply(language.missingAmount);
             if (isNaN(args[1])) return message.reply(language.amountIsNaN);
-            if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < parseInt(args[1])) return message.reply(language.insufficentBalance));
+            if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < parseInt(args[1])) return message.reply(language.insufficentBalance);
             client.countdown[message.author.id] = parseInt(new Date().getTime() + 15000);
             var hot = 1;
             var emojiText = "<:heads:851267941093343273>";
