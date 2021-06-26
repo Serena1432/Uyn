@@ -33,7 +33,7 @@ function buy(client, message, args, item) {
     else if (inv.cash < item.price) return message.reply("Insufficent **" + inv.type + "**!");
     var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
     if (item.price_type == "message_points") coins = parseInt(decrypt(client.economyManager[message.author.id].messagePoints));
-    coins -= item.price;
+    coins -= item.price * (args[1] ? parseInt(args[1]) : 1);
     if (item.price_type == "message_points") client.economyManager[message.author.id].messagePoints = encrypt(coins.toString());
     else client.economyManager[message.author.id].coins = encrypt(coins.toString());
     var length = client.economyManager[message.author.id].inventory.length;
