@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const fs = require('fs');
 const request = require("request");
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     message.delete({
         timeout: 10000
     });

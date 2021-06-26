@@ -10,7 +10,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     if (!args[0]) return message.reply("You must type the content first!");
         message.channel.send({
             embed: {

@@ -7,7 +7,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
     try {
         if (!args[0]) return message.reply("Please type a waifu name!");
@@ -32,7 +32,7 @@ module.exports.run = async (client, message, args) => {
     }
     catch (err) {
         console.error(err);
-        return message.reply("An unexpected error occurred.");
+        return message.reply(language.unexpectedErrorOccurred);
     }
 }
 

@@ -115,39 +115,39 @@ module.exports = async (client, message) => {
     }
 
     // Assign the current prefix first
-    var prefix = client.config.prefix;
+    var prefix = client.config.prefix, language = require("../languages/english.json");
     // Detect if it was a Guild Chat, if yes, go to the Custom Prefixes part
     if (message.channel.type == "text") {
         if (client.addRole[message.author.id] && client.addRole[message.author.id].channel == message.channel.id) {
             try {
                 if (message.content == "cancel") {
                     client.addRole[message.author.id] = undefined;
-                    return message.reply("Cancelled the current role-adding request.");
+                    return message.reply(language.roleAddingRequestCanncelled);
                 }
                 else if (!client.addRole[message.author.id].role) {
                     var role;
                     if (message.mentions.roles.size > 0) role = message.mentions.roles.first();
                     else if (message.mentions.roles.size == 0 && !isNaN(message.content)) role = message.guild.roles.cache.get(message.content);
 					else role = message.guild.roles.cache.find(r => r.name == message.content);
-                    if (!role) return message.reply("Cannot find the role! Please try again!");
+                    if (!role) return message.reply(language.roleNotFound);
                     if (client.economyManager[message.guild.id]) {
                         for (var i = 0; i < client.economyManager[message.guild.id].roles.length; i++) {
-                            if (client.economyManager[message.guild.id].roles[i].id == role.id) return message.reply("This role is already existed in the server shop!");
+                            if (client.economyManager[message.guild.id].roles[i].id == role.id) return message.reply(language.serverRoleAlreadyExist);
                         }
                     }
-                    if (role.position >= message.guild.member(client.user).roles.highest.position) return message.reply("This role's position is higher than the BOT's highest role's!");
+                    if (role.position >= message.guild.member(client.user).roles.highest.position) return message.reply(language.botRoleLowerPosition);
                     client.addRole[message.author.id].role = role.id;
-                    return message.reply("You're going to add the `" + role.name + "` role to the server shop. What's its description?");
+                    return message.reply(language.serverRoleDescription.replace("$role.name", role.name));
                 }
                 else if (!client.addRole[message.author.id].description) {
                     client.addRole[message.author.id].description = message.content;
-                    return message.reply("This role's description in the server shop will be:\n" + message.content + "\nNext, what's the role price in " + client.config.currency + "?")
+                    return message.reply(language.serverRolePrice.replace("$content", message.content)).replace("$currency", client.config.currency)
                 }
                 else if (!client.addRole[message.author.id].price) {
-                    if (isNaN(message.content)) return message.reply("The price must be a number!");
+                    if (isNaN(message.content)) return message.reply(language.priceisNaN);
                     client.addRole[message.author.id].price = parseInt(message.content);
                     client.addRole[message.author.id].confirmation = true;
-                    return message.reply("The role price will be **" + message.content + " " + client.config.currency + "**.\nIs the role information all set? Type yes to proceed or no to reset the information.");
+                    return message.reply(language.serverRoleIsSet.replace("$content", message.content).replace("$currency", client.config.currency));
                 }
                 else if (client.addRole[message.author.id].confirmation) {
                     switch (message.content.toLowerCase()) {
@@ -155,7 +155,7 @@ module.exports = async (client, message) => {
                             client.addRole[message.author.id] = {
                                 channel: message.channel.id
                             };
-                            message.channel.send("The role's information has been reset.\nWhat role you're trying to add? Please mention it or send its ID to this channel.\nType `cancel` anytime to cancel the role-adding request.");
+                            message.channel.send(language.serverRoleReset);
                             break;
                         }
                         case "yes": {
@@ -182,10 +182,10 @@ module.exports = async (client, message) => {
                                     var role = message.guild.roles.cache.get(client.addRole[message.author.id].role);
                                     const exampleEmbed = new Discord.MessageEmbed()
                                     .setColor(role.hexColor)
-                                    .setAuthor('Added the ' + role.name + ' role to the server shop.', message.guild.iconURL({size: 128}))
+                                    .setAuthor(language.serverRoleAdded.replace("$role.name", role.name), message.guild.iconURL({size: 128}))
                                     .addFields(
-                                        { name: 'Description:', value: client.addRole[message.author.id].description},
-                                        { name: 'Price:', value: client.addRole[message.author.id].price.toString() + " " + client.config.currency + ""},
+                                        { name: language.descriptionEmbedField, value: client.addRole[message.author.id].description},
+                                        { name: language.priceEmbedField, value: client.addRole[message.author.id].price.toString() + " " + client.config.currency + ""},
                                     )
                                     .setTimestamp()
                                     .setFooter(client.devUsername, client.user.avatarURL({size: 128}));
@@ -196,13 +196,13 @@ module.exports = async (client, message) => {
                                     client.economyManager[message.author.id].roles.splice(length, 1);
                                     client.addRole[message.author.id] = undefined;
                                     console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                    return message.reply(language.serverConnectError);
                                 }
                             });
                             break;
                         }
                         default: {
-                            return message.reply("Invalid answer! Please type again!");
+                            return message.reply(language.invalidAnswer);
                             break;
                         }
                     }
@@ -211,7 +211,7 @@ module.exports = async (client, message) => {
             catch (err) {
                 client.addRole[message.author.id] = undefined;
                 console.error(err);
-                return message.reply("An unexpected error occurred.");
+                return message.reply(language.unexpectedErrorOccurred);
             }
         }
         // If the client.customPrefixes was null, refresh it
@@ -258,13 +258,13 @@ module.exports = async (client, message) => {
   
     // Run the command
 	if (message.channel.type == "dm") {
-		if (cmd.config.dmAvailable) cmd.run(client, message, args);
+		if (cmd.config.dmAvailable) cmd.run(client, message, args, language);
 		else message.channel.send("This command cannot be executed in a Direct Messages channel!");
 	}
 	else {
 		if (message.guild.member(client.user).hasPermission("SEND_MESSAGES")) {
 			if (!message.channel.permissionOverwrites.get(client.user.id) || message.channel.permissionOverwrites.get(client.user.id).deny.has("SEND_MESSAGES") != true) 
-				cmd.run(client, message, args);
+				cmd.run(client, message, args, language);
 			else message.author.send("I don't have permission to send messages on the **" + message.guild.name + "** server! Please contact the server admin to fix the issue!");
 		}
 		else message.author.send("I don't have permission to send messages on the **" + message.guild.name + "** server! Please contact the server admin to fix the issue!");

@@ -7,7 +7,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function trade(client, message, args) {
+function trade(client, message, args, language) {
     if (client.divorce[message.author.id]) return message.reply("You are currently in a divorce, please cancel or complete it first!");
     if (client.sell[message.author.id]) return message.reply("You are currently selling a waifu, please cancel or complete it first!");
     if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
@@ -128,13 +128,13 @@ function trade(client, message, args) {
                                     }
                                     else {
                                         console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                        return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                        return message.reply(language.serverConnectError);
                                     }
                                 });
                             }
                             else {
                                 console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                return message.reply(language.serverConnectError);
                             }
                         });
                     }
@@ -182,18 +182,18 @@ function trade(client, message, args) {
     }
     catch (err) {
         console.error(err);
-        return message.reply("An unexpected error occurred.");
+        return message.reply(language.unexpectedErrorOccurred);
     }
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
         if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
             client.economyManager = JSON.parse(body);
             if (client.economyManager[message.author.id]) {
                 if (message.mentions.users.size) {
                     if (client.economyManager[message.mentions.users.first().id]) {
-                        trade(client, message, args);
+                        trade(client, message, args, language);
                         return;
                     }
                     else {
@@ -208,15 +208,15 @@ module.exports.run = async (client, message, args) => {
                             data: JSON.stringify(client.economyManager[message.mentions.users.first().id])
                         }}, function(error, response, body) {
                             if (!error && response.statusCode == 200 && body.includes("Success")) {
-                                trade(client, message, args);
+                                trade(client, message, args, language);
                                 return;
                             }
                             else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                            return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                            return message.reply(language.serverConnectError);
                         });
                     }
                 }
-                else trade(client, message, args);
+                else trade(client, message, args, language);
                 return;
             }
             else {
@@ -233,7 +233,7 @@ module.exports.run = async (client, message, args) => {
                     if (!error && response.statusCode == 200 && body.includes("Success")) {
                         if (message.mentions.users.size) {
                             if (client.economyManager[message.mentions.users.first().id]) {
-                                trade(client, message, args);
+                                trade(client, message, args, language);
                                 return;
                             }
                             else {
@@ -248,23 +248,23 @@ module.exports.run = async (client, message, args) => {
                                     data: JSON.stringify(client.economyManager[message.mentions.users.first().id])
                                 }}, function(error, response, body) {
                                     if (!error && response.statusCode == 200 && body.includes("Success")) {
-                                        trade(client, message, args);
+                                        trade(client, message, args, language);
                                         return;
                                     }
                                     else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                    return message.reply(language.serverConnectError);
                                 });
                             }
                         }
-                        else trade(client, message, args);
+                        else trade(client, message, args, language);
                         return;
                     }
                     else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                    return message.reply(language.serverConnectError);
                 });
             }
         }
-        else return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+        else return message.reply(language.serverConnectError);
     });
 }
 

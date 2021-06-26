@@ -5,7 +5,7 @@ const request = require("request");
 const {encrypt, decrypt} = require("../utils/crypto.js");
 const Canvas = require("canvas");
 
-async function settheme(client, message, args) {
+async function settheme(client, message, args, language) {
     try {
         var theme = "dark";
         if (client.economyManager[message.author.id].theme) theme = client.economyManager[message.author.id].theme;
@@ -25,25 +25,25 @@ async function settheme(client, message, args) {
             else {
                 client.economyManager[message.author.id].theme = theme;
                 console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                return message.reply(language.serverConnectError);
             }
         });
     }
     catch (err) {
         console.error(err);
-        return message.reply("An unexpected error occurred.");
+        return message.reply(language.unexpectedErrorOccurred);
     }
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
         if (client.economyManager[message.author.id]) {
             try {
-                settheme(client, message, args);
+                settheme(client, message, args, language);
                 return;
             }
             catch (err) {
                 console.log(err);
-                return message.reply("An unexpected error occurred.");
+                return message.reply(language.unexpectedErrorOccurred);
             }
         }
         else {
@@ -53,12 +53,12 @@ module.exports.run = async (client, message, args) => {
                         client.economyManager = JSON.parse(body);
                         if (client.economyManager[message.author.id] != undefined) {
                             try {
-                                settheme(client, message, args);
+                                settheme(client, message, args, language);
                                 return;
                             }
                             catch (err) {
                                 console.log(err);
-                                return message.reply("An unexpected error occurred.");
+                                return message.reply(language.unexpectedErrorOccurred);
                             }
                         }
                         else {
@@ -77,31 +77,31 @@ module.exports.run = async (client, message, args) => {
                                 }}, function(error, response, body) {
                                     if (!error && response.statusCode == 200 && body.includes("Success")) {
                                         try {
-                                            settheme(client, message, args);
+                                            settheme(client, message, args, language);
                                             return;
                                         }
                                         catch (err) {
                                             console.log(err);
-                                            return message.reply("An unexpected error occurred.");
+                                            return message.reply(language.unexpectedErrorOccurred);
                                         }
                                         return;
                                     }
                                     else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                    return message.reply(language.serverConnectError);
                                 });
                             }
                             catch (err) {
                                 console.error(err);
-                                return message.reply("An unexpected error occurred.");
+                                return message.reply(language.unexpectedErrorOccurred);
                             }
                         }
                     }
                     catch (err) {
                         console.error(err);
-                        return message.reply("An unexpected error occurred.");
+                        return message.reply(language.unexpectedErrorOccurred);
                     }
                 }
-                else return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                else return message.reply(language.serverConnectError);
             });
         }
 }

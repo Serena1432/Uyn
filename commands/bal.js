@@ -3,8 +3,8 @@ const fs = require('fs');
 const request = require("request");
 const {encrypt, decrypt} = require("../utils/crypto.js");
 
-module.exports.run = async (client, message, args) => {
-    require("./balance.js").run(client, message, args);
+module.exports.run = async (client, message, args, language) => {
+    require("./balance.js").run(client, message, args, language);
 }
 
 module.exports.config = {

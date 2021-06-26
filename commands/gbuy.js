@@ -7,7 +7,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function gbuy(client, message, args) {
+function gbuy(client, message, args, language) {
     if (!args[0]) return message.reply("Please type an item ID!");
     if (isNaN(args[0])) return message.reply("The item ID must be a number!");
     if (!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply("I don't have the Manage Roles permission! Please contact the server admin!");
@@ -16,7 +16,7 @@ function gbuy(client, message, args) {
     var role = message.guild.roles.cache.get(client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].id);
     if (!role) return message.reply("Cannot get the role information!");
     if (message.member.roles.cache.get(role.id)) return message.reply("You have already had that role!");
-    if (role.position >= message.guild.member(client.user).roles.highest.position) return message.reply("This role's position is higher than the BOT's highest role's!");
+    if (role.position >= message.guild.member(client.user).roles.highest.position) return message.reply(language.botRoleLowerPosition);
     if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].price) return message.reply("Insufficent balance!");
     try {
         var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
@@ -73,22 +73,22 @@ function gbuy(client, message, args) {
                 coins += parseInt(client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].price);
                 client.economyManager[message.author.id].coins = encrypt(coins.toString());
                 console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                return message.reply(language.serverConnectError);
             }
         });
     }
     catch (err) {
         console.error(err);
-        message.reply("An unexpected error occurred.");
+        message.reply(language.unexpectedErrorOccurred);
     }
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
         if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
             client.economyManager = JSON.parse(body);
             if (client.economyManager[message.author.id]) {
-                gbuy(client, message, args);
+                gbuy(client, message, args, language);
                 return;
             }
             else {
@@ -102,15 +102,15 @@ module.exports.run = async (client, message, args) => {
                     data: JSON.stringify(client.economyManager[message.author.id])
                 }}, function(error, response, body) {
                     if (!error && response.statusCode == 200 && body.includes("Success")) {
-                        gbuy(client, message, args);
+                        gbuy(client, message, args, language);
                         return;
                     }
                     else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                    return message.reply(language.serverConnectError);
                 });
             }
         }
-        else return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+        else return message.reply(language.serverConnectError);
     });
 }
 

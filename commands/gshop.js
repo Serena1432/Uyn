@@ -7,7 +7,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
         request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
             if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
                 client.economyManager = JSON.parse(body);
@@ -54,7 +54,7 @@ module.exports.run = async (client, message, args) => {
                     embed: embed
                 });
             }
-            else return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+            else return message.reply(language.serverConnectError);
         });
 }
 

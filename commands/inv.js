@@ -1,5 +1,5 @@
-module.exports.run = async (client, message, args) => {
-    require("./inventory.js").run(client, message, args);
+module.exports.run = async (client, message, args, language) => {
+    require("./inventory.js").run(client, message, args, language);
 }
 
 module.exports.config = {

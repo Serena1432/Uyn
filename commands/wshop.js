@@ -7,7 +7,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function waifu(client, message, args) {
+function waifu(client, message, args, language) {
     if (!client.economyManager["6746"].waifus) client.economyManager["6746"].waifus = [];
     if (!args[0] || !isNaN(args[0])) {
         if (client.economyManager["6746"].waifus.length == 0) return message.reply("There aren't any waifus/husbandos in the BOT's public shop!");
@@ -33,7 +33,7 @@ function waifu(client, message, args) {
         }
         catch (err) {
             console.error(err);
-            return message.reply("An unexpected error occurred.");
+            return message.reply(language.unexpectedErrorOccurred);
         }
     }
     else {
@@ -57,17 +57,17 @@ function waifu(client, message, args) {
         }
         catch (err) {
             console.error(err);
-            return message.reply("An unexpected error occurred.");
+            return message.reply(language.unexpectedErrorOccurred);
         }
     }
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
         if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
             client.economyManager = JSON.parse(body);
             if (client.economyManager[message.author.id]) {
-                waifu(client, message, args);
+                waifu(client, message, args, language);
                 return;
             }
             else {
@@ -83,7 +83,7 @@ module.exports.run = async (client, message, args) => {
                 }}, function(error, response, body) {
                     if (!error && response.statusCode == 200 && body.includes("Success")) {
                         if (client.economyManager["6746"]) {
-                            waifu(client, message, args);
+                            waifu(client, message, args, language);
                             return;
                         }
                         else {
@@ -97,21 +97,21 @@ module.exports.run = async (client, message, args) => {
                                 data: JSON.stringify(client.economyManager["6746"])
                             }}, function(error, response, body) {
                                 if (!error && response.statusCode == 200 && body.includes("Success")) {
-                                    waifu(client, message, args);
+                                    waifu(client, message, args, language);
                                     return;
                                 }
                                 else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                return message.reply(language.serverConnectError);
                             });
                         }
                         return;
                     }
                     else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                    return message.reply(language.serverConnectError);
                 });
             }
         }
-        else return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+        else return message.reply(language.serverConnectError);
     });
 }
 

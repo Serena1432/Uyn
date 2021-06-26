@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const fs = require('fs');
 const request = require("request");
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     try {
         if (!args[0]) return message.reply("Please type a search query or an anime MAL ID!");
         if (isNaN(args[0])) {

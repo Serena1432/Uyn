@@ -10,7 +10,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function use(client, message, args) {
+function use(client, message, args, language) {
     var items = require("../items.json");
     if (args[0] != "bgdf") {
         if (!client.economyManager[message.author.id].inventory) client.economyManager[message.author.id].inventory = [];
@@ -52,7 +52,7 @@ function use(client, message, args) {
                     else {
                         client.economyManager[message.author.id].background = formerBackground;
                         console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                        return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                        return message.reply(language.serverConnectError);
                     }
                 });
                 break;
@@ -144,16 +144,16 @@ function use(client, message, args) {
             else {
                 client.economyManager[message.author.id].background = formerBackground;
                 console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                return message.reply(language.serverConnectError);
             }
         });
     }
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     try {
         if (client.economyManager[message.author.id]) {
-            use(client, message, args);
+            use(client, message, args, language);
             return;
         }
         else {
@@ -162,7 +162,7 @@ module.exports.run = async (client, message, args) => {
                     try {
                         client.economyManager = JSON.parse(body);
                         if (client.economyManager[message.author.id] != undefined) {
-                            use(client, message, args);
+                            use(client, message, args, language);
                             return;
                         }
                         else {
@@ -177,26 +177,26 @@ module.exports.run = async (client, message, args) => {
                                     data: JSON.stringify(client.economyManager[message.author.id])
                                 }}, function(error, response, body) {
                                     if (!error && response.statusCode == 200 && body.includes("Success")) {
-                                        use(client, message, args);
+                                        use(client, message, args, language);
                                         return;
                                     }
                                     else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                    return message.reply(language.serverConnectError);
                                 });
                         }
                     }
                     catch (err) {
                         console.error(err);
-                        return message.reply("An unexpected error occurred.");
+                        return message.reply(language.unexpectedErrorOccurred);
                     }
                 }
-                else return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                else return message.reply(language.serverConnectError);
             });
         }
     }
     catch (err) {
         console.error(err);
-        return message.reply("An unexpected error occurred.");
+        return message.reply(language.unexpectedErrorOccurred);
     }
 }
 

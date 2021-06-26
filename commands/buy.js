@@ -10,7 +10,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function buy(client, message, args, item) {
+function buy(client, message, args, language, item) {
     if (!client.economyManager[message.author.id].inventory) client.economyManager[message.author.id].inventory = [];
     var has = false;
     for (var i = 0; i < client.economyManager[message.author.id].inventory.length; i++) {
@@ -81,12 +81,12 @@ function buy(client, message, args, item) {
             else client.economyManager[message.author.id].coins = encrypt(coins.toString());
             client.economyManager[message.author.id].inventory.splice(length, 1);
             console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-            return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+            return message.reply(language.serverConnectError);
         }
     });
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     try {
         var items = require("../items.json");
         if (items.length == 0) return message.reply("There aren't any items in the BOT's shop!");
@@ -98,7 +98,7 @@ module.exports.run = async (client, message, args) => {
         if (!item) return message.reply("Invalid item code!");
         if (item.type == "gacha_ticket") return message.reply("You can't buy this item!")
         if (client.economyManager[message.author.id]) {
-            buy(client, message, args, item);
+            buy(client, message, args, language, item);
             return;
         }
         else {
@@ -107,7 +107,7 @@ module.exports.run = async (client, message, args) => {
                     try {
                         client.economyManager = JSON.parse(body);
                         if (client.economyManager[message.author.id] != undefined) {
-                            buy(client, message, args, item);
+                            buy(client, message, args, language, item);
                             return;
                         }
                         else {
@@ -122,26 +122,26 @@ module.exports.run = async (client, message, args) => {
                                     data: JSON.stringify(client.economyManager[message.author.id])
                                 }}, function(error, response, body) {
                                     if (!error && response.statusCode == 200 && body.includes("Success")) {
-                                        buy(client, message, args, item);
+                                        buy(client, message, args, language, item);
                                         return;
                                     }
                                     else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                    return message.reply(language.serverConnectError);
                                 });
                         }
                     }
                     catch (err) {
                         console.error(err);
-                        return message.reply("An unexpected error occurred.");
+                        return message.reply(language.unexpectedErrorOccurred);
                     }
                 }
-                else return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                else return message.reply(language.serverConnectError);
             });
         }
     }
     catch (err) {
         console.error(err);
-        return message.reply("An unexpected error occurred.");
+        return message.reply(language.unexpectedErrorOccurred);
     }
 }
 

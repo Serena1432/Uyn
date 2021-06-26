@@ -4,7 +4,7 @@ const {
     inspect
 } = require('util');
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     if (!message.member.permissions.has("MANAGE_ROLES")) return message.reply("You don't have the rights to do this!");
 	if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply("BOT doesn't have the Manage Roles permission on this server! Please contact the server admin to fix this issue!");
 	var role;

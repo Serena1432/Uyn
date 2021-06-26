@@ -4,7 +4,7 @@ const {
     inspect
 } = require('util');
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     var bots = 0,
         realMems = 0,
         onlineMems = 0;

@@ -4,7 +4,7 @@ const {
     inspect
 } = require('util');
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     var member = message.author;
     if (message.mentions.users.size) {
         member = message.mentions.users.first();

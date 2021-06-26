@@ -10,7 +10,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function inventory(client, message, args) {
+function inventory(client, message, args, language) {
     try {
         var embed = new Discord.MessageEmbed()
         .setAuthor(message.author.username + "'s available tickets", message.author.avatarURL({size: 128, dynamic: true}))
@@ -29,14 +29,14 @@ function inventory(client, message, args) {
     }
     catch (err) {
         console.error(err);
-        return message.reply("An unexpected error occurred.");
+        return message.reply(language.unexpectedErrorOccurred);
     }
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     try {
         if (client.economyManager[message.author.id]) {
-            inventory(client, message, args);
+            inventory(client, message, args, language);
             return;
         }
         else {
@@ -45,7 +45,7 @@ module.exports.run = async (client, message, args) => {
                     try {
                         client.economyManager = JSON.parse(body);
                         if (client.economyManager[message.author.id] != undefined) {
-                            inventory(client, message, args);
+                            inventory(client, message, args, language);
                             return;
                         }
                         else {
@@ -60,26 +60,26 @@ module.exports.run = async (client, message, args) => {
                                     data: JSON.stringify(client.economyManager[message.author.id])
                                 }}, function(error, response, body) {
                                     if (!error && response.statusCode == 200 && body.includes("Success")) {
-                                        inventory(client, message, args);
+                                        inventory(client, message, args, language);
                                         return;
                                     }
                                     else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                    return message.reply(language.serverConnectError);
                                 });
                         }
                     }
                     catch (err) {
                         console.error(err);
-                        return message.reply("An unexpected error occurred.");
+                        return message.reply(language.unexpectedErrorOccurred);
                     }
                 }
-                else return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                else return message.reply(language.serverConnectError);
             });
         }
     }
     catch (err) {
         console.error(err);
-        return message.reply("An unexpected error occurred.");
+        return message.reply(language.unexpectedErrorOccurred);
     }
 }
 

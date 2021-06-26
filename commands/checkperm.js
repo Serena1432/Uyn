@@ -10,7 +10,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     var t1 = "❎ Manage Messages", t2 = "This BOT can't delete any messages in this server, including ping-responsing messages that will automatically deleted after 5 seconds.";
     if (message.guild.member(client.user).permissions.has("MANAGE_MESSAGES")) {
       t1 = "✅ Manage Messages";

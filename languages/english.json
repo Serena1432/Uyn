@@ -1,0 +1,22 @@
+{
+  "information": {
+    "author": "Meir",
+    "language": "English",
+    "global_language": "English"
+  },
+  "roleAddingRequestCancelled": "Cancelled the current role-adding request.",
+  "roleNotFound": "Cannot find the role! Please try again!",
+  "serverRoleAlreadyExist": "This role is already existed in the server shop!",
+  "botRoleLowerPosition": "This role's position is higher than the BOT's highest role's!",
+  "serverRoleDescription": "You're going to add the `$roleName` role to the server shop. What's its description?",
+  "serverRolePrice": "This role's description in the server shop will be:\n$content\nNext, what's the role price in $currency?",
+  "priceisNaN": "The price must be a number!",
+  "serverRoleIsSet": "The role price will be **$content $currency**.\nIs the role information all set? Type yes to proceed or no to reset the information.",
+  "serverRoleReset": "The role's information has been reset.\nWhat role you're trying to add? Please mention it or send its ID to this channel.\nType `cancel` anytime to cancel the role-adding request.",
+  "serverRoleAdded": "Added the $role.name role to the server shop.",
+  "descriptionEmbedField": "Description:",
+  "priceEmbedField": "Price:",
+  "serverConnectError": "Something wrong happened with the BOT server! Can you contact the developer to fix it?",
+  "invalidAnswer": "Invalid answer! Please type again!",
+  "unexpectedErrorOccurred": "An unexpected error occurred."
+}

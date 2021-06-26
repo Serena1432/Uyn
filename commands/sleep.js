@@ -9,7 +9,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     var gif = "";
     var text = "";
     for (var i = 0; i < args.length; i++) {

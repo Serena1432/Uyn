@@ -17,7 +17,7 @@ module.exports.config = {
 	dmAvailable: false
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     // If no prefix was sent, return server's current prefix
     if (!args[0]) if (client.customPrefixes[message.guild.id]) return message.reply("The BOT's current prefix on this server is `" + client.customPrefixes[message.guild.id] + "`."); else return message.reply("The BOT's current prefix on this server is `r!`.");
     // Checking for permissions

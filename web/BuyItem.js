@@ -14,7 +14,7 @@ function gbuy(client, req, res, guild, member) {
     var role = guild.roles.cache.get(client.economyManager[guild.id].roles[parseInt(req.body.item_id) - 1].id);
     if (!role) return res.status(y0y).send({code: 404, error: "Cannot get the role information!"});
     if (member.roles.cache.get(role.id)) return res.status(403).send({code: 403, error: "You have already had that role!"});
-    if (role.position >= guild.member(client.user).roles.highest.position) return res.status(500).send({code: 500, error: "This role's position is higher than the BOT's highest role's!"});
+    if (role.position >= guild.member(client.user).roles.highest.position) return res.status(500).send({code: 500, error: language.botRoleLowerPosition});
     if (parseInt(decrypt(client.economyManager[member.user.id].coins)) < client.economyManager[guild.id].roles[parseInt(req.body.item_id) - 1].price) return res.status(500).send({code: 500, error: "Insufficent balance!"});
     try {
         var coins = parseInt(decrypt(client.economyManager[member.user.id].coins));
@@ -60,7 +60,7 @@ function gbuy(client, req, res, guild, member) {
                 coins += parseInt(client.economyManager[guild.id].roles[parseInt(req.body.item_id) - 1].price);
                 client.economyManager[member.user.id].coins = encrypt(coins.toString());
                 console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                return res.status(500).send({code: 500, error: "Something wrong happened with the BOT server! Can you contact the developer to fix it?"});
+                return res.status(500).send({code: 500, error: language.serverConnectError});
             }
         });
     }
@@ -127,11 +127,11 @@ module.exports.post = async function(client, req, res) {
                             return;
                         }
                         else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                        return res.status(500).send({code: 500, error: "Something wrong happened with the BOT server! Can you contact the developer to fix it?"});
+                        return res.status(500).send({code: 500, error: language.serverConnectError});
                     });
                 }
             }
-            else return res.status(500).send({code: 500, error: "Something wrong happened with the BOT server! Can you contact the developer to fix it?"});
+            else return res.status(500).send({code: 500, error: language.serverConnectError});
         });
     }
     catch (err) {

@@ -7,7 +7,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function roll(client, message, args) {
+function roll(client, message, args, language) {
     if (!client.countdown[message.author.id] || client.countdown[message.author.id] < (new Date()).getTime()) {
         try {
             var spent = "500 🪙 Uyncoins";
@@ -150,13 +150,13 @@ function roll(client, message, args) {
                     client.economyManager[message.author.id].coins = encrypt(coins.toString());
                     client.economyManager[message.author.id].waifus.splice(length, 1);
                     console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                    return message.reply(language.serverConnectError);
                 }
             });
         }
         catch (err) {
             console.error(err);
-            message.reply("An unexpected error occurred.");
+            message.reply(language.unexpectedErrorOccurred);
         }
     } else {
         var totalSeconds = (client.countdown[message.author.id] - (new Date()).getTime()) / 1000;
@@ -173,12 +173,12 @@ function roll(client, message, args) {
     }
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
         if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
             client.economyManager = JSON.parse(body);
             if (client.economyManager[message.author.id]) {
-                roll(client, message, args);
+                roll(client, message, args, language);
                 return;
             }
             else {
@@ -193,15 +193,15 @@ module.exports.run = async (client, message, args) => {
                     data: JSON.stringify(client.economyManager[message.author.id])
                 }}, function(error, response, body) {
                     if (!error && response.statusCode == 200 && body.includes("Success")) {
-                        roll(client, message, args);
+                        roll(client, message, args, language);
                         return;
                     }
                     else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                    return message.reply(language.serverConnectError);
                 });
             }
         }
-        else return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+        else return message.reply(language.serverConnectError);
     });
 }
 

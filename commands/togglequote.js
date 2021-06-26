@@ -10,7 +10,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     if (!message.member.hasPermission("MANAGE_GUILD")) return message.reply("You do not have the `Manage Guild` permission to do this!");
     var enabled = 0;
     if (args[0] == "on") enabled = 1;

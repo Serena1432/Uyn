@@ -7,7 +7,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     if (!message.member.hasPermission("MANAGE_GUILD") && message.author.id != client.config.ownerId[0]) return message.reply("You need the Manage Guild permission to do this!");
     if (!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply("I don't have the Manage Roles permission! Please contact the server admin!");
     if (!client.addRole[message.author.id]) {
@@ -22,10 +22,10 @@ module.exports.run = async (client, message, args) => {
                 }
                 catch (err) {
                     console.error(err);
-                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                    return message.reply(language.serverConnectError);
                 }
             }
-            else return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+            else return message.reply(language.serverConnectError);
         });
     }
     else return message.reply("Please complete your previous role-adding request!");

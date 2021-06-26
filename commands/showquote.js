@@ -10,7 +10,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     if (message.channel.type == "text") return message.reply("This command now can only be used in a Direct Messages channel!"); 
     var user;
     if (args[0] && message.mentions.users.size) user = message.mentions.users.first();

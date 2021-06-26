@@ -9,7 +9,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-async function daily(client, message, args) {
+async function daily(client, message, args, language) {
     if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
         try {
             if (!client.economyManager[message.author.id].dailyCountdown || client.economyManager[message.author.id].dailyCountdown < (new Date()).getTime()) {
@@ -71,7 +71,7 @@ async function daily(client, message, args) {
                         coins -= dailyCoins;
                         client.economyManager[message.author.id].coins = encrypt(coins.toString());
                         console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                        return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                        return message.reply(language.serverConnectError);
                     }
                 });
             }
@@ -91,13 +91,13 @@ async function daily(client, message, args) {
         }
         catch (err) {
             console.log(err);
-            return message.reply("An unexpected error occurred.");
+            return message.reply(language.unexpectedErrorOccurred);
         }
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     if (client.economyManager[message.author.id]) {
-        daily(client, message, args);
+        daily(client, message, args, language);
         return;
     }
     else {
@@ -106,7 +106,7 @@ module.exports.run = async (client, message, args) => {
                 try {
                     client.economyManager = JSON.parse(body);
                     if (client.economyManager[message.author.id] != undefined) {
-                        daily(client, message, args);
+                        daily(client, message, args, language);
                         return;
                     }
                     else {
@@ -120,20 +120,20 @@ module.exports.run = async (client, message, args) => {
                                 data: JSON.stringify(client.economyManager[message.author.id])
                             }}, function(error, response, body) {
                                 if (!error && response.statusCode == 200 && body.includes("Success")) {
-                                    daily(client, message, args);
+                                    daily(client, message, args, language);
                                     return;
                                 }
                                 else console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                return message.reply(language.serverConnectError);
                             });
                     }
                 }
                 catch (err) {
                     console.error(err);
-                    return message.reply("An unexpected error occurred.");
+                    return message.reply(language.unexpectedErrorOccurred);
                 }
             }
-            else return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+            else return message.reply(language.serverConnectError);
         });
     }
 }

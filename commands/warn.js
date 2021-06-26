@@ -4,7 +4,7 @@ const {
     inspect
 } = require('util');
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.reply("You don't have the `Manage Messages` permission to do this!"); 
     if (!message.mentions.members.size) return message.reply("You must mention an user!");
     if (message.mentions.members.first().user.id == message.author.id) return message.reply("You can't warn yourself!");

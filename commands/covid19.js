@@ -10,7 +10,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     request("https://code.junookyo.xyz/api/ncov-moh/data.json", function(err, response, body) {
         if (!response || response.statusCode != 200) {
             console.log(body);

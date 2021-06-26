@@ -4,7 +4,7 @@ const {
     inspect
 } = require('util');
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     message.delete({
         timeout: 10000
     });

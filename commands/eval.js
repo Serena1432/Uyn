@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const fs = require('fs');
 const { inspect } = require('util');
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
 	var usrEvaled = false;
   client.config.ownerId.forEach(async ownerId => {
     if (message.author.id == ownerId) {

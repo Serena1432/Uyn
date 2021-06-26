@@ -6,7 +6,7 @@ const {
     decrypt
 } = require("../utils/crypto.js");
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
         if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
             client.economyManager = JSON.parse(body);
@@ -97,7 +97,7 @@ module.exports.run = async (client, message, args) => {
                                                                 coins -= parseInt(args[1]);
                                                                 client.economyManager[message.mentions.users.first().id].coins = encrypt(coins.toString());
                                                                 console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                                                return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                                                return message.reply(language.serverConnectError);
                                                             }
                                                         });
                                                     } else {
@@ -105,21 +105,21 @@ module.exports.run = async (client, message, args) => {
                                                         var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                                                         coins += parseInt(args[1]);
                                                         client.economyManager[message.author.id].coins = encrypt(coins.toString());
-                                                        return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                                        return message.reply(language.serverConnectError);
                                                     }
                                                 });
                                             } catch (err) {
                                                 console.error(err);
-                                                return message.reply("An unexpected error occurred.");
+                                                return message.reply(language.unexpectedErrorOccurred);
                                             }
                                         } else {
                                             console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                            return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                            return message.reply(language.serverConnectError);
                                         }
                                     });
                                 } catch (err) {
                                     console.error(err);
-                                    return message.reply("An unexpected error occurred.");
+                                    return message.reply(language.unexpectedErrorOccurred);
                                 }
                             } else {
                                 try {
@@ -173,7 +173,7 @@ module.exports.run = async (client, message, args) => {
                                                     coins -= parseInt(args[1]);
                                                     client.economyManager[message.mentions.users.first().id].coins = encrypt(coins.toString());
                                                     console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                                    return message.reply(language.serverConnectError);
                                                 }
                                             });
                                         } else {
@@ -181,22 +181,22 @@ module.exports.run = async (client, message, args) => {
                                             var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                                             coins += parseInt(args[1]);
                                             client.economyManager[message.author.id].coins = encrypt(coins.toString());
-                                            return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                            return message.reply(language.serverConnectError);
                                         }
                                     });
                                 } catch (err) {
                                     console.error(err);
-                                    return message.reply("An unexpected error occurred.");
+                                    return message.reply(language.unexpectedErrorOccurred);
                                 }
                             }
                         } else {
                             console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                            return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                            return message.reply(language.serverConnectError);
                         }
                     });
                 } catch (err) {
                     console.error(err);
-                    return message.reply("An unexpected error occurred.");
+                    return message.reply(language.unexpectedErrorOccurred);
                 }
             } else {
                 try {
@@ -267,7 +267,7 @@ module.exports.run = async (client, message, args) => {
                                                         coins -= parseInt(args[1]);
                                                         client.economyManager[message.mentions.users.first().id].coins = encrypt(coins.toString());
                                                         console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                                        return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                                        return message.reply(language.serverConnectError);
                                                     }
                                                 });
                                             } else {
@@ -275,21 +275,21 @@ module.exports.run = async (client, message, args) => {
                                                 var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                                                 coins += parseInt(args[1]);
                                                 client.economyManager[message.author.id].coins = encrypt(coins.toString());
-                                                return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                                return message.reply(language.serverConnectError);
                                             }
                                         });
                                     } catch (err) {
                                         console.error(err);
-                                        return message.reply("An unexpected error occurred.");
+                                        return message.reply(language.unexpectedErrorOccurred);
                                     }
                                 } else {
                                     console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                    return message.reply(language.serverConnectError);
                                 }
                             });
                         } catch (err) {
                             console.error(err);
-                            return message.reply("An unexpected error occurred.");
+                            return message.reply(language.unexpectedErrorOccurred);
                         }
                     } else {
                         try {
@@ -343,7 +343,7 @@ module.exports.run = async (client, message, args) => {
                                             coins -= parseInt(args[1]);
                                             client.economyManager[message.mentions.users.first().id].coins = encrypt(coins.toString());
                                             console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-                                            return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                            return message.reply(language.serverConnectError);
                                         }
                                     });
                                 } else {
@@ -351,22 +351,22 @@ module.exports.run = async (client, message, args) => {
                                     var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                                     coins += parseInt(args[1]);
                                     client.economyManager[message.author.id].coins = encrypt(coins.toString());
-                                    return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                                    return message.reply(language.serverConnectError);
                                 }
                             });
                         } catch (err) {
                             console.error(err);
-                            return message.reply("An unexpected error occurred.");
+                            return message.reply(language.unexpectedErrorOccurred);
                         }
                     }
                 } catch (err) {
                     console.error(err);
-                    return message.reply("An unexpected error occurred.");
+                    return message.reply(language.unexpectedErrorOccurred);
                 }
             }
         } else {
             console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
-            return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+            return message.reply(language.serverConnectError);
         }
     });
 }

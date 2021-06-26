@@ -10,7 +10,7 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message, args, language) => {
     try {
         var items = require("../items.json");
         if (items.length == 0) return message.reply("There aren't any items in the BOT's shop!");
@@ -80,7 +80,7 @@ module.exports.run = async (client, message, args) => {
     }
     catch (err) {
         console.error(err);
-        return message.reply("An unexpected error occurred.");
+        return message.reply(language.unexpectedErrorOccurred);
     }
 }
 
