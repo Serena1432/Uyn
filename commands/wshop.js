@@ -13,6 +13,7 @@ function waifu(client, message, args) {
         if (client.economyManager["6746"].waifus.length == 0) return message.reply("There aren't any waifus/husbandos in the BOT's public shop!");
         try {
             var descText = "Use the `wbuy <id>` command to buy a waifu/husbando.\nUse the `wshop <name>` command to search for waifus/husbando that have a specific name.";
+            var n = parseInt(args[0]) - 1 || 0;
             if ((n + 1) * 6 <= client.economyManager["6746"].waifus.length - 1) descText += "\nUse the `wshop " + (n + 2) + "` command to get to the next page.";
             var embed = new Discord.MessageEmbed()
             .setAuthor(client.user.username + " BOT's public shop", client.user.avatarURL({
@@ -21,7 +22,6 @@ function waifu(client, message, args) {
             .setColor(Math.floor(Math.random() * 16777215))
             .setDescription(descText)
             .setTimestamp();
-            var n = parseInt(args[0]) - 1 || 0;
             if (n * 6 > client.economyManager["6746"].waifus.length - 1) return message.reply("There aren't have any more waifus/husbandos in the shop!");
             for (var i = n * 6; i < n * 6 + 6; i++) {
                 if (client.economyManager["6746"].waifus[i]) {
