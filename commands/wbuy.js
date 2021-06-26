@@ -25,7 +25,10 @@ function wbuy(client, message, args) {
     var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
     coins -= waifu.price;
     client.economyManager[message.author.id].coins = encrypt(coins.toString());
-    var length = client.economyManager[message.author.id].waifus.length, name = waifu.name, price = waifu.price.toLocaleString();
+    coins = parseInt(decrypt(client.economyManager[waifu.seller].coins));
+    coins += waifu.price;
+    client.economyManager[waifu.seller].coins = encrypt(coins.toString());
+    var length = client.economyManager[message.author.id].waifus.length, name = waifu.name, price = waifu.price.toLocaleString(), seller = waifu.seller;
     client.economyManager[message.author.id].waifus.push({
         id: (client.economyManager[message.author.id].waifus[length - 1] && client.economyManager[message.author.id].waifus[length - 1].id) ? client.economyManager[message.author.id].waifus[length - 1].id + 1 : 1,
         name: waifu.name,
@@ -56,33 +59,46 @@ function wbuy(client, message, args) {
             request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                 type: "update",
                 token: process.env.php_server_token,
-                id: "6746",
-                data: JSON.stringify(client.economyManager["6746"])
+                id: seller,
+                data: JSON.stringify(client.economyManager[seller])
             }}, function(error, response, body) {
                 if (!error && response.statusCode == 200 && body.includes("Success")) {
-                    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-                    let result = "";
-                    for (let i = 0; i < 32; i++) {
-                        result += characters.charAt(Math.floor(Math.random() * characters.length));
-                    }
-                    if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
-                        .setColor(Math.floor(Math.random() * 16777215))
-                        .setAuthor(message.author.username + " has just bought \"" + name + "\" item from the BOT's public shop for " + price + " " + client.config.currency + ".", message.author.avatarURL({size: 128}))
-                        .setTimestamp()
-                    );
-                    else console.log("Cannot get the log channel.");
-                    const embed = {
-                        color: Math.floor(Math.random() * 16777215),
-                        author: {
-                            name: "Succesfully bought \"" + name + "\" from the server shop.",
-                            icon_url: message.author.avatarURL({size: 128})
-                        },
-                        description: "The transaction ID is " + result + ".\nYou should remember this ID and send this to the BOT developer if something wrong happened.",
-                        timestamp: new Date()
-                    };
-                    message.channel.send({
-                        embed: embed
-                    });
+                  request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
+                      type: "update",
+                      token: process.env.php_server_token,
+                      id: "6746",
+                      data: JSON.stringify(client.economyManager["6746"])
+                  }}, function(error, response, body) {
+                      if (!error && response.statusCode == 200 && body.includes("Success")) {
+                          const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                          let result = "";
+                          for (let i = 0; i < 32; i++) {
+                              result += characters.charAt(Math.floor(Math.random() * characters.length));
+                          }
+                          if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                              .setColor(Math.floor(Math.random() * 16777215))
+                              .setAuthor(message.author.username + " has just bought \"" + name + "\" item from the BOT's public shop for " + price + " " + client.config.currency + ".", message.author.avatarURL({size: 128}))
+                              .setTimestamp()
+                          );
+                          else console.log("Cannot get the log channel.");
+                          const embed = {
+                              color: Math.floor(Math.random() * 16777215),
+                              author: {
+                                  name: "Succesfully bought \"" + name + "\" from the server shop.",
+                                  icon_url: message.author.avatarURL({size: 128})
+                              },
+                              description: "The transaction ID is " + result + ".\nYou should remember this ID and send this to the BOT developer if something wrong happened.",
+                              timestamp: new Date()
+                          };
+                          message.channel.send({
+                              embed: embed
+                          });
+                      }
+                      else {
+                          console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
+                          return message.reply("Something wrong happened with the BOT server! Can you contact the developer to fix it?");
+                      }
+                  });
                 }
                 else {
                     console.error("EconomyManagerError: Cannot connect to the server.\nError Information: " + error + "\nResponse Information: " + body);
