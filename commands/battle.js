@@ -144,7 +144,7 @@ function info(client, message, args) {
 				}
 			}
 			maxLevel = 0;
-			client.countdown[message.author.id] = (new Date()).getTime() + 15000;
+			client.countdown[message.author.id] = (new Date()).getTime() + 5000;
 			for (var i = 0; i < opponentTeam.members.length; i++) {
 				var waifu = opponentTeam.members[i];
 				maxLevel = Math.max(waifu.level, maxLevel);
