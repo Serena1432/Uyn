@@ -240,7 +240,7 @@ function info(client, message, args, language) {
 							if (client.economyManager[message.author.id].streaks >= 30) random = Math.floor(Math.random() * 5) + 1;
 							eval("if (!client.economyManager[message.author.id].leveling_tickets.lvt" + random + ") client.economyManager[message.author.id].leveling_tickets.lvt" + random + " = 1; else client.economyManager[message.author.id].leveling_tickets.lvt" + random + "++;");
 							var random2 = Math.floor(Math.random() * 3) + 1;
-							if (client.economyManagereconomyManager[message.author.id].streaks >= 30) random2 = Math.floor(Math.random() * 5) + 1;
+							if (client.economyManager[message.author.id].streaks >= 30) random2 = Math.floor(Math.random() * 5) + 1;
 							eval("if (!client.economyManager[message.author.id].leveling_tickets.gtk" + random2 + ") client.economyManager[message.author.id].leveling_tickets.gtk" + random2 + " = 1; else client.economyManager[message.author.id].leveling_tickets.gtk" + random2 + "++;");
 							ticketGift = "\nYou also got a Leveling Ticket " + random + "★ and a Gacha Ticket " + random2 + "★!";
 						}
