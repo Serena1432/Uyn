@@ -6,20 +6,20 @@ const {
 
 module.exports.run = async (client, message, args, language) => {
     if (!message.member.permissions.has("MANAGE_ROLES")) return message.reply(language.insufficientPermission);
-	if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply("BOT doesn't have the Manage Roles permission on this server! Please contact the server admin to fix this issue!");
-	if (!args[0]) return message.reply("Please specify a role name!");
+	if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply(language.missingManageRolesPermission);
+	if (!args[0]) return message.reply(language.specifyRoleName);
 	var roleName = args.join(" ");
-	if (message.guild.roles.cache.find(role => role.name == roleName)) return message.reply("There's already a role with this name!");
+	if (message.guild.roles.cache.find(role => role.name == roleName)) return message.reply(language.roleAlreadyExist);
 	message.guild.roles.create({
 	  data: {
 		name: roleName
 	  },
-	  reason: 'Created by ' + message.author.tag,
+	  reason: language.createdBy + message.author.tag,
 	})
 	  .then(role => {
 		  message.channel.send(new Discord.MessageEmbed()
 			.setColor(Math.floor(Math.random() * 16777214) + 1)
-			.setAuthor(message.author.tag + " has just created the " + role.name + " role", message.author.avatarURL({
+			.setAuthor(language.roleCreated.replace("$user", message.author.tag).replace("$role", role.name), message.author.avatarURL({
                 format: "png",
                 dynamic: true,
                 size: 2048
@@ -29,7 +29,7 @@ module.exports.run = async (client, message, args, language) => {
 	  })
 	  .catch(err => {
 		  console.error(err);
-		  message.reply("There's an error while creating the role! Please try again!");
+		  message.reply(language.roleCreationError);
 	  });
 }
 

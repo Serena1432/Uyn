@@ -24,7 +24,7 @@ module.exports.run = async (client, message, args, language) => {
             embed: mess
         });
     } else {
-        message.reply('You must type the image link first!');
+        message.reply(language.imageRequired);
     }
 }
 

@@ -45,14 +45,14 @@ function trade(client, message, args, language) {
             switch (args[0]) {
                 case "add": {
                     if (sender.info.completed) return message.reply("You have already set your trade items!");
-                    if (!args[1]) return message.reply("Please type a waifu ID!");
-                    if (isNaN(args[1])) return message.reply("The waifu ID must be a number!");
+                    if (!args[1]) return message.reply(language.noWaifuID);
+                    if (isNaN(args[1])) return message.reply(language.waifuIsNaN);
                     for (var i = 0; i < sender.info.items.length; i++) {
                         if (sender.info.items[i].id == args[1]) return message.reply("You have already added this waifu!");
                     }
                     if (client.economyManager[sender.id].team && client.economyManager[sender.id].team.members.length) {
                         for (var i = 0; i < client.economyManager[sender.id].team.members.length; i++) {
-                            if (client.economyManager[sender.id].team.members[i] == args[1]) return message.reply("This waifu is currently in your team! Please remove his/her from your team first!");
+                            if (client.economyManager[sender.id].team.members[i] == args[1]) return message.reply(language.inTeam);
                         }
                     }
                     var waifu;
@@ -62,7 +62,7 @@ function trade(client, message, args, language) {
                             break;
                         }
                     }
-                    if (!waifu) return message.reply("Invalid waifu ID!");
+                    if (!waifu) return message.reply(language.invalidWaifu);
                     sender.info.items.push(waifu);
                     break;
                 }
@@ -70,7 +70,7 @@ function trade(client, message, args, language) {
                     if (sender.info.completed) return message.reply("You have already set your trade items!");
                     if (!args[1]) return message.reply("Please type the ID first!");
                     if (isNaN(args[1])) return message.reply("The ID must be a number!");
-                    if (!sender.info.items[parseInt(args[1]) - 1]) return message.reply("Invalid item ID!");
+                    if (!sender.info.items[parseInt(args[1]) - 1]) return message.reply(language.invalidItemID);
                     sender.info.items.splice(parseInt(args[1]) - 1, 1);
                     break;
                 }

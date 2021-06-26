@@ -6,7 +6,7 @@ const {
 
 module.exports.run = async (client, message, args, language) => {
     if (!message.member.permissions.has("MANAGE_ROLES")) return message.reply(language.insufficientPermission);
-	if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply("BOT doesn't have the Manage Roles permission on this server! Please contact the server admin to fix this issue!");
+	if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply(language.missingManageRolesPermission);
 	if (!message.mentions.roles.size) return message.reply("Please mention a role first!");
 	if (!args[1]) return message.reply("Please specify a role color!");
 	if (message.mentions.roles.first().position >= message.guild.member(client.user).roles.highest.position) return message.reply("This role is higher than the BOT's highest role!");

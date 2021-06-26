@@ -8,16 +8,16 @@ function random(min, max) {
 }
 
 function gbuy(client, message, args, language) {
-    if (!args[0]) return message.reply("Please type an item ID!");
-    if (isNaN(args[0])) return message.reply("The item ID must be a number!");
+    if (!args[0]) return message.reply(language.specifyItemID);
+    if (isNaN(args[0])) return message.reply(language.itemIDIsNaN);
     if (!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply(language.missingManageRolesPermission);
     if (!client.economyManager[message.guild.id] || client.economyManager[message.guild.id].roles.length == 0) return message.reply("Invalid item ID!");
     if (!client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1]) return message.reply("Invalid item ID!");
     var role = message.guild.roles.cache.get(client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].id);
-    if (!role) return message.reply("Cannot get the role information!");
-    if (message.member.roles.cache.get(role.id)) return message.reply("You have already had that role!");
+    if (!role) return message.reply(language.serverRoleNotFound);
+    if (message.member.roles.cache.get(role.id)) return message.reply(language.alreadyHaveServerRole);
     if (role.position >= message.guild.member(client.user).roles.highest.position) return message.reply(language.botRoleLowerPosition);
-    if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].price) return message.reply("Insufficent balance!");
+    if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].price) return message.reply(language.insufficentBalance);
     try {
         var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
         coins -= parseInt(client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].price);
@@ -29,7 +29,7 @@ function gbuy(client, message, args, language) {
             data: JSON.stringify(client.economyManager[message.author.id])
         }}, function(error, response, body) {
             if (!error && response.statusCode == 200 && body.includes("Success")) {
-                message.member.roles.add(role, "Bought the role from the server shop").then(r => {
+                message.member.roles.add(role, language.serverRoleBuyReason).then(r => {
                     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
                     let result = "";
                     for (let i = 0; i < 32; i++) {
@@ -44,7 +44,7 @@ function gbuy(client, message, args, language) {
                     const embed = {
                         color: role.hexColor,
                         author: {
-                            name: "Succesfully bought the " + role.name + " role.",
+                            name: language.serverRoleBought.replace("$role", role.name),
                             icon_url: message.guild.iconURL({size: 128})
                         },
                         description: "**" + language.descriptionEmbedField + "**\n" + client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].description + "\n**" + language.transactionID + "**\n" + result + "\n" + language.transactionNotice + "",

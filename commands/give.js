@@ -11,8 +11,8 @@ module.exports.run = async (client, message, args, language) => {
         if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
             client.economyManager = JSON.parse(body);
             if (!message.mentions.users.size) return message.reply(language.pleaseMentionUser);
-            if (message.mentions.users.size && !args[1]) return message.reply("You must type an amount!");
-            if (isNaN(args[1])) return message.reply("The amount must be a number!");
+            if (message.mentions.users.size && !args[1]) return message.reply(language.missingAmount);
+            if (isNaN(args[1])) return message.reply(language.amountIsNaN);
             if (message.mentions.users.first().id == message.author.id) return message.reply("You can't give coins to yourself!");
             if (message.mentions.users.first().bot) return message.reply("You can't give coins to a BOT!");
             if (!client.economyManager[message.author.id]) {
@@ -30,7 +30,7 @@ module.exports.run = async (client, message, args, language) => {
                         }
                     }, function(error, response, body) {
                         if (!error && response.statusCode == 200 && body.includes("Success")) {
-                            if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < parseInt(args[1])) return message.reply("Insufficent balance!");
+                            if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < parseInt(args[1])) return message.reply(language.insufficentBalance);
                             if (!client.economyManager[message.mentions.users.first().id]) {
                                 try {
                                     client.economyManager[message.mentions.users.first().id] = {
@@ -86,7 +86,7 @@ module.exports.run = async (client, message, args, language) => {
                                                                 else console.log("Cannot get the log channel.");
                                                                 message.channel.send("**" + message.author.username + "** have just sent **" + args[1] + " " + client.config.currency + "** to **" + message.mentions.users.first().username + "**!", new Discord.MessageEmbed()
                                                                     .setColor(Math.floor(Math.random() * 16777215))
-                                                                    .setDescription("The Transaction ID is " + result + ".\nYou should remember this ID and send it to the BOT developer if something wrong happened.")
+                                                                    .setDescription(language.transactionEmbedNotice.replace("$id", result))
                                                                     .setTimestamp()
                                                                 );
                                                             } else {
@@ -162,7 +162,7 @@ module.exports.run = async (client, message, args, language) => {
                                                     else console.log("Cannot get the log channel.");
                                                     message.channel.send("**" + message.author.username + "** have just sent **" + args[1] + " " + client.config.currency + "** to **" + message.mentions.users.first().username + "**!", new Discord.MessageEmbed()
                                                         .setColor(Math.floor(Math.random() * 16777215))
-                                                        .setDescription("The Transaction ID is " + result + ".\nYou should remember this ID and send it to the BOT developer if something wrong happened.")
+                                                        .setDescription(language.transactionEmbedNotice.replace("$id", result))
                                                         .setTimestamp()
                                                     );
                                                 } else {
@@ -200,7 +200,7 @@ module.exports.run = async (client, message, args, language) => {
                 }
             } else {
                 try {
-                    if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < parseInt(args[1])) return message.reply("Insufficent balance!");
+                    if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < parseInt(args[1])) return message.reply(language.insufficentBalance);
                     if (!client.economyManager[message.mentions.users.first().id]) {
                         try {
                             client.economyManager[message.mentions.users.first().id] = {
@@ -256,7 +256,7 @@ module.exports.run = async (client, message, args, language) => {
                                                         else console.log("Cannot get the log channel.");
                                                         message.channel.send("**" + message.author.username + "** have just sent **" + args[1] + " " + client.config.currency + "** to **" + message.mentions.users.first().username + "**!", new Discord.MessageEmbed()
                                                             .setColor(Math.floor(Math.random() * 16777215))
-                                                            .setDescription("The Transaction ID is " + result + ".\nYou should remember this ID and send it to the BOT developer if something wrong happened.")
+                                                            .setDescription(language.transactionEmbedNotice.replace("$id", result))
                                                             .setTimestamp()
                                                         );
                                                     } else {
@@ -332,7 +332,7 @@ module.exports.run = async (client, message, args, language) => {
                                             else console.log("Cannot get the log channel.");
                                             message.channel.send("**" + message.author.username + "** have just sent **" + args[1] + " " + client.config.currency + "** to **" + message.mentions.users.first().username + "**!", new Discord.MessageEmbed()
                                                 .setColor(Math.floor(Math.random() * 16777215))
-                                                .setDescription("The Transaction ID is " + result + ".\nYou should remember this ID and send it to the BOT developer if something wrong happened.")
+                                                .setDescription(language.transactionEmbedNotice.replace("$id", result))
                                                 .setTimestamp()
                                             );
                                         } else {

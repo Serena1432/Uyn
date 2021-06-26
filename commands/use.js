@@ -58,8 +58,8 @@ function use(client, message, args, language) {
                 break;
             }
             case "leveling_ticket": {
-                if (!args[1]) return message.reply("Please type a waifu ID!");
-                if (isNaN(args[1])) return message.reply("The waifu ID must be a number!");
+                if (!args[1]) return message.reply(language.noWaifuID);
+                if (isNaN(args[1])) return message.reply(language.waifuIsNaN);
                 if (args[2] && isNaN(args[2])) return message.reply(language.quantityIsNaN);
                 var waifu, quantity = args[2] ? parseInt(args[2]) : 1;
                 if (eval("client.economyManager[message.author.id].leveling_tickets." + item.code) < quantity) return message.reply("You don't have enough tickets!");
@@ -69,7 +69,7 @@ function use(client, message, args, language) {
                         break;
                     }
                 }
-                if (!waifu) return message.reply("Invalid Waifu ID!");
+                if (!waifu) return message.reply(language.invalidWaifu);
                 eval("client.economyManager[message.author.id].leveling_tickets." + item.code + " -= quantity");
                 var exp = item.exp_points * quantity;
                 while (exp > 0) {

@@ -11,7 +11,7 @@ function random(min, max) {
 }
 
 module.exports.run = async (client, message, args, language) => {
-    if (message.channel.type == "text") return message.reply("This command now can only be used in a Direct Messages channel!"); 
+    if (message.channel.type == "text") return message.reply(language.dmOnly); 
     var user;
     if (args[0] && message.mentions.users.size) user = message.mentions.users.first();
     else if (args[0] && !message.mentions.users.size) user = client.users.cache.get(args[0]);

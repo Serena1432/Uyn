@@ -14,9 +14,9 @@ function slots(client, message, args, language) {
     if (!client.economyManager[message.author.id].coins) return message.reply(language.coinError);
     try {
         if (!client.countdown[message.author.id] || client.countdown[message.author.id] < (new Date()).getTime()) {
-            if (message.mentions.users.size && !args[0]) return message.reply("You must type an amount!");
-            if (isNaN(args[0])) return message.reply("The amount must be a number!");
-            if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < parseInt(args[0])) return message.reply("Insufficent balance!");
+            if (message.mentions.users.size && !args[0]) return message.reply(language.missingAmount);
+            if (isNaN(args[0])) return message.reply(language.amountIsNaN);
+            if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < parseInt(args[0])) return message.reply(language.insufficentBalance);
             var slots = ["🍒", "🍆", "🍊", "🔔", "🥑", "7️⃣"];
             var slots1, slots2, slots3, slotsi1, slotsi2, slotsi3;
             client.countdown[message.author.id] = parseInt(new Date().getTime() + 15000);
@@ -72,7 +72,7 @@ function slots(client, message, args, language) {
                                     else console.log("Cannot get the log channel.");
                                     msg.edit(slots1 + "|" + slots2 + "|" + slots3 + "| **" + message.author.username + "** bets **" + args[0] + "" + client.config.currency + "**...\n" + resultText, new Discord.MessageEmbed()
                                         .setColor(Math.floor(Math.random() * 16777215))
-                                        .setDescription("The Transaction ID is " + result + ".\nYou should remember this ID and send it to the BOT developer if something wrong happened.")
+                                        .setDescription(language.transactionEmbedNotice.replace("$id", result))
                                         .setTimestamp()
                                     );
                                 } else {

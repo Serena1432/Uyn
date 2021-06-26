@@ -11,7 +11,7 @@ function random(min, max) {
 }
 
 module.exports.run = async (client, message, args, language) => {
-    if (message.channel.type == "text") return message.reply("This command now can only be used in a Direct Messages channel!"); 
+    if (message.channel.type == "text") return message.reply(language.dmOnly); 
     request(process.env.php_server_url + '/DeleteQuote.php?token=' + process.env.php_server_token + '&id=' + message.author.id, function(err, response, body) {
         if (!response || response.statusCode != 200 || body.includes('Connection failed')) {
             console.log(body);

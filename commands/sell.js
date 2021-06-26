@@ -13,11 +13,11 @@ function sell(client, message, args, language) {
     if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
     try {
         if (!client.sell[message.author.id]) {
-            if (!args[0]) return message.reply("Please type a waifu ID!");
-            if (isNaN(args[0])) return message.reply("The waifu ID must be a number!");
+            if (!args[0]) return message.reply(language.noWaifuID);
+            if (isNaN(args[0])) return message.reply(language.waifuIsNaN);
             if (client.economyManager[message.author.id].team && client.economyManager[message.author.id].team.members.length) {
                 for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
-                    if (client.economyManager[message.author.id].team.members[i] == args[0]) return message.reply("This waifu is currently in your team! Please remove his/her from your team first!");
+                    if (client.economyManager[message.author.id].team.members[i] == args[0]) return message.reply(language.inTeam);
                 }
             }
             var waifu;
@@ -27,7 +27,7 @@ function sell(client, message, args, language) {
                     break;
                 }
             }
-            if (!waifu) return message.reply("Invalid waifu ID!");
+            if (!waifu) return message.reply(language.invalidWaifu);
             client.sell[message.author.id] = args[0];
             message.reply("You are going to sell your **" + waifu.name + "**.\n\nNotice that this action is **IRREVERSIBLE**!\nUse the `sell <coins>` command again to confirm selling with <coins> as your waifu's price in " + client.config.currency + " or use the `sell cancel` command to cancel selling.");
         }
@@ -48,7 +48,7 @@ function sell(client, message, args, language) {
                             break;
                         }
                     }
-                    if (!waifu) return message.reply("Cannot find the waifu with this ID! What have you done before?");
+                    if (!waifu) return message.reply(language.waifuNotFound);
                     if (!client.economyManager["6746"].waifus) client.economyManager["6746"].waifus = [];
                     var length = client.economyManager["6746"].waifus.length;
                     client.economyManager["6746"].waifus.push({

@@ -11,11 +11,11 @@ module.exports.run = async (client, message, args, language) => {
         request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
             if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
                 client.economyManager = JSON.parse(body);
-                if (!client.economyManager[message.guild.id] || client.economyManager[message.guild.id].roles.length == 0) return message.reply("Your server doesn't have anything in the shop!");
+                if (!client.economyManager[message.guild.id] || client.economyManager[message.guild.id].roles.length == 0) return message.reply(language.serverItemsNotFound);
                 var n = 0;
                 if (args[0]) n = parseInt(args[0]) - 1;
                 var descText = "`-------------------------------------------------------------\n| ID     | Item name                     | Price            |\n-------------------------------------------------------------";
-                if (n * 10 > client.economyManager[message.guild.id].roles.length - 1) return message.reply("There aren't any more items in the server shop!");
+                if (n * 10 > client.economyManager[message.guild.id].roles.length - 1) return message.reply(language.noMoreServerItems);
                 for (var i = n * 10; i < n * 10 + 10; i++) {
                     if (client.economyManager[message.guild.id].roles[i]) {
                         var role = message.guild.roles.cache.get(client.economyManager[message.guild.id].roles[i].id);
@@ -39,12 +39,12 @@ module.exports.run = async (client, message, args, language) => {
                     }
                     else break;
                 }
-                descText += "`\n\nUse the `gbuy <id>` command to buy an item.";
-                if ((n + 1) * 10 <= client.economyManager[message.guild.id].roles.length - 1) descText += "\nUse the `gshop " + (n + 2) + "` command to get to the next page.";
+                descText += language.gbuyInstructions;
+                if ((n + 1) * 10 <= client.economyManager[message.guild.id].roles.length - 1) descText += language.gbuyNextPage.replace("$page", n + 2);
                 const embed = {
                     color: Math.floor(Math.random() * 16777214) + 1,
                     author: {
-                        name: "List of the items in the " + message.guild.name + " server",
+                        name: language.gbuyTitle.replace("$name", message.guild.name),
                         icon_url: message.guild.iconURL({size: 128})
                     },
                     description: descText,

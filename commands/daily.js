@@ -29,12 +29,12 @@ async function daily(client, message, args, language) {
                         encoding: 'buffer', 
                         format: 'png'
                     });
-                    return message.channel.send("Please type the command `daily (captcha code)` to claim the reward:\nUse the `daily refresh` command to generate a new captcha code.", {files: [
+                    return message.channel.send(languages.daily, {files: [
                         {attachment: data, name: "captcha.png"}
                     ]});
                 }
-                else if (!args[0]) return message.reply("Please enter the captcha code!");
-                else if (args[0] != client.captchas.daily[message.author.id]) return message.reply("Incorrect captcha code!");
+                else if (!args[0]) return message.reply(language.pleaseEnterCaptcha);
+                else if (args[0] != client.captchas.daily[message.author.id]) return message.reply(language.captchaIncorrect);
                 client.captchas.daily[message.author.id] = undefined;
                 var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                 var dailyCoins = random(1000, 5000);
@@ -53,15 +53,15 @@ async function daily(client, message, args, language) {
                         for (let i = 0; i < 32; i++) {
                             result += characters.charAt(Math.floor(Math.random() * characters.length));
                         }
-                        if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**" + language.transactionID + "** " + result, new Discord.MessageEmbed()
+                        if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
                             .setColor(Math.floor(Math.random() * 16777215))
                             .setAuthor(message.author.username + " has just rewarded " + dailyCoins + " " + client.config.currency + ".", message.author.avatarURL({size: 128}))
                             .setTimestamp()
                         );
                         else console.log("Cannot get the log channel.");
-                        message.channel.send("Here is your daily reward: **" + dailyCoins.toString() + " " + client.config.currency + "**!", new Discord.MessageEmbed()
+                        message.channel.send(language.dailyReward + dailyCoins.toString() + " " + client.config.currency + "**!", new Discord.MessageEmbed()
                             .setColor(Math.floor(Math.random() * 16777215))
-                            .setDescription("The Transaction ID is " + result + ".\nYou should remember this ID and send it to the BOT developer if something wrong happened.")
+                            .setDescription(language.transactionEmbedNotice.replace("$id", result))
                             .setTimestamp()
                         );
                     }

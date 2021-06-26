@@ -6,14 +6,14 @@ const {
 
 module.exports.run = async (client, message, args, language) => {
     if (!message.member.permissions.has("MANAGE_ROLES")) return message.reply(language.insufficientPermission);
-	if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply("BOT doesn't have the Manage Roles permission on this server! Please contact the server admin to fix this issue!");
+	if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply(language.missingManageRolesPermission);
 	if (!message.mentions.members.size) return message.reply("Please mention a member first!");
 	args.splice(0,1);
 	var role;
 	if (args[0] && message.mentions.roles.size) role = message.mentions.roles.first();
 	else if (args[0] && !message.mentions.roles.size) role = message.guild.roles.cache.find(role => role.name == args.join(" "));
-	else if (!args[0]) return message.reply("Please mention a role or specify a role name first!");
-	if (!role) return message.reply("Cannot find that role! Please try again!");
+	else if (!args[0]) return message.reply(language.specifyARole);
+	if (!role) return message.reply(language.roleNotFound);
 	if (message.mentions.members.first().roles.cache.find(memrole => memrole.id == role.id)) return message.reply("This member is currently having that role!");
 	if (role.position >= message.guild.member(client.user).roles.highest.position) return message.reply("This role is higher than the BOT's highest role!");
 	message.mentions.members.first().roles.add(role, "Role given by " + message.author.tag)

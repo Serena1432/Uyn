@@ -14,11 +14,10 @@ function flip(client, message, args, language) {
     if (!client.economyManager[message.author.id].coins) return message.reply(language.coinError);
     try {
         if (!client.countdown[message.author.id] || client.countdown[message.author.id] < (new Date()).getTime()) {
-            if (!args[0]) return message.reply("Please choose heads or tails!");
-            if (args[0] != "heads" && args[0] != "tails") return message.reply("Choose heads or tails, not anything else!");
-            if (message.mentions.users.size && !args[1]) return message.reply("You must type an amount!");
-            if (isNaN(args[1])) return message.reply("The amount must be a number!");
-            if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < parseInt(args[1])) return message.reply("Insufficent balance!");
+            if (args[0] != "heads" && args[0] != "tails") return message.reply(language.headOrTails);
+            if (message.mentions.users.size && !args[1]) return message.reply(language.missingAmount);
+            if (isNaN(args[1])) return message.reply(language.amountIsNaN);
+            if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < parseInt(args[1])) return message.reply(language.insufficentBalance));
             client.countdown[message.author.id] = parseInt(new Date().getTime() + 15000);
             var hot = 1;
             var emojiText = "<:heads:851267941093343273>";
@@ -26,7 +25,7 @@ function flip(client, message, args, language) {
                 hot = 2;
                 emojiText = "<:tails:851267996231270420>";
             }
-            message.channel.send("**" + message.author.username + "** choose **" + emojiText + " " + args[0] + "** for **🪙 " + args[1] + " Uyncoins**...").then(msg => {
+            message.channel.send(language.hotChoose.replace("$user", message.author.username).replace("$type", args[0]).replace("$amount", args[1] + " " + client.config.currency)).then(msg => {
                 setTimeout(function() {
                     var hotRand = random(0, 500);
                     if (hotRand < random(150, 400)) hotRand = 1;
@@ -58,14 +57,14 @@ function flip(client, message, args, language) {
                                 .setTimestamp()
                             );
                             else console.log("Cannot get the log channel.");
-                            if (hotRand == hot) msg.edit("**" + message.author.username + "** choose **" + emojiText + " " + args[0] + "** for **🪙 " + args[1] + " Uyncoins**...\nand get **" + args[0] + "**\n**" + message.author.username + "** won **🪙 " + args[1] + " Uyncoins**!", new Discord.MessageEmbed()
+                            if (hotRand == hot) msg.edit(language.hotChooseWin.replace("$user", message.author.username).replace("$type", args[0]).replace("$amount", args[1] + " " + client.config.currency), new Discord.MessageEmbed()
                                 .setColor(Math.floor(Math.random() * 16777215))
-                                .setDescription("The Transaction ID is " + result + ".\nYou should remember this ID and send it to the BOT developer if something wrong happened.")
+                                .setDescription(language.transactionEmbedNotice.replace("$id", result))
                                 .setTimestamp()
                             );
-                            else msg.edit("**" + message.author.username + "** choose **" + emojiText + " " + args[0] + "** for **🪙 " + args[1] + " Uyncoins**...\nand get **" + resultText + "** instead...\n**" + message.author.username + "** lost **🪙 " + args[1] + " Uyncoins**...", new Discord.MessageEmbed()
+                            else msg.edit(language.hotChooseLose.replace("$user", message.author.username).replace("$type", args[0]).replace("$amount", args[1] + " " + client.config.currency).replace("$result", resultText), new Discord.MessageEmbed()
                                 .setColor(Math.floor(Math.random() * 16777215))
-                                .setDescription("The Transaction ID is " + result + ".\nYou should remember this ID and send it to the BOT developer if something wrong happened.")
+                                .setDescription(language.transactionEmbedNotice.replace("$id", result))
                                 .setTimestamp()
                             );
                         } else {

@@ -8,16 +8,16 @@ function random(min, max) {
 }
 
 function info(client, message, args, language) {
-    if (client.trades[message.author.id]) return message.reply("You are currently in a trade, please end or complete it first!");
-    if (client.sell[message.author.id]) return message.reply("You are currently selling a waifu, please end or complete it first!");
+    if (client.trades[message.author.id]) return message.reply(language.trading);
+    if (client.sell[message.author.id]) return message.reply(language.selling);
     if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
     try {
         if (!client.divorce[message.author.id]) {
-            if (!args[0]) return message.reply("Please type a waifu ID!");
-            if (isNaN(args[0])) return message.reply("The waifu ID must be a number!");
+            if (!args[0]) return message.reply(language.noWaifuID);
+            if (isNaN(args[0])) return message.reply(language.waifuIsNaN);
             if (client.economyManager[message.author.id].team && client.economyManager[message.author.id].team.members.length) {
                 for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
-                    if (client.economyManager[message.author.id].team.members[i] == args[0]) return message.reply("This waifu is currently in your team! Please remove his/her from your team first!");
+                    if (client.economyManager[message.author.id].team.members[i] == args[0]) return message.reply(language.inTeam);
                 }
             }
             var waifu;
@@ -27,15 +27,15 @@ function info(client, message, args, language) {
                     break;
                 }
             }
-            if (!waifu) return message.reply("Invalid waifu ID!");
+            if (!waifu) return message.reply(language.invalidWaifu);
             client.divorce[message.author.id] = args[0];
-            message.reply("You are going to delete your **" + waifu.name + "**.\n\nNotice that this action is **IRREVERSIBLE**!\nUse the `divorce` command again to confirm the deletion or use the `divorce cancel` command to cancel the deletion.");
+            message.reply(language.deleteWarning.replace("$name", waifu.name));
         }
         else {
             switch (args[0]) {
                 case "cancel": {
                     client.divorce[message.author.id] = undefined;
-                    message.reply("Successfully cancelled the current deletion.");
+                    message.reply(language.deleteCancelled);
                     break;
                 }
                 default: {
@@ -46,7 +46,7 @@ function info(client, message, args, language) {
                             break;
                         }
                     }
-                    if (!waifu) return message.reply("Cannot find the waifu with this ID! What have you done before?");
+                    if (!waifu) return message.reply(language.waifuNotFound);
                     var rarityValue = 0, level = waifu.level, name = waifu.name;
                     switch (waifu.rarity) {
                         case "Normal": {rarityValue = 1; break}
@@ -88,7 +88,7 @@ function info(client, message, args, language) {
                             );
                             message.channel.send(new Discord.MessageEmbed()
                             .setAuthor(message.author.tag, message.author.avatarURL({size: 128, dynamic: true}))
-                            .setDescription("Successfully divorced **" + waifu.name + "** and got " + divorceValue.toLocaleString() + " " + client.config.currency + " as a compensation gift.")
+                            .setDescription(language.divorced.replace("$name", waifu.name).replace("$amount", divorceValue.toLocaleString() + " " + client.config.currency))
                             .setTimestamp());
                         }
                         else {

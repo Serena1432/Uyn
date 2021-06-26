@@ -33,8 +33,8 @@ async function weekly(client, message, args, language) {
                         {attachment: data, name: "captcha.png"}
                     ]});
                 }
-                else if (!args[0]) return message.reply("Please enter the captcha code!");
-                else if (args[0] != client.captchas.weekly[message.author.id]) return message.reply("Incorrect captcha code!");
+                else if (!args[0]) return message.reply(language.pleaseEnterCaptcha);
+                else if (args[0] != client.captchas.weekly[message.author.id]) return message.reply(language.captchaIncorrect);
                 client.captchas.weekly[message.author.id] = undefined;
                 var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                 var weeklyCoins = random(2500, 7500);
@@ -61,7 +61,7 @@ async function weekly(client, message, args, language) {
                         else console.log("Cannot get the log channel.");
                         message.channel.send("Here is your weekly reward: **" + weeklyCoins.toString() + " " + client.config.currency + "**!", new Discord.MessageEmbed()
                             .setColor(Math.floor(Math.random() * 16777215))
-                            .setDescription("The Transaction ID is " + result + ".\nYou should remember this ID and send it to the BOT developer if something wrong happened.")
+                            .setDescription(language.transactionEmbedNotice.replace("$id", result))
                             .setTimestamp()
                         );
                     }

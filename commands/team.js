@@ -17,8 +17,8 @@ function info(client, message, args, language) {
         switch (args[0]) {
             case "add": {
                 if (client.economyManager[message.author.id].team.members.length >= 3) return message.reply("Your team already have enough members! Please remove one using the `team remove <member id>` command and try again!");
-                if (!args[1]) return message.reply("Please type a waifu ID!");
-                if (isNaN(args[1])) return message.reply("The waifu ID must be a number!");
+                if (!args[1]) return message.reply(language.noWaifuID);
+                if (isNaN(args[1])) return message.reply(language.waifuIsNaN);
                 var waifu, length = client.economyManager[message.author.id].team.members.length;
                 for (var i = 0; i < client.economyManager[message.author.id].waifus.length; i++) {
                     if (client.economyManager[message.author.id].waifus[i].id == args[1]) {
@@ -26,7 +26,7 @@ function info(client, message, args, language) {
                         break;
                     }
                 }
-                if (!waifu) return message.reply("Invalid waifu ID!");
+                if (!waifu) return message.reply(language.invalidWaifu);
                 for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
                     if (client.economyManager[message.author.id].team.members[i] == waifu.id) return message.reply("This waifu/husbando is already in your team!");
                 }

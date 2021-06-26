@@ -16,7 +16,7 @@ function roll(client, message, args, language) {
             if (client.economyManager[message.author.id].waifus.length >= 200) return message.reply("You have exceeded the maximum limit of waifus in an account! Please remove one and try again!")
             var random = Math.random(), waifu, length = client.economyManager[message.author.id].waifus.length, rarity, type, normalRate, rareRate, sRareRate, ssRareRate;
             if (!args[0] || args[0] == "uync") {
-                if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < 500) return message.reply("Insufficent balance!");
+                if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < 500) return message.reply(language.insufficentBalance);
                 var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                 coins -= 500;
                 client.economyManager[message.author.id].coins = encrypt(coins.toString());
@@ -44,7 +44,7 @@ function roll(client, message, args, language) {
                         break;
                     }
                 }
-                if (!item) return message.reply("Invalid item ID!");
+                if (!item) return message.reply(language.invalidItemID);
                 if (item.type != "gacha_ticket") return message.reply("This item isn't a gacha ticket! Please type another code!");
                 if (!client.economyManager[message.author.id].leveling_tickets) client.economyManager[message.author.id].leveling_tickets = {};
                 if (eval("!client.economyManager[message.author.id].leveling_tickets." + item.code)) return message.reply("You don't have this item in your inventory!");

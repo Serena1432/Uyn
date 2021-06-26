@@ -6,18 +6,18 @@ const {
 
 module.exports.run = async (client, message, args, language) => {
     if (!message.member.permissions.has("MANAGE_ROLES")) return message.reply(language.insufficientPermission);
-	if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply("BOT doesn't have the Manage Roles permission on this server! Please contact the server admin to fix this issue!");
+	if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply(language.missingManageRolesPermission);
 	var role;
     if (args[0] && message.mentions.roles.size) role = message.mentions.roles.first();
     else if (args[0] && !message.mentions.roles.size) role = message.guild.roles.cache.find(r => r.name == args.join(" "));
-    else if (!args[0]) return message.reply("Please mention a role or specify a role name first!");
-    if (!role) return message.reply("Cannot find that role! Please try again!");
-    if (role.position >= message.guild.member(client.user).roles.highest.position) return message.reply("This role's position is higher than this BOT's highest role's! Please contact the server admin to fix this issue!");
-	role.delete("Deleted by " + message.author.tag)
+    else if (!args[0]) return message.reply(language.specifyARole);
+    if (!role) return message.reply(language.roleNotFound);
+    if (role.position >= message.guild.member(client.user).roles.highest.position) return message.reply(language.higherRole);
+	role.delete(language.deletedBy + message.author.tag)
 	  .then(role => {
 		  message.channel.send(new Discord.MessageEmbed()
 			.setColor(Math.floor(Math.random() * 16777214) + 1)
-			.setAuthor(message.author.tag + " has just deleted the " + role.name + " role", message.author.avatarURL({
+			.setAuthor(language.roleDeleted.replace("$user", message.author.tag).replace("$role", role.name), message.author.avatarURL({
                 format: "png",
                 dynamic: true,
                 size: 2048
@@ -27,7 +27,7 @@ module.exports.run = async (client, message, args, language) => {
 	  })
 	  .catch(err => {
 		  console.error(err);
-		  message.reply("There's an error while deleting the role! Please try again!");
+		  message.reply(language.deleteRoleError);
 	  });
 }
 

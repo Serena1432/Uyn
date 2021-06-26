@@ -17,7 +17,7 @@ module.exports.run = async (client, message, args, language) => {
     var embedBool = language.no;
     if (message.guild.embedEnabled) embedBool = language.yes;
     var jd = message.guild.createdAt;
-    var systemChannel = "Không có";
+    var systemChannel = language.none;
     if (message.guild.systemChannel) systemChannel = message.guild.systemChannel.toString();
     var createdDate = jd.getDate() + "/" + (jd.getMonth() + 1) + "/" + jd.getFullYear() + "; " + jd.getHours() + ":" + jd.getMinutes() + ":" + jd.getSeconds() + " (GMT +0)";
     const infoMessage = {
@@ -33,7 +33,7 @@ module.exports.run = async (client, message, args, language) => {
             })
         },
         fields: [{
-                name: "Icon URL:",
+                name: language.iconURL,
                 value: "[" + language.download + "](" + message.guild.iconURL({
                     format: "png",
                     dynamic: true,
@@ -42,32 +42,32 @@ module.exports.run = async (client, message, args, language) => {
                 inline: false
             },
             {
-                name: "Created at:",
+                name: language.createdAt,
                 value: createdDate,
                 inline: false
             },
             {
-                name: "Owner:",
+                name: language.owner,
                 value: message.guild.owner.toString(),
                 inline: false
             },
             {
-                name: "Member count:",
+                name: language.memberCount,
                 value: message.guild.memberCount,
                 inline: false
             },
             {
-                name: "Number of BOTs:",
+                name: language.numberOfBOTs,
                 value: bots,
                 inline: true
             },
             {
-                name: "Number of real members:",
+                name: language.realMembers,
                 value: realMems,
                 inline: true
             },
             {
-                name: "Online members:",
+                name: language.onlineMembers,
                 value: onlineMems,
                 inline: true
             },
@@ -79,32 +79,32 @@ module.exports.run = async (client, message, args, language) => {
                 inline: true
             },
             {
-                name: "Highest role:",
+                name: language.highestRole,
                 value: highestRole,
                 inline: true
             },
             {
-                name: "System channel:",
+                name: language.systemChannel,
                 value: systemChannel,
                 inline: true
             },
             {
-                name: "Verification level:",
+                name: language.verificationLevel,
                 value: message.guild.verificationLevel.toString(),
                 inline: true
             },
             {
-                name: "Image filter level:",
+                name: language.imageFilter,
                 value: message.guild.explicitContentFilter.toString(),
                 inline: true
             },
             {
-                name: "Can send images? (the everyone role)",
+                name: language.canSendImages,
                 value: embedBool,
                 inline: true
             },
             {
-                name: "Server region:",
+                name: language.serverRegion,
                 value: message.guild.region,
                 inline: true
             },
@@ -118,7 +118,7 @@ module.exports.run = async (client, message, args, language) => {
             })
         }
     };
-    message.channel.send("Information about this server:", {
+    message.channel.send(language.serverInformation, {
         embed: infoMessage
     });
 }

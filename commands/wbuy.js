@@ -11,7 +11,7 @@ function random(min, max) {
 }
 
 function wbuy(client, message, args, language) {
-    if (!args[0]) return message.reply("Please type a waifu ID!");
+    if (!args[0]) return message.reply(language.noWaifuID);
     if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
     var waifu;
     for (var i = 0; i < client.economyManager["6746"].waifus.length; i++) {
@@ -20,8 +20,8 @@ function wbuy(client, message, args, language) {
             break;
         }
     }
-    if (!waifu) return message.reply("Invalid waifu ID!");
-    if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < waifu.price) return message.reply("Insufficent balance!");
+    if (!waifu) return message.reply(language.invalidWaifu);
+    if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < waifu.price) return message.reply(language.insufficentBalance);
     var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
     coins -= waifu.price;
     client.economyManager[message.author.id].coins = encrypt(coins.toString());
