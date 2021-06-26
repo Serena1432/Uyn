@@ -30,7 +30,7 @@ module.exports.run = async (client, message, args, language) => {
                             for (var j = 0; j < 29 - name.length; j++) descText += " ";
                         }
                         else descText += " | " + name.substr(0, 26) + "...";
-                        var price = items[i].price + ((items[i].price_type == "currency") ? client.config.currency : "💬 Message Points");
+                        var price = items[i].price + ((items[i].price_type == "currency") ? client.config.currency : "💬 " + language.messagePoints + "");
                         if (price.length <= 16) {
                             descText += " | " + price;
                             for (var j = 0; j < 16 - price.length; j++) descText += " ";
@@ -48,7 +48,7 @@ module.exports.run = async (client, message, args, language) => {
                             for (var j = 0; j < 29 - items[i].name.length; j++) descText += " ";
                         }
                         else descText += " | " + items[i].name.substr(0, 26) + "...";
-                        var price = items[i].price + ((items[i].price_type == "currency") ? client.config.currency : "💬 Message Points");
+                        var price = items[i].price + ((items[i].price_type == "currency") ? client.config.currency : "💬 " + language.messagePoints + "");
                         if (price.length <= 16) {
                             descText += " | " + price;
                             for (var j = 0; j < 16 - price.length; j++) descText += " ";

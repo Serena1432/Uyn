@@ -10,7 +10,7 @@ function random(min, max) {
 }
 
 async function monthly(client, message, args, language) {
-    if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
+    if (!client.economyManager[message.author.id].coins) return message.reply(language.coinError);
         try {
             if (!client.economyManager[message.author.id].monthlyCountdown || client.economyManager[message.author.id].monthlyCountdown < (new Date()).getTime()) {
                 if (args[0] == "refresh") client.captchas.monthly[message.author.id] = undefined;
@@ -53,7 +53,7 @@ async function monthly(client, message, args, language) {
                         for (let i = 0; i < 32; i++) {
                             result += characters.charAt(Math.floor(Math.random() * characters.length));
                         }
-                        if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                        if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**" + language.transactionID + "** " + result, new Discord.MessageEmbed()
                             .setColor(Math.floor(Math.random() * 16777215))
                             .setAuthor(message.author.username + " has just rewarded " + monthlyCoins + " " + client.config.currency + ".", message.author.avatarURL({size: 128}))
                             .setTimestamp()

@@ -33,7 +33,7 @@ function gbuy(client, req, res, guild, member) {
                     for (let i = 0; i < 32; i++) {
                         result += characters.charAt(Math.floor(Math.random() * characters.length));
                     }
-                    if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                    if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**" + language.transactionID + "** " + result, new Discord.MessageEmbed()
                         .setColor(Math.floor(Math.random() * 16777215))
                         .setAuthor(member.user.username + " has just bought \"" + role.name + "\" role for " + client.economyManager[guild.id].roles[parseInt(req.body.item_id) - 1].price + " " + client.config.currency + " from the \"" + guild.name + "\" server shop on the uynbot.ga website.", member.user.avatarURL({size: 128}))
                         .setTimestamp()

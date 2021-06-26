@@ -19,7 +19,7 @@ function use(client, message, args, language) {
         for (var i = 0; i < items.length; i++) {
             if (items[i].code == args[0]) item = items[i];
         }
-        if (!item) return message.reply("Invalid item code!");
+        if (!item) return message.reply(language.invalidItemCode);
         var has = false;
         if (item.type == "leveling_ticket") {
             if (eval("client.economyManager[message.author.id].leveling_tickets." + item.code)) has = true;
@@ -60,7 +60,7 @@ function use(client, message, args, language) {
             case "leveling_ticket": {
                 if (!args[1]) return message.reply("Please type a waifu ID!");
                 if (isNaN(args[1])) return message.reply("The waifu ID must be a number!");
-                if (args[2] && isNaN(args[2])) return message.reply("The quantity must be a number!");
+                if (args[2] && isNaN(args[2])) return message.reply(language.quantityIsNaN);
                 var waifu, quantity = args[2] ? parseInt(args[2]) : 1;
                 if (eval("client.economyManager[message.author.id].leveling_tickets." + item.code) < quantity) return message.reply("You don't have enough tickets!");
                 for (var i = 0; i < client.economyManager[message.author.id].waifus.length; i++) {
@@ -108,7 +108,7 @@ function use(client, message, args, language) {
                                 name: message.author.tag,
                                 icon_url: message.author.avatarURL({size: 128})
                             },
-                            description: "You just used " + (quantity > 1 ? quantity : "a") + " " + item.name + " and your **" + waifu.name + "** got " + (item.exp_points * quantity).toLocaleString() + " EXP.\n\n**Transaction ID:**\n" + result + "\nYou should remember this ID and send this to the BOT developer if something wrong happened.",
+                            description: "You just used " + (quantity > 1 ? quantity : "a") + " " + item.name + " and your **" + waifu.name + "** got " + (item.exp_points * quantity).toLocaleString() + " EXP.\n\n**" + language.transactionID + "**\n" + result + "\n" + language.transactionNotice + "",
                             timestamp: new Date()
                         };
                         message.channel.send({embed: embed});

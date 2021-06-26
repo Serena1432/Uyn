@@ -14,8 +14,8 @@ module.exports.run = async (client, message, args, language) => {
         if (member.presence.status == "online" || member.presence.status == "dnd" || member.presence.status == "idle") onlineMems++;
     });
     var highestRole = message.guild.roles.cache.sort((b, a) => a.rawPosition - b.rawPosition || a.id - b.id).first().toString();
-    var embedBool = "No";
-    if (message.guild.embedEnabled) embedBool = "Yes";
+    var embedBool = language.no;
+    if (message.guild.embedEnabled) embedBool = language.yes;
     var jd = message.guild.createdAt;
     var systemChannel = "Không có";
     if (message.guild.systemChannel) systemChannel = message.guild.systemChannel.toString();
@@ -34,7 +34,7 @@ module.exports.run = async (client, message, args, language) => {
         },
         fields: [{
                 name: "Icon URL:",
-                value: "[Download](" + message.guild.iconURL({
+                value: "[" + language.download + "](" + message.guild.iconURL({
                     format: "png",
                     dynamic: true,
                     size: 2048
@@ -72,7 +72,7 @@ module.exports.run = async (client, message, args, language) => {
                 inline: true
             },
             {
-                name: "Number of roles:",
+                name: language.numberOfRoles,
                 value: message.guild.roles.cache.filter(
                     role => role.name !== ""
                 ).size - 1,

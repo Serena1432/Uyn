@@ -75,7 +75,7 @@ function wbuy(client, message, args, language) {
                           for (let i = 0; i < 32; i++) {
                               result += characters.charAt(Math.floor(Math.random() * characters.length));
                           }
-                          if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                          if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**" + language.transactionID + "** " + result, new Discord.MessageEmbed()
                               .setColor(Math.floor(Math.random() * 16777215))
                               .setAuthor(message.author.username + " has just bought \"" + name + "\" item from the BOT's public shop for " + price + " " + client.config.currency + ".", message.author.avatarURL({size: 128}))
                               .setTimestamp()
@@ -87,7 +87,7 @@ function wbuy(client, message, args, language) {
                                   name: "Succesfully bought \"" + name + "\" from the server shop.",
                                   icon_url: message.author.avatarURL({size: 128})
                               },
-                              description: "The transaction ID is " + result + ".\nYou should remember this ID and send this to the BOT developer if something wrong happened.",
+                              description: "The transaction ID is " + result + ".\n" + language.transactionNotice + "",
                               timestamp: new Date()
                           };
                           message.channel.send({

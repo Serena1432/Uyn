@@ -66,7 +66,7 @@ client.on("guildMemberAdd", (member) => {
                     },
                     description: "**Duration:**: " + ms(endtime - (new Date()).getTime(), {
                         long: true
-                    }) + "**Reason:** Roles persist",
+                    }) + "**" + language.reason + ":** Roles persist",
                     footer: {
                         text: "Mentioned member's ID: " + member.user.id,
                         timestamp: (new Date()).getTime()

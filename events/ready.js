@@ -142,7 +142,7 @@ module.exports = (client) => {
                                                         },
                                                         description: "**Reason**: Automatic Unmute",
                                                         footer: {
-                                                            text: "Sender's ID: " + author.id + " | Mentioned member's ID: " + member.user.id,
+                                                            text: message.senderID + author.id + message.mentionedMemberID + member.user.id,
                                                             timestamp: (new Date()).getTime()
                                                         }
                                                     }

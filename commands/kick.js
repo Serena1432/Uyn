@@ -6,14 +6,14 @@ const {
 } = require('util');
 
 module.exports.run = async (client, message, args, language) => {
-    if (!message.member.permissions.has("KICK_MEMBERS")) return message.reply("You don't have the rights to do this!");
-    if (!message.mentions.members.size) return message.reply("You must mention an user!");
+    if (!message.member.permissions.has("KICK_MEMBERS")) return message.reply(language.insufficientPermission);
+    if (!message.mentions.members.size) return message.reply(language.pleaseMentionUser);
     if (message.mentions.members.first().user.id == message.author.id) return message.reply("You can't kick yourself!");
-    if (message.mentions.members.first().roles.highest.rawPosition >= message.member.roles.highest.rawPosition) return message.reply("The mentioned member's highest role is higher than yours!");
-    if (message.mentions.members.first().roles.highest.rawPosition >= message.guild.member(client.user).roles.highest.rawPosition) return message.reply("The mentioned member's highest role is higher than this BOT's role!");
+    if (message.mentions.members.first().roles.highest.rawPosition >= message.member.roles.highest.rawPosition) return message.reply(language.higherThanYours);
+    if (message.mentions.members.first().roles.highest.rawPosition >= message.guild.member(client.user).roles.highest.rawPosition) return message.reply(language.higherThanBOT);
     if (message.mentions.members.first().user.id == client.user.id) return message.reply("You cannot kick this BOT!");
     if (!message.guild.member(client.user).permissions.has("KICK_MEMBERS")) return message.reply("BOT doesn't have the Kick Members permission on this server!");
-    var reason = "Unspecified";
+    var reason = language.unspecified;
     args.splice(0, 1);
     if (args[0]) reason = args.join(" ");
     message.mentions.members.first().kick(message.author.tag + " - " + reason);
@@ -28,9 +28,9 @@ module.exports.run = async (client, message, args, language) => {
                     size: 2048
                 })
             },
-            description: "**Reason:** " + reason,
+            description: "**" + language.reason + ":** " + reason,
             footer: {
-                text: "Sender's ID: " + message.author.id + " | Mentioned member's ID: " + message.mentions.members.first().user.id,
+                text: message.senderID + message.author.id + message.mentionedMemberID + message.mentions.members.first().user.id,
                 timestamp: message.timestamp
             }
         }
@@ -46,9 +46,9 @@ module.exports.run = async (client, message, args, language) => {
                     size: 2048
                 })
             },
-            description: "**Being kicked by:** " + message.author.toString() + "\n**Reason:** " + reason,
+            description: "**Being kicked by:** " + message.author.toString() + "\n**" + language.reason + ":** " + reason,
             footer: {
-                text: "Sender's ID: " + message.author.id + " | Mentioned member's ID: " + message.mentions.members.first().user.id,
+                text: message.senderID + message.author.id + message.mentionedMemberID + message.mentions.members.first().user.id,
                 timestamp: message.timestamp
             }
         }

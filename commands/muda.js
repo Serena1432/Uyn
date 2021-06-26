@@ -38,7 +38,7 @@ module.exports.run = async (client, message, args, language) => {
             embed: image
         });
     } else {
-        message.reply("You must mention an user!");
+        message.reply(language.pleaseMentionUser);
     }
 }
 

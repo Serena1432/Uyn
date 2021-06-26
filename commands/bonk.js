@@ -33,7 +33,7 @@ module.exports.run = async (client, message, args, language) => {
                     const image = {
                         color: Math.floor(Math.random() * 16777214) + 1,
                         author: {
-                            name: message.author.username + ' "bonk"s ' + message.mentions.users.first().username + "! Ouch!\n" + text,
+                            name: message.author.username + language.bonk + message.mentions.users.first().username + "! Ouch!\n" + text,
                             icon_url: message.author.avatarURL({
                                 format: "png",
                                 dynamic: true,
@@ -50,7 +50,7 @@ module.exports.run = async (client, message, args, language) => {
                 }
             });
     } else {
-        message.reply("You must mention an user!");
+        message.reply(language.pleaseMentionUser);
     }
 }
 

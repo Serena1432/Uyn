@@ -6,11 +6,11 @@ const {
 
 module.exports.run = async (client, message, args, language) => {
     if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.reply("You don't have the `Manage Messages` permission to do this!"); 
-    if (!message.mentions.members.size) return message.reply("You must mention an user!");
+    if (!message.mentions.members.size) return message.reply(language.pleaseMentionUser);
     if (message.mentions.members.first().user.id == message.author.id) return message.reply("You can't warn yourself!");
-    if (message.mentions.members.first().roles.highest.rawPosition >= message.member.roles.highest.rawPosition) return message.reply("The mentioned member's highest role is higher than yours!");
+    if (message.mentions.members.first().roles.highest.rawPosition >= message.member.roles.highest.rawPosition) return message.reply(language.higherThanYours);
     if (message.mentions.members.first().user.id == client.user.id) return message.reply("You can't warn this BOT!");
-    var reason = "Unspecified";
+    var reason = language.unspecified;
     args.splice(0, 1);
     if (args[0]) reason = args.join(" ");
     message.channel.send({
@@ -24,9 +24,9 @@ module.exports.run = async (client, message, args, language) => {
                     size: 2048
                 })
             },
-            description: "**Reason:** " + reason,
+            description: "**" + language.reason + ":** " + reason,
             footer: {
-                text: "Sender's ID: " + message.author.id + " | Mentioned member's ID: " + message.mentions.members.first().id,
+                text: message.senderID + message.author.id + message.mentionedMemberID + message.mentions.members.first().id,
                 timestamp: message.timestamp
             }
         }
@@ -42,9 +42,9 @@ module.exports.run = async (client, message, args, language) => {
                     size: 2048
                 })
             },
-            description: "**Being warned by:** " + message.author.toString() + "\n**Reason:** " + reason,
+            description: "**Being warned by:** " + message.author.toString() + "\n**" + language.reason + ":** " + reason,
             footer: {
-                text: "Sender's ID: " + message.author.id + " | Mentioned member's ID: " + message.mentions.members.first().id,
+                text: message.senderID + message.author.id + message.mentionedMemberID + message.mentions.members.first().id,
                 timestamp: message.timestamp
             }
         }

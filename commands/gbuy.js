@@ -10,7 +10,7 @@ function random(min, max) {
 function gbuy(client, message, args, language) {
     if (!args[0]) return message.reply("Please type an item ID!");
     if (isNaN(args[0])) return message.reply("The item ID must be a number!");
-    if (!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply("I don't have the Manage Roles permission! Please contact the server admin!");
+    if (!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply(language.missingManageRolesPermission);
     if (!client.economyManager[message.guild.id] || client.economyManager[message.guild.id].roles.length == 0) return message.reply("Invalid item ID!");
     if (!client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1]) return message.reply("Invalid item ID!");
     var role = message.guild.roles.cache.get(client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].id);
@@ -35,7 +35,7 @@ function gbuy(client, message, args, language) {
                     for (let i = 0; i < 32; i++) {
                         result += characters.charAt(Math.floor(Math.random() * characters.length));
                     }
-                    if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                    if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**" + language.transactionID + "** " + result, new Discord.MessageEmbed()
                         .setColor(Math.floor(Math.random() * 16777215))
                         .setAuthor(message.author.username + " has just bought \"" + role.name + "\" role for " + client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].price + " " + client.config.currency + " from the \"" + message.guild.name + "\" server shop.", message.author.avatarURL({size: 128}))
                         .setTimestamp()
@@ -47,7 +47,7 @@ function gbuy(client, message, args, language) {
                             name: "Succesfully bought the " + role.name + " role.",
                             icon_url: message.guild.iconURL({size: 128})
                         },
-                        description: "**Description:**\n" + client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].description + "\n**Transaction ID:**\n" + result + "\nYou should remember this ID and send this to the BOT developer if something wrong happened.",
+                        description: "**" + language.descriptionEmbedField + "**\n" + client.economyManager[message.guild.id].roles[parseInt(args[0]) - 1].description + "\n**" + language.transactionID + "**\n" + result + "\n" + language.transactionNotice + "",
                         timestamp: new Date()
                     };
                     message.channel.send({

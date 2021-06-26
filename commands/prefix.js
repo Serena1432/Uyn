@@ -21,7 +21,7 @@ module.exports.run = async (client, message, args, language) => {
     // If no prefix was sent, return server's current prefix
     if (!args[0]) if (client.customPrefixes[message.guild.id]) return message.reply("The BOT's current prefix on this server is `" + client.customPrefixes[message.guild.id] + "`."); else return message.reply("The BOT's current prefix on this server is `r!`.");
     // Checking for permissions
-    if (!message.member.hasPermission("MANAGE_GUILD")) return message.reply("You need the Manage Guild permission to do this!");
+    if (!message.member.hasPermission("MANAGE_GUILD")) return message.reply(language.needManageGuildPermission);
 	// Check the current prefix
 	if (client.customPrefixes[message.guild.id] && client.customPrefixes[message.guild.id] == args[0]) return message.reply("The BOT's prefix on this server is already `" + args[0] + "`!");
     // Connecting to the server

@@ -16,21 +16,21 @@ function buy(client, message, args, language, item) {
     for (var i = 0; i < client.economyManager[message.author.id].inventory.length; i++) {
         if (client.economyManager[message.author.id].inventory[i] == item.code) has = true;
     }
-    if (has) return message.reply("You have already had this item!");
+    if (has) return message.reply(language.itemAlreadyHave);
     var inv = {
         type: client.config.currency,
         cash: parseInt(decrypt(client.economyManager[message.author.id].coins))
     };
     if (item.price_type == "message_points") {
-        inv.type = "💬 Message Points";
+        inv.type = "💬 " + language.messagePoints + "";
         inv.cash = parseInt(decrypt(client.economyManager[message.author.id].messagePoints))
     }
-    if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
+    if (!client.economyManager[message.author.id].coins) return message.reply(language.coinError);
     if (item.type == "leveling_ticket") {
-        if (args[1] && isNaN(args[1])) return message.reply("The quantity must be a number!");
-        if (inv.cash < item.price * (args[1] ? parseInt(args[1]) : 1)) return message.reply("Insufficent **" + inv.type + "**!");
+        if (args[1] && isNaN(args[1])) return message.reply(language.quantityIsNaN);
+        if (inv.cash < item.price * (args[1] ? parseInt(args[1]) : 1)) return message.reply(language.insufficent + " **" + inv.type + "**!");
     }
-    else if (inv.cash < item.price) return message.reply("Insufficent **" + inv.type + "**!");
+    else if (inv.cash < item.price) return message.reply(language.insufficent + " **" + inv.type + "**!");
     var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
     if (item.price_type == "message_points") coins = parseInt(decrypt(client.economyManager[message.author.id].messagePoints));
     coins -= item.price * (args[1] ? parseInt(args[1]) : 1);
@@ -54,7 +54,7 @@ function buy(client, message, args, language, item) {
             for (let i = 0; i < 32; i++) {
                 result += characters.charAt(Math.floor(Math.random() * characters.length));
             }
-            if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+            if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**" + language.transactionID + "** " + result, new Discord.MessageEmbed()
                 .setColor(Math.floor(Math.random() * 16777215))
                 .setAuthor(message.author.username + " has just bought " + (args[1] ? parseInt(args[1]) : "a") + " \"" + item.name + "\" item" + (parseInt(args[1]) > 1 ? "s" : "") + " from the shop for " + item.price + " " + inv.type + ".", message.author.avatarURL({size: 128}))
                 .setTimestamp()
@@ -63,10 +63,10 @@ function buy(client, message, args, language, item) {
             const embed = {
                 color: Math.floor(Math.random() * 16777215),
                 author: {
-                    name: "Succesfully bought the \"" + item.name + "\" item.",
+                    name: language.itemBought.replace("$item", item),
                     icon_url: message.author.avatarURL({size: 128})
                 },
-                description: "**Description:**\n" + item.description + "\n**Transaction ID:**\n" + result + "\nYou should remember this ID and send this to the BOT developer if something wrong happened.",
+                description: "**" + language.descriptionEmbedField + "**\n" + item.description + "\n**" + language.transactionID + "**\n" + result + "\n" + language.transactionNotice + "",
                 timestamp: new Date()
             };
             message.channel.send({
@@ -89,14 +89,14 @@ function buy(client, message, args, language, item) {
 module.exports.run = async (client, message, args, language) => {
     try {
         var items = require("../items.json");
-        if (items.length == 0) return message.reply("There aren't any items in the BOT's shop!");
-        if (!args[0]) return message.reply("Please specify the code of at item!");
+        if (items.length == 0) return message.reply(language.noBOTShopItem);
+        if (!args[0]) return message.reply(language.specifyCode);
         var item;
         for (var i = 0; i < items.length; i++) {
             if (items[i].code == args[0]) item = items[i];
         }
-        if (!item) return message.reply("Invalid item code!");
-        if (item.type == "gacha_ticket") return message.reply("You can't buy this item!")
+        if (!item) return message.reply(language.invalidItemCode);
+        if (item.type == "gacha_ticket") return message.reply(language.cantBuyItem)
         if (client.economyManager[message.author.id]) {
             buy(client, message, args, language, item);
             return;

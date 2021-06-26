@@ -15,7 +15,7 @@ module.exports.run = async (client, message, args, language) => {
         timeout: 10000
     });
     if (message.mentions.users.size) {
-        var creatingMsg = await message.channel.send("Creating images, please wait...");
+        var creatingMsg = await message.channel.send(language.creatingImage);
         const canvas = Canvas.createCanvas(759, 427);
         const ctx = canvas.getContext('2d');
 
@@ -36,7 +36,7 @@ module.exports.run = async (client, message, args, language) => {
             }]
         });
     } else {
-        message.reply("You must mention an user!");
+        message.reply(language.pleaseMentionUser);
     }
 }
 

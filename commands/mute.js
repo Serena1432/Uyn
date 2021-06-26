@@ -8,13 +8,13 @@ const {
 
 module.exports.run = async (client, message, args, language) => {
     if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.reply("You don't have the `Manage Messages` permission to do this!");
-    if (!message.mentions.members.size) return message.reply("You must mention an user!");
+    if (!message.mentions.members.size) return message.reply(language.pleaseMentionUser);
     if (message.mentions.members.first().user.id == message.author.id) return message.reply("You can't mute yourself!");
-    if (message.mentions.members.first().roles.highest.rawPosition >= message.member.roles.highest.rawPosition) return message.reply("The mentioned member's highest role is higher than yours!");
-    if (message.mentions.members.first().roles.highest.rawPosition >= message.guild.member(client.user).roles.highest.rawPosition) return message.reply("The mentioned member's highest role is higher than this BOT's role!");
+    if (message.mentions.members.first().roles.highest.rawPosition >= message.member.roles.highest.rawPosition) return message.reply(language.higherThanYours);
+    if (message.mentions.members.first().roles.highest.rawPosition >= message.guild.member(client.user).roles.highest.rawPosition) return message.reply(language.higherThanBOT);
     if (message.mentions.members.first().user.id == client.user.id) return message.reply("You cannot mute this BOT!");
     if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply("BOT doesn't have the Manage Roles permission on this server!");
-    var reason = "Unspecified";
+    var reason = language.unspecified;
     var duration = undefined;
     var durationText = "";
     var member = message.mentions.members.first();
@@ -72,7 +72,7 @@ module.exports.run = async (client, message, args, language) => {
 									},
 									description: "**Reason**: Automatic Unmute",
 									footer: {
-										text: "Sender's ID: " + author.id + " | Mentioned member's ID: " + member.user.id,
+										text: message.senderID + author.id + message.mentionedMemberID + member.user.id,
 										timestamp: message.timestamp
 									}
 								}
@@ -94,9 +94,9 @@ module.exports.run = async (client, message, args, language) => {
                                 size: 2048
                             })
                         },
-                        description: durationText + "**Reason:** " + reason,
+                        description: durationText + "**" + language.reason + ":** " + reason,
                         footer: {
-                            text: "Sender's ID: " + author.id + " | Mentioned member's ID: " + member.user.id,
+                            text: message.senderID + author.id + message.mentionedMemberID + member.user.id,
                             timestamp: message.timestamp
                         }
                     }
@@ -112,9 +112,9 @@ module.exports.run = async (client, message, args, language) => {
                                 size: 2048
                             })
                         },
-                        description: "**Being muted by:** " + author.toString() + "\n" + durationText + "**Reason:** " + reason,
+                        description: "**Being muted by:** " + author.toString() + "\n" + durationText + "**" + language.reason + ":** " + reason,
                         footer: {
-                            text: "Sender's ID: " + author.id + " | Mentioned member's ID: " + member.user.id,
+                            text: message.senderID + author.id + message.mentionedMemberID + member.user.id,
                             timestamp: message.timestamp
                         }
                     }
@@ -144,9 +144,9 @@ module.exports.run = async (client, message, args, language) => {
                         size: 2048
                     })
                 },
-                description: "**Reason:** " + reason,
+                description: "**" + language.reason + ":** " + reason,
                 footer: {
-                    text: "Sender's ID: " + author.id + " | Mentioned member's ID: " + member.user.id,
+                    text: message.senderID + author.id + message.mentionedMemberID + member.user.id,
                     timestamp: message.timestamp
                 }
             }
@@ -162,9 +162,9 @@ module.exports.run = async (client, message, args, language) => {
                         size: 2048
                     })
                 },
-                description: "**Being muted by:** " + author.toString() + "\n**Reason:** " + reason,
+                description: "**Being muted by:** " + author.toString() + "\n**" + language.reason + ":** " + reason,
                 footer: {
-                    text: "Sender's ID: " + author.id + " | Mentioned member's ID: " + member.user.id,
+                    text: message.senderID + author.id + message.mentionedMemberID + member.user.id,
                     timestamp: message.timestamp
                 }
             }

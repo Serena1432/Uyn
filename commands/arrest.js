@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args, language) => {
     });
     if (message.mentions.users.size) {
         if (message.mentions.users.first().id != message.author.id) {
-            var creatingMsg = await message.channel.send("Creating images, please wait...");
+            var creatingMsg = await message.channel.send(language.creatingImage);
             const canvas = Canvas.createCanvas(600, 400);
             const ctx = canvas.getContext('2d');
 
@@ -36,7 +36,7 @@ module.exports.run = async (client, message, args, language) => {
                 size: 256
             }));
             ctx.drawImage(p2avatar, 450, 0, 140, 140);
-            message.channel.send(message.mentions.users.first().toString() + ", you have been caught by " + message.author.toString() + "!", {
+            message.channel.send(message.mentions.users.first().toString() + language.haveBeenCaught + message.author.toString() + "!", {
                 files: [{
                     attachment: canvas.toBuffer(),
                     name: message.author.username + '_arrests_' + message.mentions.users.first().username + '.png'
@@ -44,10 +44,10 @@ module.exports.run = async (client, message, args, language) => {
             });
             creatingMsg.delete();
         } else {
-            message.reply("You arrested yourself, but... why??");
+            message.reply(language.arrestedYourself);
         }
     } else {
-        message.reply("You must mention an user!");
+        message.reply(language.pleaseMentionUser);
     }
 }
 

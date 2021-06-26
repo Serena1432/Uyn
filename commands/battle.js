@@ -17,9 +17,9 @@ function info(client, message, args, language) {
 		};
 		try {
 			var opponentTeam = {};
-			if (!client.economyManager[message.author.id].team || client.economyManager[message.author.id].team.members.length == 0) return message.reply("You don't have any team!\nUse the `team add <waifu id>` command to add a member to your team!");
+			if (!client.economyManager[message.author.id].team || client.economyManager[message.author.id].team.members.length == 0) return message.reply(language.noTeam);
 			var playerTeam = {
-				name: client.economyManager[message.author.id].team.name != "" ? client.economyManager[message.author.id].team.name : (message.author.username + "'s team"),
+				name: client.economyManager[message.author.id].team.name != "" ? client.economyManager[message.author.id].team.name : (language.defaultPlayerTeamName.replace("$username", message.author.username)),
 				members: []
 			};
 			var maxLevel = 0;
@@ -33,7 +33,7 @@ function info(client, message, args, language) {
 				}
 				maxLevel = Math.max(waifu.level, maxLevel);
 			}
-			if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < 50 * (2 + maxLevel * 0.35)) return message.reply("You need to have at least **" + parseInt(50 * (2 + maxLevel * 0.35)) + " " + client.config.currency + "** to start a battle!");
+			if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < 50 * (2 + maxLevel * 0.35)) return message.reply(language.insufficentBattleAmount.replace("$amount", parseInt(50 * (2 + maxLevel * 0.35)) + " " + client.config.currency));
 			for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
 				var waifu;
 				for (var j = 0; j < client.economyManager[message.author.id].waifus.length; j++) {
@@ -54,7 +54,7 @@ function info(client, message, args, language) {
 				});
 			}
 			if (!message.mentions.users.size) {
-				opponentTeam.name = "opponent's Team";
+				opponentTeam.name = language.defaultOpponentTeamName;
 				opponentTeam.members = [];
 				for (var i = 0; i < Math.floor(Math.random() * 3) + 1; i++) {
 					var random = Math.random(), waifu, length = client.economyManager[message.author.id].waifus.length, rarity, type;
@@ -116,11 +116,11 @@ function info(client, message, args, language) {
 				}
 			}
 			else {
-				if (message.mentions.users.first().bot) return message.reply("You cannot battle with a BOT!");
-				if (message.mentions.users.first().id == message.author.id) return message.reply("You cannot battle with yourself!");
-				if (!client.economyManager[message.mentions.users.first().id].team || client.economyManager[message.mentions.users.first().id].team.members.length == 0) return message.reply("The mentioned user doesn't have any team!")
+				if (message.mentions.users.first().bot) return message.reply(language.cannotBattleWithBOT);
+				if (message.mentions.users.first().id == message.author.id) return message.reply(language.cannotBattleWithYourself);
+				if (!client.economyManager[message.mentions.users.first().id].team || client.economyManager[message.mentions.users.first().id].team.members.length == 0) return message.reply(language.opponentNoTeam)
 				var opponentTeam = {
-					name: client.economyManager[message.mentions.users.first().id].team.name != "" ? client.economyManager[message.mentions.users.first().id].team.name : (message.mentions.users.first().username + "'s team"),
+					name: client.economyManager[message.mentions.users.first().id].team.name != "" ? client.economyManager[message.mentions.users.first().id].team.name : language.defaultPlayerTeamName.replace("$username", message.mentions.users.first().username),
 					members: []
 				};
 				for (var i = 0; i < client.economyManager[message.mentions.users.first().id].team.members.length; i++) {
@@ -157,8 +157,8 @@ function info(client, message, args, language) {
 				opponentTeamText += "**" + opponentTeam.members[i].name + "** (Lv." + opponentTeam.members[i].level + ")\n**HP:** " + opponentTeam.members[i].current_hp.toLocaleString() + "/" + parseInt(opponentTeam.members[i].base_hp * (1 + 0.05 * opponentTeam.members[i].level)).toLocaleString() + "\n\n";
 			}
 			var embed = new Discord.MessageEmbed()
-			.setAuthor(message.author.username + "'s battle against " + (message.mentions.users.size ? message.mentions.users.first().username : "a random opponent"), message.author.avatarURL({size: 128, dynamic: true}))
-			.setDescription("If the BOT doesn't update the battle status for a long time, that means the BOT has been restarted during the battle.\nAt that time, please use the command again.")
+			.setAuthor(language.battleAgainst.replace("$username", message.author.username) + (message.mentions.users.size ? message.mentions.users.first().username : language.aRandomOpponent), message.author.avatarURL({size: 128, dynamic: true}))
+			.setDescription(language.battleDescription)
 			.addFields({name: playerTeam.name, value: playerTeamText, inline: true}, {name: opponentTeam.name, value: opponentTeamText, inline: true})
 			.setTimestamp(), end = false;
 			message.channel.send(embed).then(msg => {
@@ -212,20 +212,20 @@ function info(client, message, args, language) {
 					}
 					var res = "battling";
 					embed = new Discord.MessageEmbed()
-					.setAuthor(message.author.username + "'s battle against " + (message.mentions.users.size ? message.mentions.users.first().username : "a random opponent"), message.author.avatarURL({size: 128, dynamic: true}))
-					.setDescription("If the BOT doesn't update the battle status for a long time, that means the BOT has been restarted during the battle.\nAt that time, please use the command again.")
+					.setAuthor(language.battleAgainst.replace("$username", message.author.username) + (message.mentions.users.size ? message.mentions.users.first().username : language.aRandomOpponent), message.author.avatarURL({ size: 128, dynamic: true }))
+					.setDescription(language.battleDescription)
 					.addFields({name: playerTeam.name, value: playerTeamText, inline: true}, {name: opponentTeam.name, value: opponentTeamText, inline: true})
 					.setTimestamp();
 					if (playerUtb == playerTeam.members.length && opponentUtb == opponentTeam.members.length) {
 						res = "draw";
 						end = true;
-						embed.setFooter("The result is a draw!");
+						embed.setFooter(language.drawResult);
 						clearInterval(interval);
 					}
 					else if (playerUtb == playerTeam.members.length) {
 						res = "lose";
 						end = true;
-						embed.setFooter((message.mentions.users.size ? message.mentions.users.first().username : "The opponent") + " is the winner!\nYou lost " + parseInt(15 * (2 + maxLevel * 0.05) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1)) + " " + client.config.currency + (message.mentions.users.size ? (" and " + message.mentions.users.first().username + " got " + parseInt(15 * (2 + maxLevel * 0.05) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1)) + " " + client.config.currency + " and " + parseInt(5 * (2 + maxLevel * 0.05) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1)) + " EXP") : "") + "...\nYou lost your streak of " + (client.economyManager[message.author.id].streaks) + " wins...");
+						embed.setFooter((message.mentions.users.size ? message.mentions.users.first().username : language.theOpponent) + language.isTheWinner + parseInt(15 * (2 + maxLevel * 0.05) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1)) + " " + client.config.currency + (message.mentions.users.size ? (language.and + message.mentions.users.first().username + language.got + parseInt(15 * (2 + maxLevel * 0.05) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1)) + " " + client.config.currency + language.and + parseInt(5 * (2 + maxLevel * 0.05) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1)) + " EXP") : "") + language.streaksLost + (client.economyManager[message.author.id].streaks) + language.lostStreaks);
 						client.economyManager[message.author.id].streaks = 0;
 						clearInterval(interval);
 					}
@@ -242,9 +242,9 @@ function info(client, message, args, language) {
 							var random2 = Math.floor(Math.random() * 3) + 1;
 							if (client.economyManager[message.author.id].streaks >= 30) random2 = Math.floor(Math.random() * 5) + 1;
 							eval("if (!client.economyManager[message.author.id].leveling_tickets.gtk" + random2 + ") client.economyManager[message.author.id].leveling_tickets.gtk" + random2 + " = 1; else client.economyManager[message.author.id].leveling_tickets.gtk" + random2 + "++;");
-							ticketGift = "\nYou also got a Leveling Ticket " + random + "★ and a Gacha Ticket " + random2 + "★!";
+							ticketGift = language.ticketGift.replace("$r1", random).replace("$r2", random2);
 						}
-						embed.setFooter("You are the winner! Congratulations!\nYou got " + parseInt(15 * (2 + maxLevel * 0.05) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1)) + " " + client.config.currency + " and your team got " + parseInt(5 * (2 + maxLevel * 0.05) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1)) + " EXP!\n" + (message.mentions.users.size ? (message.mentions.users.first().username + " has lost " + parseInt(15 * (2 + maxLevel * 0.05) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1)) + " " + client.config.currency + "!\n") : "") + "You are in " + (client.economyManager[message.author.id].streaks) + " win streak(s)!" + ticketGift);
+						embed.setFooter(language.winnerText + parseInt(15 * (2 + maxLevel * 0.05) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1)) + " " + client.config.currency + language.andYourTeamGot + parseInt(5 * (2 + maxLevel * 0.05) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1)) + " EXP!\n" + (message.mentions.users.size ? (message.mentions.users.first().username + language.hasLost + parseInt(15 * (2 + maxLevel * 0.05) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1)) + " " + client.config.currency + "!\n") : "") + language.winStreaks.replace("$streaks", client.economyManager[message.author.id].streaks) + ticketGift);
 						clearInterval(interval);
 					}
 					if (!end && opponentUtb != opponentTeam.members.length || res == "draw") msg.edit(embed);
@@ -383,7 +383,7 @@ function info(client, message, args, language) {
         if (hours > 0) timeText += hours + "h ";
         if (minutes > 0) timeText += minutes + "m ";
         if (seconds > 0) timeText += seconds + "s ";
-        return message.reply("You have to wait **" + timeText + "**to do this again!");
+        return message.reply(language.waitCountdown.replace("$time", timeText));
     }
 }
 

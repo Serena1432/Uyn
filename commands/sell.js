@@ -95,7 +95,7 @@ function sell(client, message, args, language) {
                                     for (let i = 0; i < 32; i++) {
                                         result += characters.charAt(Math.floor(Math.random() * characters.length));
                                     }
-                                    if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                                    if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**" + language.transactionID + "** " + result, new Discord.MessageEmbed()
                                         .setColor(Math.floor(Math.random() * 16777215))
                                         .setAuthor(message.author.username + " has just sold a waifu in the BOT's public shop.", message.author.avatarURL({size: 128}))
                                         .setTimestamp()

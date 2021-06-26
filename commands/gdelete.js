@@ -9,7 +9,7 @@ function random(min, max) {
 
 module.exports.run = async (client, message, args, language) => {
     try {
-        if (!message.member.hasPermission("MANAGE_GUILD") && message.author.id != client.config.ownerId[0]) return message.reply("You need the Manage Guild permission to do this!");
+        if (!message.member.hasPermission("MANAGE_GUILD") && message.author.id != client.config.ownerId[0]) return message.reply(language.needManageGuildPermission);
         request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
             if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
                 var formerRoles = client.economyManager[message.guild.id].roles;

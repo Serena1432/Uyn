@@ -26,11 +26,11 @@ function roll(client, message, args, language) {
                 ssRareRate = 0.03;
             }
             else if (args[0] == "msgp") {
-                if (parseInt(decrypt(client.economyManager[message.author.id].messagePoints)) < 100) return message.reply("Insufficent 💬 Message Points!");
+                if (parseInt(decrypt(client.economyManager[message.author.id].messagePoints)) < 100) return message.reply("Insufficent 💬 " + language.messagePoints + "!");
                 var msgp = parseInt(decrypt(client.economyManager[message.author.id].messagePoints));
                 msgp -= 100;
                 client.economyManager[message.author.id].messagePoints = encrypt(msgp.toString());
-                spent = "100 💬 Message Points";
+                spent = "100 💬 " + language.messagePoints + "";
                 normalRate = 0.8;
                 rareRate = 0.1;
                 sRareRate = 0.05;
@@ -134,7 +134,7 @@ function roll(client, message, args, language) {
                     for (let i = 0; i < 32; i++) {
                         result += characters.charAt(Math.floor(Math.random() * characters.length));
                     }
-                    if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                    if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**" + language.transactionID + "** " + result, new Discord.MessageEmbed()
                         .setColor(Math.floor(Math.random() * 16777215))
                         .setAuthor(message.author.username + " has just spent " + spent + " for rolling a waifu/husbando.", message.author.avatarURL({size: 128}))
                         .setTimestamp()
@@ -169,7 +169,7 @@ function roll(client, message, args, language) {
         if (hours > 0) timeText += hours + "h ";
         if (minutes > 0) timeText += minutes + "m ";
         if (seconds > 0) timeText += seconds + "s ";
-        return message.reply("You have to wait **" + timeText + "**to do this again!");
+        return message.reply(language.waitCountdown.replace("$time", timeText));
     }
 }
 

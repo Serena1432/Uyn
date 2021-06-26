@@ -35,7 +35,7 @@ module.exports.post = async function(client, req, res) {
         if (!guild) return res.status(404).send(JSON.stringify({code: 404, error: "Cannot get the Guild object. Maybe you entered an invalid Guild ID or the BOT hasn't joined this guild yet."}));
         var member = guild.member(id);
         if (!member) return res.status(404).send(JSON.stringify({code: 404, error: "Cannot get the member information. Are you trying to view information of a guild that you haven't joined?"}));
-        if (!member.hasPermission("MANAGE_GUILD")) return res.status(403).send(JSON.stringify({code: 403, error: "You need the Manage Guild permission to do this!"}));
+        if (!member.hasPermission("MANAGE_GUILD")) return res.status(403).send(JSON.stringify({code: 403, error: language.needManageGuildPermission}));
         if (client.customPrefixes[guild.id] && client.customPrefixes[guild.id] == req.body.prefix) return res.status(400).send(JSON.stringify({code: 400, error: "The BOT's prefix on this server is already " + req.body.prefix + "!"}));
         request(process.env.php_server_url + '/SetCustomPrefix.php?token=' + process.env.php_server_token + '&id=' + guild.id + "&prefix=" + encodeURIComponent(req.body.prefix), function(err, response, body) {
             if (!response || response.statusCode != 200 || body.includes('Connection failed')) {

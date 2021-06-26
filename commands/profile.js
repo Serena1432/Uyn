@@ -66,7 +66,7 @@ async function prof(client, message, args, language, user) {
 module.exports.run = async (client, message, args, language) => {
     if (!message.mentions.users.size) {
         if (client.economyManager[message.author.id]) {
-            if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
+            if (!client.economyManager[message.author.id].coins) return message.reply(language.coinError);
             try {
                 prof(client, message, args, language, message.author);
                 return;
@@ -82,7 +82,7 @@ module.exports.run = async (client, message, args, language) => {
                     try {
                         client.economyManager = JSON.parse(body);
                         if (client.economyManager[message.author.id] != undefined) {
-                            if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
+                            if (!client.economyManager[message.author.id].coins) return message.reply(language.coinError);
                             try {
                                 prof(client, message, args, language, message.author);
                                 return;
@@ -107,7 +107,7 @@ module.exports.run = async (client, message, args, language) => {
                                     data: JSON.stringify(client.economyManager[message.author.id])
                                 }}, function(error, response, body) {
                                     if (!error && response.statusCode == 200 && body.includes("Success")) {
-                                        if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
+                                        if (!client.economyManager[message.author.id].coins) return message.reply(language.coinError);
                                         try {
                                             prof(client, message, args, language, message.author);
                                             return;
@@ -139,7 +139,7 @@ module.exports.run = async (client, message, args, language) => {
     }
     else {
         if (client.economyManager[message.mentions.users.first().id]) {
-            if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply("Cannot get the coins information.");
+            if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply(language.coinError);
             try {
                 prof(client, message, args, language, message.mentions.users.first());
                 return;
@@ -155,7 +155,7 @@ module.exports.run = async (client, message, args, language) => {
                     try {
                         client.economyManager = JSON.parse(body);
                         if (client.economyManager[message.mentions.users.first().id] != undefined) {
-                            if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply("Cannot get the coins information.");
+                            if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply(language.coinError);
                             try {
                                 prof(client, message, args, language, message.mentions.users.first());
                                 return;
@@ -180,7 +180,7 @@ module.exports.run = async (client, message, args, language) => {
                                     data: JSON.stringify(client.economyManager[message.mentions.users.first().id])
                                 }}, function(error, response, body) {
                                     if (!error && response.statusCode == 200 && body.includes("Success")) {
-                                        if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply("Cannot get the coins information.");
+                                        if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply(language.coinError);
                                         try {
                                             prof(client, message, args, language, message.mentions.users.first());
                                             return;

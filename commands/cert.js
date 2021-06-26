@@ -125,7 +125,7 @@ module.exports.run = async (client, message, args, language) => {
             message.reply("You must type a certificate name!");
         }
     } else {
-        message.reply("You must mention an user!");
+        message.reply(language.pleaseMentionUser);
     }
 }
 

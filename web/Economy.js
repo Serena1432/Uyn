@@ -31,7 +31,7 @@ module.exports.get = async function(client, req, res) {
         else if (tokenData.id == null) return res.status(401).send(JSON.stringify({code: 401, error: "Invalid Access Token."}));
         var id = tokenData.id;
         if (client.economyManager[id]) {
-            if (!client.economyManager[id].coins) return res.status(500).send(JSON.stringify({code: 500, error: "Cannot get the coins information."}));
+            if (!client.economyManager[id].coins) return res.status(500).send(JSON.stringify({code: 500, error: language.coinError}));
             try {
                 var economy = {
                     coins: parseInt(decrypt(client.economyManager[id].coins)),
@@ -58,7 +58,7 @@ module.exports.get = async function(client, req, res) {
                     try {
                         client.economyManager = JSON.parse(body);
                         if (client.economyManager[id] != undefined) {
-                            if (!client.economyManager[id].coins) return res.status(500).send(JSON.stringify({code: 500, error: "Cannot get the coins information."}));
+                            if (!client.economyManager[id].coins) return res.status(500).send(JSON.stringify({code: 500, error: language.coinError}));
                             try {
                                 var economy = {
                                     coins: parseInt(decrypt(client.economyManager[id].coins)),
@@ -91,7 +91,7 @@ module.exports.get = async function(client, req, res) {
                                     data: JSON.stringify(client.economyManager[id])
                                 }}, function(error, response, body) {
                                     if (!error && response.statusCode == 200 && body.includes("Success")) {
-                                        if (!client.economyManager[id].coins) return res.status(500).send(JSON.stringify({code: 500, error: "Cannot get the coins information."}));
+                                        if (!client.economyManager[id].coins) return res.status(500).send(JSON.stringify({code: 500, error: language.coinError}));
                                         try {
                                             var economy = {
                                                 coins: parseInt(decrypt(client.economyManager[id].coins)),

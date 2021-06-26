@@ -237,7 +237,7 @@ module.exports = async (client, message) => {
     // Done the Custom Prefix part.
    
     if (message.mentions.users.size)
-    if (message.mentions.users.first().id == client.user.id) message.channel.send("The BOT's prefix in this server is " + prefix + ".").then(message => {
+    if (message.mentions.users.first().id == client.user.id) message.channel.send(language.currentServerPrefix.replace("$prefix", prefix)).then(message => {
         message.delete({timeout:5000});
     });
   
@@ -265,8 +265,8 @@ module.exports = async (client, message) => {
 		if (message.guild.member(client.user).hasPermission("SEND_MESSAGES")) {
 			if (!message.channel.permissionOverwrites.get(client.user.id) || message.channel.permissionOverwrites.get(client.user.id).deny.has("SEND_MESSAGES") != true) 
 				cmd.run(client, message, args, language);
-			else message.author.send("I don't have permission to send messages on the **" + message.guild.name + "** server! Please contact the server admin to fix the issue!");
+			else message.author.send(language.missingSendPermissions.replace("$guild.name", message.guild.name));
 		}
-		else message.author.send("I don't have permission to send messages on the **" + message.guild.name + "** server! Please contact the server admin to fix the issue!");
+		else message.author.send(language.missingSendPermissions.replace("$guild.name", message.guild.name));
 	}
 };

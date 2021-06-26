@@ -11,7 +11,7 @@ function random(min, max) {
 }
 
 function slots(client, message, args, language) {
-    if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
+    if (!client.economyManager[message.author.id].coins) return message.reply(language.coinError);
     try {
         if (!client.countdown[message.author.id] || client.countdown[message.author.id] < (new Date()).getTime()) {
             if (message.mentions.users.size && !args[0]) return message.reply("You must type an amount!");
@@ -64,7 +64,7 @@ function slots(client, message, args, language) {
                                     for (let i = 0; i < 32; i++) {
                                         result += characters.charAt(Math.floor(Math.random() * characters.length));
                                     }
-                                    if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                                    if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**" + language.transactionID + "** " + result, new Discord.MessageEmbed()
                                         .setColor(Math.floor(Math.random() * 16777215))
                                         .setAuthor(message.author.username + " has just " + ((res == 1) ? "won" : "lost") + " " + Math.abs(coinValue) + " " + client.config.currency + " because of the slots command.", message.author.avatarURL({size: 128}))
                                         .setTimestamp()
@@ -98,7 +98,7 @@ function slots(client, message, args, language) {
             if (hours > 0) timeText += hours + "h ";
             if (minutes > 0) timeText += minutes + "m ";
             if (seconds > 0) timeText += seconds + "s ";
-            return message.reply("You have to wait **" + timeText + "**to do this again!");
+            return message.reply(language.waitCountdown.replace("$time", timeText));
         }
     } catch (err) {
         console.log(err);

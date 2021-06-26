@@ -16,16 +16,16 @@ module.exports.run = async (client, message, args, language) => {
             var jd = member.createdAt;
             var dateString = jd.getDate() + "/" + (jd.getMonth() + 1) + "/" + jd.getFullYear() + "; " + jd.getHours() + ":" + jd.getMinutes() + ":" + jd.getSeconds() + " (GMT +0)";
             var gjd = guildMember.joinedAt;
-            var admin = "No";
-            if (guildMember.permissions.has("ADMINISTRATOR")) admin = "Yes";
-            var kickMem = "No";
-            if (guildMember.permissions.has("KICK_MEMBERS")) kickMem = "Yes";
-            var banMem = "No";
-            if (guildMember.permissions.has("BAN_MEMBERS")) banMem = "Yes";
-            var roleManager = "No";
-            if (guildMember.permissions.has("MANAGE_ROLES")) roleManager = "Yes";
-            var channelManager = "No";
-            if (guildMember.permissions.has("MANAGE_CHANNELS")) channelManager = "Yes";
+            var admin = language.no;
+            if (guildMember.permissions.has("ADMINISTRATOR")) admin = language.yes;
+            var kickMem = language.no;
+            if (guildMember.permissions.has("KICK_MEMBERS")) kickMem = language.yes;
+            var banMem = language.no;
+            if (guildMember.permissions.has("BAN_MEMBERS")) banMem = language.yes;
+            var roleManager = language.no;
+            if (guildMember.permissions.has("MANAGE_ROLES")) roleManager = language.yes;
+            var channelManager = language.no;
+            if (guildMember.permissions.has("MANAGE_CHANNELS")) channelManager = language.yes;
             var joinDateString = gjd.getDate() + "/" + (gjd.getMonth() + 1) + "/" + gjd.getFullYear() + "; " + gjd.getHours() + ":" + gjd.getMinutes() + ":" + gjd.getSeconds() + " (GMT +0)";
             const infoMessage = {
                 color: Math.floor(Math.random() * 16777214) + 1,
@@ -40,18 +40,18 @@ module.exports.run = async (client, message, args, language) => {
                     })
                 },
                 fields: [{
-                        name: "Display Name:",
+                        name: language.displayName,
                         value: "<@" + member.id + ">",
                         inline: true
                     },
                     {
-                        name: "Member ID:",
+                        name: language.memberID,
                         value: member.id,
                         inline: true
                     },
                     {
-                        name: "Avatar URL:",
-                        value: "[Download](" + member.avatarURL({
+                        name: language.avatarURL,
+                        value: "[" + language.download + "](" + member.avatarURL({
                             format: "png",
                             dynamic: true,
                             size: 2048
@@ -59,29 +59,29 @@ module.exports.run = async (client, message, args, language) => {
                         inline: true
                     },
                     {
-                        name: "Account created in:",
+                        name: language.accountCreatedIn,
                         value: dateString,
                         inline: false
                     },
                     {
-                        name: "Joined this server in:",
+                        name: language.joinedServerIn,
                         value: joinDateString,
                         inline: false
                     },
                     {
-                        name: "Number of roles:",
+                        name: language.numberOfRoles,
                         value: guildMember.roles.cache.filter(
                             role => role.name !== ""
                         ).size - 1,
                         inline: true
                     },
                     {
-                        name: "Highest role",
+                        name: language.highestRole,
                         value: guildMember.roles.highest.toString(),
                         inline: true
                     },
                     {
-                        name: "Current Display Color:",
+                        name: language.currentDisplayColor,
                         value: guildMember.displayHexColor,
                         inline: false
                     },
@@ -91,27 +91,27 @@ module.exports.run = async (client, message, args, language) => {
                         inline: false
                     },
                     {
-                        name: "Is an administrator?",
+                        name: language.isAdmin,
                         value: admin,
                         inline: true
                     },
                     {
-                        name: "Can kick members?",
+                        name: language.canKickMem,
                         value: kickMem,
                         inline: true
                     },
                     {
-                        name: "Can ban members?",
+                        name: language.canBanMem,
                         value: banMem,
                         inline: true
                     },
                     {
-                        name: "Can manage roles?",
+                        name: language.canManageRoles,
                         value: roleManager,
                         inline: true
                     },
                     {
-                        name: "Can manage channels?",
+                        name: language.canManageChannel,
                         value: channelManager,
                         inline: true
                     },
@@ -144,18 +144,18 @@ module.exports.run = async (client, message, args, language) => {
                     })
                 },
                 fields: [{
-                        name: "Display Name:",
+                        name: language.displayName,
                         value: "<@" + member.id + ">",
                         inline: true
                     },
                     {
-                        name: "Member ID:",
+                        name: language.memberID,
                         value: member.id,
                         inline: true
                     },
                     {
-                        name: "Avatar URL:",
-                        value: "[Download](" + member.avatarURL({
+                        name: language.avatarURL,
+                        value: "[" + language.download + "](" + member.avatarURL({
                             format: "png",
                             dynamic: true,
                             size: 2048
@@ -163,12 +163,12 @@ module.exports.run = async (client, message, args, language) => {
                         inline: true
                     },
                     {
-                        name: "Account created in:",
+                        name: language.accountCreatedIn,
                         value: dateString,
                         inline: false
                     },
                     {
-                        name: "Some information cannot be displayed because this user don't join this server as well.",
+                        name: language.userDontJoinGuild,
                         value: "\u200b",
                         inline: false
                     },
@@ -202,18 +202,18 @@ module.exports.run = async (client, message, args, language) => {
                 })
             },
             fields: [{
-                    name: "Display Name:",
+                    name: language.displayName,
                     value: "<@" + member.id + ">",
                     inline: true
                 },
                 {
-                    name: "Member ID:",
+                    name: language.memberID,
                     value: member.id,
                     inline: true
                 },
                 {
-                    name: "Avatar URL:",
-                    value: "[Download](" + member.avatarURL({
+                    name: language.avatarURL,
+                    value: "[" + language.download + "](" + member.avatarURL({
                         format: "png",
                         dynamic: true,
                         size: 2048
@@ -221,12 +221,12 @@ module.exports.run = async (client, message, args, language) => {
                     inline: true
                 },
                 {
-                    name: "Account created in:",
+                    name: language.accountCreatedIn,
                     value: dateString,
                     inline: false
                 },
                 {
-                    name: "Some information cannot be displayed because you're using this command on a Direct Messages channel.",
+                    name: language.userInfoOnDM,
                     value: "\u200b",
                     inline: false
                 },

@@ -10,7 +10,7 @@ module.exports.run = async (client, message, args, language) => {
     request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
         if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
             client.economyManager = JSON.parse(body);
-            if (!message.mentions.users.size) return message.reply("You must mention an user!");
+            if (!message.mentions.users.size) return message.reply(language.pleaseMentionUser);
             if (message.mentions.users.size && !args[1]) return message.reply("You must type an amount!");
             if (isNaN(args[1])) return message.reply("The amount must be a number!");
             if (message.mentions.users.first().id == message.author.id) return message.reply("You can't give coins to yourself!");
@@ -78,7 +78,7 @@ module.exports.run = async (client, message, args, language) => {
                                                                 for (let i = 0; i < 32; i++) {
                                                                     result += characters.charAt(Math.floor(Math.random() * characters.length));
                                                                 }
-                                                                if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                                                                if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**" + language.transactionID + "** " + result, new Discord.MessageEmbed()
                                                                     .setColor(Math.floor(Math.random() * 16777215))
                                                                     .setAuthor(message.author.username + " have just sent " + args[1] + " " + client.config.currency + " to " + message.mentions.users.first().username + "!", message.author.avatarURL({size:128}))
                                                                     .setTimestamp()
@@ -154,7 +154,7 @@ module.exports.run = async (client, message, args, language) => {
                                                     for (let i = 0; i < 32; i++) {
                                                         result += characters.charAt(Math.floor(Math.random() * characters.length));
                                                     }
-                                                    if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                                                    if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**" + language.transactionID + "** " + result, new Discord.MessageEmbed()
                                                         .setColor(Math.floor(Math.random() * 16777215))
                                                         .setAuthor(message.author.username + " have just sent " + args[1] + " " + client.config.currency + " to " + message.mentions.users.first().username + "!", message.author.avatarURL({size:128}))
                                                         .setTimestamp()
@@ -248,7 +248,7 @@ module.exports.run = async (client, message, args, language) => {
                                                         for (let i = 0; i < 32; i++) {
                                                             result += characters.charAt(Math.floor(Math.random() * characters.length));
                                                         }
-                                                        if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                                                        if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**" + language.transactionID + "** " + result, new Discord.MessageEmbed()
                                                             .setColor(Math.floor(Math.random() * 16777215))
                                                             .setAuthor(message.author.username + " have just sent " + args[1] + " " + client.config.currency + " to " + message.mentions.users.first().username + "!", message.author.avatarURL({size:128}))
                                                             .setTimestamp()
@@ -324,7 +324,7 @@ module.exports.run = async (client, message, args, language) => {
                                             for (let i = 0; i < 32; i++) {
                                                 result += characters.charAt(Math.floor(Math.random() * characters.length));
                                             }
-                                            if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**Transaction ID:** " + result, new Discord.MessageEmbed()
+                                            if (client.channels.cache.get(client.config.logChannel)) client.channels.cache.get(client.config.logChannel).send("**" + language.transactionID + "** " + result, new Discord.MessageEmbed()
                                                 .setColor(Math.floor(Math.random() * 16777215))
                                                 .setAuthor(message.author.username + " have just sent " + args[1] + " " + client.config.currency + " to " + message.mentions.users.first().username + "!", message.author.avatarURL({size:128}))
                                                 .setTimestamp()

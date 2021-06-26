@@ -8,8 +8,8 @@ function random(min, max) {
 }
 
 module.exports.run = async (client, message, args, language) => {
-    if (!message.member.hasPermission("MANAGE_GUILD") && message.author.id != client.config.ownerId[0]) return message.reply("You need the Manage Guild permission to do this!");
-    if (!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply("I don't have the Manage Roles permission! Please contact the server admin!");
+    if (!message.member.hasPermission("MANAGE_GUILD") && message.author.id != client.config.ownerId[0]) return message.reply(language.needManageGuildPermission);
+    if (!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply(language.missingManageRolesPermission);
     if (!client.addRole[message.author.id]) {
         request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
             if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
@@ -18,7 +18,7 @@ module.exports.run = async (client, message, args, language) => {
                     client.addRole[message.author.id] = {
                         channel: message.channel.id
                     };
-                    message.channel.send("You are going to add a role to your server's shop.\nWhat role you're trying to add? Please mention it or send its ID to this channel.\nType `cancel` anytime to cancel the role-adding request.");
+                    message.channel.send(language.beginServerRoleAdd);
                 }
                 catch (err) {
                     console.error(err);
@@ -28,7 +28,7 @@ module.exports.run = async (client, message, args, language) => {
             else return message.reply(language.serverConnectError);
         });
     }
-    else return message.reply("Please complete your previous role-adding request!");
+    else return message.reply(language.completePreviousServerRole);
 }
 
 module.exports.config = {

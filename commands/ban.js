@@ -5,14 +5,14 @@ const {
 } = require('util');
 
 module.exports.run = async (client, message, args, language) => {
-    if (!message.member.permissions.has("BAN_MEMBERS")) return message.reply("You don't have the rights to do this!");
-    if (!message.mentions.members.size) return message.reply("You must mention an user!");
-    if (message.mentions.members.first().user.id == message.author.id) return message.reply("You cannot ban yourself!");
-    if (message.mentions.members.first().roles.highest.rawPosition >= message.member.roles.highest.rawPosition) return message.reply("The mentioned member's highest role is higher than yours!");
-    if (message.mentions.members.first().roles.highest.rawPosition >= message.guild.member(client.user).roles.highest.rawPosition) return message.reply("The mentioned member's highest role is higher than this BOT's role!");
-    if (message.mentions.members.first().user.id == client.user.id) return message.reply("You cannot ban this BOT!");
-    if (!message.guild.member(client.user).permissions.has("KICK_MEMBERS")) return message.reply("This BOT doesn't have the Ban Members permission on this server!");
-    var reason = "Unspecified";
+    if (!message.member.permissions.has("BAN_MEMBERS")) return message.reply(language.insufficientPermission);
+    if (!message.mentions.members.size) return message.reply(language.pleaseMentionUser);
+    if (message.mentions.members.first().user.id == message.author.id) return message.reply(language.cannotBanYourself);
+    if (message.mentions.members.first().roles.highest.rawPosition >= message.member.roles.highest.rawPosition) return message.reply(language.higherThanYours);
+    if (message.mentions.members.first().roles.highest.rawPosition >= message.guild.member(client.user).roles.highest.rawPosition) return message.reply(language.higherThanBOT);
+    if (message.mentions.members.first().user.id == client.user.id) return message.reply(language.cannotBanThisBOT);
+    if (!message.guild.member(client.user).permissions.has("KICK_MEMBERS")) return message.reply(language.noBanPermission);
+    var reason = language.unspecified;
     args.splice(0, 1);
     if (args[0]) reason = args.join(" ");
     message.mentions.members.first().ban({
@@ -22,16 +22,16 @@ module.exports.run = async (client, message, args, language) => {
         embed: {
             color: Math.floor(Math.random() * 16777214) + 1,
             author: {
-                name: message.author.tag + " has just banned " + message.mentions.members.first().user.tag,
+                name: message.author.tag + language.hasJustBanned + message.mentions.members.first().user.tag,
                 icon_url: message.author.avatarURL({
                     format: "png",
                     dynamic: true,
                     size: 2048
                 })
             },
-            description: "**Reason:** " + reason,
+            description: "**" + language.reason + ":** " + reason,
             footer: {
-                text: "Sender's ID: " + message.author.id + " | Mentioned member's ID: " + message.mentions.members.first().user.id,
+                text: message.senderID + message.author.id + message.mentionedMemberID + message.mentions.members.first().user.id,
                 timestamp: message.timestamp
             }
         }
@@ -40,16 +40,16 @@ module.exports.run = async (client, message, args, language) => {
         embed: {
             color: Math.floor(Math.random() * 16777214) + 1,
             author: {
-                name: "You have just been banned in the " + message.guild.name + " server",
+                name: language.banned.replace("$guild.name", message.guild.name),
                 icon_url: message.guild.iconURL({
                     format: "png",
                     dynamic: true,
                     size: 2048
                 })
             },
-            description: "**Being banned by:** " + message.author.toString() + "\n**Reason:** " + reason,
+            description: language.beingBannedBy + message.author.toString() + "\n**" + language.reason + ":** " + reason,
             footer: {
-                text: "Sender's ID: " + message.author.id + " | Mentioned member's ID: " + message.mentions.members.first().user.id,
+                text: message.senderID + message.author.id + message.mentionedMemberID + message.mentions.members.first().user.id,
                 timestamp: message.timestamp
             }
         }

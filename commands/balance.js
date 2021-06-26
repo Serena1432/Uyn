@@ -6,10 +6,10 @@ const {encrypt, decrypt} = require("../utils/crypto.js");
 function bal(client, message, args, language, user) {
     message.channel.send(new Discord.MessageEmbed()
     .setColor(Math.floor(Math.random() * 16777215))
-    .setAuthor(user.username + "'s balance", user.avatarURL({size:128}))
+    .setAuthor(language.balance.replace("$username", user.username), user.avatarURL({size:128}))
     .addFields([
         {name: client.config.currency + ":", value: parseInt(decrypt(client.economyManager[user.id].coins)).toLocaleString()},
-        {name: "💬 Message Points:", value: (client.economyManager[user.id].messagePoints) ? parseInt(decrypt(client.economyManager[user.id].messagePoints)).toLocaleString() : "0"}
+        {name: "💬 " + language.messagePoints + ":", value: (client.economyManager[user.id].messagePoints) ? parseInt(decrypt(client.economyManager[user.id].messagePoints)).toLocaleString() : "0"}
     ])
     .setTimestamp()
     .setFooter(client.devUsername, client.user.avatarURL({size:128})));
@@ -18,7 +18,7 @@ function bal(client, message, args, language, user) {
 module.exports.run = async (client, message, args, language) => {
     if (!message.mentions.users.size) {
         if (client.economyManager[message.author.id]) {
-            if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
+            if (!client.economyManager[message.author.id].coins) return message.reply(language.coinError);
             try {
                 bal(client, message, args, language, message.author);
                 return;
@@ -34,7 +34,7 @@ module.exports.run = async (client, message, args, language) => {
                     try {
                         client.economyManager = JSON.parse(body);
                         if (client.economyManager[message.author.id] != undefined) {
-                            if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
+                            if (!client.economyManager[message.author.id].coins) return message.reply(language.coinError);
                             try {
                                 bal(client, message, args, language, message.author);
                                 return;
@@ -56,7 +56,7 @@ module.exports.run = async (client, message, args, language) => {
                                     data: JSON.stringify(client.economyManager[message.author.id])
                                 }}, function(error, response, body) {
                                     if (!error && response.statusCode == 200 && body.includes("Success")) {
-                                        if (!client.economyManager[message.author.id].coins) return message.reply("Cannot get the coins information.");
+                                        if (!client.economyManager[message.author.id].coins) return message.reply(language.coinError);
                                         try {
                                             bal(client, message, args, language, message.author);
                                             return;
@@ -88,7 +88,7 @@ module.exports.run = async (client, message, args, language) => {
     }
     else {
         if (client.economyManager[message.mentions.users.first().id]) {
-            if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply("Cannot get the coins information.");
+            if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply(language.coinError);
             try {
                 bal(client, message, args, language, message.mentions.users.first());
                 return;
@@ -104,7 +104,7 @@ module.exports.run = async (client, message, args, language) => {
                     try {
                         client.economyManager = JSON.parse(body);
                         if (client.economyManager[message.mentions.users.first().id] != undefined) {
-                            if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply("Cannot get the coins information.");
+                            if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply(language.coinError);
                             try {
                                 bal(client, message, args, language, message.mentions.users.first());
                                 return;
@@ -126,7 +126,7 @@ module.exports.run = async (client, message, args, language) => {
                                     data: JSON.stringify(client.economyManager[message.mentions.users.first().id])
                                 }}, function(error, response, body) {
                                     if (!error && response.statusCode == 200 && body.includes("Success")) {
-                                        if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply("Cannot get the coins information.");
+                                        if (!client.economyManager[message.mentions.users.first().id].coins) return message.reply(language.coinError);
                                         try {
                                             bal(client, message, args, language, message.mentions.users.first());
                                             return;
