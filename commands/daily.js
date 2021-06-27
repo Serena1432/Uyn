@@ -29,7 +29,7 @@ async function daily(client, message, args, language) {
                         encoding: 'buffer', 
                         format: 'png'
                     });
-                    return message.channel.send(languages.daily, {files: [
+                    return message.channel.send(language.daily, {files: [
                         {attachment: data, name: "captcha.png"}
                     ]});
                 }
