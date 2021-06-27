@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args, language) => {
     if (args[0] && args[1]) {
         if (!isNaN(args[0]) && isNaN(args[1])) {
             message.channel.send(random(parseInt(args[0]), parseInt(args[1])));
-        } catch {
+        } else {
             message.channel.send(language.rangeIsNaN);
         }
     } else {
