@@ -26,7 +26,7 @@ function info(client, message, args, language) {
         .addFields(
             {name: language.rarity, value: waifu.rarity.replace("Super Super Rare", "Specially Super Rare"), inline: true},
             {name: language.level, value: waifu.level, inline: true},
-            {name: language.currentExp, value: waifu.exp + "/" + parseInt(waifu.max_exp), inline: true},
+            {name: language.currentEXP, value: waifu.exp + "/" + parseInt(waifu.max_exp), inline: true},
             {name: "HP:", value: parseInt(waifu.base_hp * (1 + 0.05 * waifu.level)).toLocaleString(), inline: true},
             {name: language.atk, value: parseInt(waifu.base_atk * (1 + 0.075 * waifu.level)).toLocaleString(), inline: true},
             {name: language.def, value: parseInt(waifu.base_def * (1 + 0.085 * waifu.level)).toLocaleString(), inline: true}
