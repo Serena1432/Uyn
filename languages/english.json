@@ -196,7 +196,7 @@
   "invInstructions": "`\nUse the `preview <code>` command to preview a banner image.\nUse the `use <code>` command to use an item.\nUse the `tickets` command to view all of your bought tickets.\n",
   "invNextPage": "Use the `inventory $page` command to get to the next page.",
   "inventory": "$name's inventory",
-  "inviteLink": " BOT\'s Invite Link",
+  "inviteLink": " BOT's Invite Link",
   "inviteThisBOT": "Invite this BOT",
   "supportServer": "Support Server",
   "cannotKickYourself": "You can't kick yourself!",
