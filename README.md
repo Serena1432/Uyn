@@ -25,7 +25,7 @@ addrole, balance, buy, cash, daily, gbuy, gdelete, give, gshop, hourly, inv, inv
 anime, character, manga
 
 ### 😊 Just for fun:
-arrest, cert, coffindance, covid19, gay, img, les, number, poll, quote, reverse, say, trap, trash
+arrest, coffindance, img, number, poll, quote, reverse, say, trash
 
 ### 👋 Interactions:
 baka, bite, bonk, boop, bully, cry, dance, greet, grin, highfive, hold, hug, hungry, kill, kiss, lewd, lick, love, muda, nom, pat, poke, pout, punch, shrug, slap, sleep, smile, smug, snuggle, stare, thinking, thumbsup, tickle, wag, wait, wave
@@ -37,7 +37,7 @@ ban, kick, mute, setnickname, unmute, warn
 battle, dex, divorce, info, roll, search, sell, team, trade, waifu, wbuy, wshop
 
 ### 🚩 Server information:
-channels, guild, role
+guild, role
 
 ### 📜 Roles managing:
 createrole, deleterole, giverole, setcolor, setname, takerole
