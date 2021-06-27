@@ -30,7 +30,7 @@ function info(client, message, args, language) {
                         var waifu = client.economyManager[message.author.id].waifus[i];
                         if (waifu.rarity == "Normal") {
                             var inTeam = false;
-                            for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
+                            for (var j = 0; j < client.economyManager[message.author.id].team.members.length; j++) {
                                 if (client.economyManager[message.author.id].team.members[i] == waifu.id) inTeam = true;
                             }
                             if (!inTeam) {
