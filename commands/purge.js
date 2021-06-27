@@ -29,13 +29,23 @@ function info(client, message, args, language) {
                     for (var i = 0; i < client.economyManager[message.author.id].waifus.length; i++) {
                         var waifu = client.economyManager[message.author.id].waifus[i];
                         if (waifu.rarity == "Normal") {
-                            client.economyManager[message.author.id].waifus.splice(i, 1);
-                            var level = waifu.level, name = waifu.name, purgeValue = parseInt(500 * (1 + (0.075 * level)));
-                            purgeCoins += purgeValue;
-                            length++;
-                            i--;
+                            var inTeam = false;
+                            for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
+                                if (client.economyManager[message.author.id].team.members[i] == args[0]) inTeam = true;
+                            }
+                            if (!inTeam) {
+                                client.economyManager[message.author.id].waifus.splice(i, 1);
+                                var level = waifu.level, name = waifu.name, purgeValue = parseInt(500 * (1 + (0.075 * level)));
+                                purgeCoins += purgeValue;
+                                length++;
+                                i--;
+                            }
                         }
                     }
+                    if (!length) return message.channel.send(new Discord.MessageEmbed()
+                    .setAuthor(message.author.tag, message.author.avatarURL({size: 128, dynamic: true}))
+                    .setDescription(language.noPurgedWaifu)
+                    .setTimestamp());
                     var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                     coins += purgeCoins;
                     client.economyManager[message.author.id].coins = encrypt(coins.toString());

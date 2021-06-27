@@ -186,6 +186,7 @@
   "currentEXP": "Current EXP:",
   "atk": "Attack:",
   "def": "Defense:",
-  "purgeWarning": "You are going to delete ALL of your Normal waifus.\n\nNotice that this action is **IRREVERSIBLE**!\nUse the `purge` command again to confirm the deletion or use the `purge cancel` command to cancel the deletion.",
-  "purged": "Successfully deleted $length Normal waifus and got $amount as a compensation gift."
+  "purgeWarning": "You are going to delete ALL of your Normal waifus. Your Normal waifus that are in your team will **not** be deleted.\n\nNotice that this action is **IRREVERSIBLE**!\nUse the `purge` command again to confirm the deletion or use the `purge cancel` command to cancel the deletion.",
+  "purged": "Successfully deleted $length Normal waifus and got $amount as a compensation gift.",
+  "noPurgedWaifu": "**No** waifu is deleted."
 }
