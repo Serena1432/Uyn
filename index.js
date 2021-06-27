@@ -24,6 +24,7 @@ client.muteLeaved = [];
 client.trades = [];
 client.divorce = [];
 client.sell = [];
+client.purge = [];
 client.waifus = require("./waifus.json");
 client.husbandos = require("./husbandos.json");
 client.waifus.length = client.waifus.normal.length + client.waifus.rare.length + client.waifus.srare.length + client.waifus.ssrare.length + client.waifus.urare.length;

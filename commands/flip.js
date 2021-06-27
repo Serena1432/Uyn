@@ -57,12 +57,12 @@ function flip(client, message, args, language) {
                                 .setTimestamp()
                             );
                             else console.log("Cannot get the log channel.");
-                            if (hotRand == hot) msg.edit(language.hotChooseWin.replace("$user", message.author.username).replace("$type", args[0]).replace("$amount", args[1] + " " + client.config.currency), new Discord.MessageEmbed()
+                            if (hotRand == hot) msg.edit(language.hotChooseWin.replace("$user", message.author.username).replace("$type", args[0]).replace("$amount", (args[1] + " " + client.config.currency)).replace("$user", message.author.username).replace("$amount", (args[1] + " " + client.config.currency)), new Discord.MessageEmbed()
                                 .setColor(Math.floor(Math.random() * 16777215))
                                 .setDescription(language.transactionEmbedNotice.replace("$id", result))
                                 .setTimestamp()
                             );
-                            else msg.edit(language.hotChooseLose.replace("$user", message.author.username).replace("$type", args[0]).replace("$amount", args[1] + " " + client.config.currency).replace("$result", resultText), new Discord.MessageEmbed()
+                            else msg.edit(language.hotChooseLose.replace("$user", message.author.username).replace("$type", args[0]).replace("$amount", (args[1] + " " + client.config.currency)).replace("$type", args[0]).replace("$result", resultText).replace("$user", message.author.username).replace("$amount", (args[1] + " " + client.config.currency)), new Discord.MessageEmbed()
                                 .setColor(Math.floor(Math.random() * 16777215))
                                 .setDescription(language.transactionEmbedNotice.replace("$id", result))
                                 .setTimestamp()

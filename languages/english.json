@@ -144,9 +144,9 @@
   "headOrTails": "Choose heads or tails, not anything else!",
   "missingAmount": "You must type an amount!",
   "amountIsNaN": "The amount must be a number!",
-  "hotChoose": "**$name** choose **$type** for **$amount**...",
-  "hotChooseWin": "**$name** choose **$type** for **$amount**...\nand got **$type**\n**$name** got **$amount**!",
-  "hotChooseLose": "**$name** choose **$type** for **$amount**...\nand got **$result** instead...\n**$name** lost **$amount**...",
+  "hotChoose": "**$user** choose **$type** for **$amount**...",
+  "hotChooseWin": "**$user** choose **$type** for **$amount**...\nand got **$type**\n**$user** got **$amount**!",
+  "hotChooseLose": "**$user** choose **$type** for **$amount**...\nand got **$result** instead...\n**$user** lost **$amount**...",
   "specifyItemID": "Please type an item ID!",
   "itemIDIsNaN": "The item ID must be a number!",
   "invalidItemID": "Invalid item ID!",
@@ -185,5 +185,7 @@
   "level": "Level:",
   "currentEXP": "Current EXP:",
   "atk": "Attack:",
-  "def": "Defense:"
+  "def": "Defense:",
+  "purgeWarning": "You are going to delete ALL of your Normal waifus.\n\nNotice that this action is **IRREVERSIBLE**!\nUse the `purge` command again to confirm the deletion or use the `purge cancel` command to cancel the deletion.",
+  "purged": "Successfully deleted $length Normal waifus and got $amount as a compensation gift."
 }
