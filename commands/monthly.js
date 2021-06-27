@@ -29,7 +29,7 @@ async function monthly(client, message, args, language) {
                         encoding: 'buffer', 
                         format: 'png'
                     });
-                    return message.channel.send("Please type the command `monthly (captcha code)` to claim the reward:\nUse the `monthly refresh` command to generate a new captcha code.", {files: [
+                    return message.channel.send(language.monthly, {files: [
                         {attachment: data, name: "captcha.png"}
                     ]});
                 }
@@ -59,7 +59,7 @@ async function monthly(client, message, args, language) {
                             .setTimestamp()
                         );
                         else console.log("Cannot get the log channel.");
-                        message.channel.send("Here is your monthly reward: **" + monthlyCoins.toString() + " " + client.config.currency + "**!", new Discord.MessageEmbed()
+                        message.channel.send(language.monthlyReward + monthlyCoins.toString() + " " + client.config.currency + "**!", new Discord.MessageEmbed()
                             .setColor(Math.floor(Math.random() * 16777215))
                             .setDescription(language.transactionEmbedNotice.replace("$id", result))
                             .setTimestamp()

@@ -17,8 +17,14 @@ function inventory(client, message, args, language) {
         if (client.economyManager[message.author.id].inventory.length == 0) return message.reply("You don't have anything in the inventory!");
         var n = 0;
         if (args[0]) n = parseInt(args[0]) - 1;
-        var descText = "`------------------------------------------\n| Code   | Item name                     |\n------------------------------------------";
-        if (n * 10 > client.economyManager[message.author.id].inventory.length - 1) return message.reply("There aren't any more items in your inventory!");
+        var descText = "`------------------------------------------\n| Code  ";
+        if (language.itemName.length <= 29) {
+            descText += " | " + language.itemName;
+            for (var j = 0; j < 29 - language.itemName.length; j++) descText += " ";
+        }
+        else descText += " | " + language.itemName.substr(0, 26) + "...";
+		descText += " |\n------------------------------------------";
+        if (n * 10 > client.economyManager[message.author.id].inventory.length - 1) return message.reply(language.noMoreInvItem);
         for (var i = n * 10; i < n * 10 + 10; i++) {
             if (client.economyManager[message.author.id].inventory[i]) {
 				for (var j = 0; j < items.length; j++) {
@@ -26,7 +32,7 @@ function inventory(client, message, args, language) {
 						var item = items[j];
 						switch (item.type) {
 							case "background": {
-								var name = "\"" + item.name + "\" Banner Image";
+								var name = language.bannerImageItem.replace("$name", item.name);
 								descText += "\n| " + item.code;
 								for (var k = 0; k < 6 - item.code.length; k++) descText += " ";
 								if (name.length <= 29) {
@@ -43,12 +49,12 @@ function inventory(client, message, args, language) {
 				}
             } else break;
         }
-        descText += "`\nUse the `preview <code>` command to preview a banner image.\nUse the `use <code>` command to use an item.\nUse the `tickets` command to view all of your bought tickets.\n";
-        if ((n + 1) * 10 <= client.economyManager[message.author.id].inventory.length - 1) descText += "Use the `inventory " + (n + 2) + "` command to get to the next page.";
+        descText += language.invInstructions;
+        if ((n + 1) * 10 <= client.economyManager[message.author.id].inventory.length - 1) descText += language.invNextPage.replace("$page", n + 2);
         const embed = {
             color: Math.floor(Math.random() * 16777214) + 1,
             author: {
-                name: message.author.username + "'s inventory",
+                name: language.inventory.replace("$name", message.author.username),
                 icon_url: message.author.avatarURL({
                     size: 128
                 })

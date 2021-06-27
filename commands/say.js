@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args, language) => {
     if (args[0]) {
         message.channel.send(args.join(" "));
     } else {
-        message.reply('You must type the content first!');
+        message.reply(language.missingContent);
     }
 }
 

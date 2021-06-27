@@ -20,31 +20,31 @@ function slots(client, message, args, language) {
             var slots = ["🍒", "🍆", "🍊", "🔔", "🥑", "7️⃣"];
             var slots1, slots2, slots3, slotsi1, slotsi2, slotsi3;
             client.countdown[message.author.id] = parseInt(new Date().getTime() + 15000);
-            message.channel.send("🇽|🇽|🇽| **" + message.author.username + "** bets **" + args[0] + " " + client.config.currency + "**...").then(msg => {
+            message.channel.send("🇽|🇽|🇽| **" + message.author.username + "** " + language.bets + " **" + args[0] + " " + client.config.currency + "**...").then(msg => {
                 setTimeout(function() {
                     slotsi1 = random(0, slots.length - 1);
                     slots1 = slots[slotsi1];
-                    msg.edit(slots1 + "|🇽|🇽| **" + message.author.username + "** bets **" + args[0] + " " + client.config.currency + "**...");
+                    msg.edit(slots1 + "|🇽|🇽| **" + message.author.username + "** " + language.bets + " **" + args[0] + " " + client.config.currency + "**...");
                     setTimeout(function() {
                         slotsi2 = random(0, slots.length - 1);
                         slots2 = slots[slotsi2];
-                        msg.edit(slots1 + "|" + slots2 + "|🇽| **" + message.author.username + "** bets **" + args[0] + " " + client.config.currency + "**...");
+                        msg.edit(slots1 + "|" + slots2 + "|🇽| **" + message.author.username + "** " + language.bets + " **" + args[0] + " " + client.config.currency + "**...");
                         setTimeout(function() {
                             slotsi3 = random(0, slots.length - 1);
                             slots3 = slots[slotsi3];
-                            msg.edit(slots1 + "|" + slots2 + "|" + slots3 + "| **" + message.author.username + "** bets **" + args[0] + " " + client.config.currency + "**...");
+                            msg.edit(slots1 + "|" + slots2 + "|" + slots3 + "| **" + message.author.username + "** " + language.bets + " **" + args[0] + " " + client.config.currency + "**...");
                             var resultText = "",
                                 coinValue, res = 1;
                             var coins = parseInt(decrypt(client.economyManager[message.author.id].coins));
                             if (slotsi1 == 5 && slotsi2 == 5 && slotsi3 == 5) {
                                 coinValue = parseInt(args[0]) * 10;
-                                resultText = "and won **" + coinValue + " " + client.config.currency + "**!";
+                                resultText = language.andWon + " **" + coinValue + " " + client.config.currency + "**!";
                             } else if (slotsi1 == slotsi2 && slotsi2 == slotsi3) {
                                 coinValue = parseInt(args[0]) * random(1, 7);
-                                resultText = "and won **" + coinValue + " " + client.config.currency + "**!";
+                                resultText = language.andWon + "**" + coinValue + " " + client.config.currency + "**!";
                             } else {
                                 coinValue = 0 - parseInt(args[0]);
-                                resultText = "and lost it all...";
+                                resultText = language.andLost;
                                 res = 0;
                             }
                             coins += coinValue;
@@ -70,7 +70,7 @@ function slots(client, message, args, language) {
                                         .setTimestamp()
                                     );
                                     else console.log("Cannot get the log channel.");
-                                    msg.edit(slots1 + "|" + slots2 + "|" + slots3 + "| **" + message.author.username + "** bets **" + args[0] + "" + client.config.currency + "**...\n" + resultText, new Discord.MessageEmbed()
+                                    msg.edit(slots1 + "|" + slots2 + "|" + slots3 + "| **" + message.author.username + "** " + language.bets + " **" + args[0] + "" + client.config.currency + "**...\n" + resultText, new Discord.MessageEmbed()
                                         .setColor(Math.floor(Math.random() * 16777215))
                                         .setDescription(language.transactionEmbedNotice.replace("$id", result))
                                         .setTimestamp()

@@ -10,7 +10,7 @@ function random(min, max) {
 module.exports.run = async (client, message, args, language) => {
     if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
     try {
-        if (!args[0]) return message.reply("Please type a waifu name!");
+        if (!args[0]) return message.reply(language.missingWaifuName);
         var name = args.join(" ").toLowerCase();
         var desc = "", length = 0;
         for (var i = 0; i < client.waifus.normal.length; i++) if (client.waifus.normal[i].name.toLowerCase().includes(name) && length < 20) {  desc += "`wn." + (i + 1) + "` **" + client.waifus.normal[i].name + "**\n"; length++ }
@@ -23,9 +23,9 @@ module.exports.run = async (client, message, args, language) => {
         for (var i = 0; i < client.husbandos.srare.length; i++) if (client.husbandos.srare[i].name.toLowerCase().includes(name) && length < 20) {  desc += "`hsr." + (i + 1) + "` **" + client.husbandos.srare[i].name + "**\n"; length++ }
         for (var i = 0; i < client.husbandos.ssrare.length; i++) if (client.husbandos.ssrare[i].name.toLowerCase().includes(name) && length < 20) {  desc += "`hssr." + (i + 1) + "` **" + client.husbandos.ssrare[i].name + "**\n"; length++ }
         for (var i = 0; i < client.husbandos.urare.length; i++) if (client.husbandos.urare[i].name.toLowerCase().includes(name) && length < 20) {  desc += "`hur." + (i + 1) + "` **" + client.husbandos.urare[i].name + "**\n"; length++ }
-        desc += "\nThis message only shows 20 first results. To reduce the search results please search using the full name.\nUse the `dex <id>` command with the ID next to the name to view the information of a waifu/husbando.";
+        desc += language.searchDesc;
         message.channel.send(new Discord.MessageEmbed()
-        .setAuthor("List of the waifus/husbando that contain the \"" + name + "\" name", client.user.avatarURL({size: 128}))
+        .setAuthor(language.searchTitle.replace("$name", name), client.user.avatarURL({size: 128}))
         .setDescription(desc)
         .setColor(Math.floor(Math.random * 16777215))
         .setTimestamp());

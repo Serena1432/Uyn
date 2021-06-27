@@ -7,12 +7,12 @@ const {
 } = require('util');
 
 module.exports.run = async (client, message, args, language) => {
-    if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.reply("You don't have the `Manage Messages` permission to do this!"); 
+    if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.reply(language.insufficentMessagePermission); 
     if (!message.mentions.members.size) return message.reply(language.pleaseMentionUser);
     if (message.mentions.members.first().user.id == message.author.id) return message.reply("You can't unmute yourself!");
     if (message.mentions.members.first().roles.highest.rawPosition >= message.member.roles.highest.rawPosition) return message.reply(language.higherThanYours);
     if (message.mentions.members.first().roles.highest.rawPosition >= message.guild.member(client.user).roles.highest.rawPosition) return message.reply(language.higherThanBOT);
-    if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply("BOT doesn't have the Manage Roles permission on this server!");
+    if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply(language.missingManageRolesPermission);
     var member = message.mentions.members.first();
 	var mutedRole = message.guild.roles.cache.find(role => role.name == "Muted");
 	if (!member.roles.cache.find(role => role.id == mutedRole.id)) return message.reply("This member isn't being muted!");
@@ -31,7 +31,7 @@ module.exports.run = async (client, message, args, language) => {
 						})
 					},
 					footer: {
-						text: message.senderID + message.author.id + message.mentionedMemberID + member.user.id,
+						text: language.senderID + message.author.id + language.mentionedMemberID + member.user.id,
 						timestamp: message.timestamp
 					}
 				}
@@ -48,14 +48,14 @@ module.exports.run = async (client, message, args, language) => {
 						})
 					},
 					footer: {
-						text: message.senderID + message.author.id + message.mentionedMemberID + member.user.id,
+						text: language.senderID + message.author.id + language.mentionedMemberID + member.user.id,
 						timestamp: message.timestamp
 					}
 				}
 			});
 		}
 		else {
-            client.users.cache.get("536899471720841228").send("Cannot connect to the unmute server.");
+            client.users.cache.get(client.config.ownerID[0]).send("Cannot connect to the unmute server.");
             message.channel.send("Cannot connect to the server! Please try again later.");
 		}
 	});

@@ -44,9 +44,9 @@ module.exports.run = async (client, message, args, language) => {
                         {name: "Source:", value: data.source || "Unknown", inline: true},
                         {name: "Episodes:", value: data.episodes || "Unknown", inline: true},
                         {name: "Status:", value: data.status || "Unknown", inline: true},
-                        {name: "Aired duration:", value: data.aired.string || "Unknown", inline: true},
+                        {name: "Aired " + language.duration + "", value: data.aired.string || "Unknown", inline: true},
                         {name: "Rating:", value: data.rating || "Unknown", inline: true},
-                        {name: "Duration:", value: data.duration || "Unknown", inline: true},
+                        {name: "" + language.duration + "", value: data.duration || "Unknown", inline: true},
                         {name: "Score:", value: data.score || "Unknown", inline: true},
                         {name: "Favorites:", value: data.favorites.toLocaleString() || "Unknown", inline: true},
                         {name: "Synopsis:", value: data.synopsis ? (data.synopsis.length > 512 ? (data.synopsis.substr(0, 509) + "...") : data.synopsis) : "Unknown", inline: false}

@@ -11,12 +11,12 @@ function random(min, max) {
 }
 
 module.exports.run = async (client, message, args, language) => {
-    if (!args[0]) return message.reply("You must type the content first!");
+    if (!args[0]) return message.reply(language.missingContent);
         message.channel.send({
             embed: {
                 color: Math.floor(Math.random() * 16777214) + 1,
                 author: {
-                    name: "Succesfully reversed " + message.author.username + "'s message.",
+                    name: language.reversed.replace("$name", message.author.username),
                     icon_url: message.author.avatarURL({
                         format: "png",
                         dynamic: true,
@@ -24,12 +24,12 @@ module.exports.run = async (client, message, args, language) => {
                     })
                 },
                 fields: [{
-                        name: "Original message:",
+                        name: language.originalMessage,
                         value: args.join(" "),
                         inline: false
                     },
                     {
-                        name: "Reversed message:",
+                        name: language.reversedMessage,
                         value: args.join(" ").split("").reverse().join(""),
                         inline: false
                     }

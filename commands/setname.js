@@ -7,17 +7,17 @@ const {
 module.exports.run = async (client, message, args, language) => {
     if (!message.member.permissions.has("MANAGE_ROLES")) return message.reply(language.insufficientPermission);
 	if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply(language.missingManageRolesPermission);
-	if (!message.mentions.roles.size) return message.reply("Please mention a role first!");
-	if (!args[1]) return message.reply("Please specify a role name!");
-	if (message.mentions.roles.first().position >= message.guild.member(client.user).roles.highest.position) return message.reply("This role is higher than the BOT's highest role!");
+	if (!message.mentions.roles.size) return message.reply(language.missingRoleMention);
+	if (!args[1]) return message.reply(language.missingRoleName);
+	if (message.mentions.roles.first().position >= message.guild.member(client.user).roles.highest.position) return message.reply(language.higherRole);
 	args.splice(0,1);
 	var roleName = args.join(" ");
-	if (message.guild.roles.cache.find(role => role.name == roleName)) return message.reply("There's already a role with this name!");
+	if (message.guild.roles.cache.find(role => role.name == roleName)) return message.reply(language.roleAlreadyExist);
 	message.mentions.roles.first().setName(roleName)
 	  .then(role => {
 		  message.channel.send(new Discord.MessageEmbed()
 			.setColor(Math.floor(Math.random() * 16777214) + 1)
-			.setAuthor(message.author.tag + " has just renamed the " + role.name + " role", message.author.avatarURL({
+			.setAuthor(language.roleRenamed.replace("$user", message.author.name).replace("$role", role.name), message.author.avatarURL({
                 format: "png",
                 dynamic: true,
                 size: 2048
@@ -27,7 +27,7 @@ module.exports.run = async (client, message, args, language) => {
 	  })
 	  .catch(err => {
 		  console.error(err);
-		  message.reply("There's an error while renaming the role! Please try again!");
+		  message.reply(language.renamingError);
 	  });
 }
 

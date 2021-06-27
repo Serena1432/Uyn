@@ -13,16 +13,28 @@ function random(min, max) {
 module.exports.run = async (client, message, args, language) => {
     try {
         var items = require("../items.json");
-        if (items.length == 0) return message.reply("There aren't any items in the BOT's shop!");
+        if (items.length == 0) return message.reply(language.noBOTShopItem);
         var n = 0;
         if (args[0]) n = parseInt(args[0]) - 1;
-        var descText = "`-------------------------------------------------------------\n| Code   | Item name                     | Price            |\n-------------------------------------------------------------";
-        if (n * 10 > items.length - 1) return message.reply("There aren't any more items in the BOT's shop!");
+        var descText = "`-------------------------------------------------------------\n| ID     | ";
+        if (language.itemName.length <= 29) {
+            descText += " | " + language.itemName;
+            for (var j = 0; j < 29 - language.itemName.length; j++) descText += " ";
+        }
+        else descText += " | " + language.itemName.substr(0, 26) + "...";
+		descText += " | ";
+        if (language.price.length <= 16) {
+            descText += " | " + language.price;
+            for (var j = 0; j < 16 - language.price.length; j++) descText += " ";
+        }
+        else descText += " | " + language.price.substr(0, 13) + "...";
+		descText += " |\n-------------------------------------------------------------";
+        if (n * 10 > items.length - 1) return message.reply(language.noMoreBOTShopItem);
         for (var i = n * 10; i < n * 10 + 10; i++) {
             if (items[i]) {
                 switch (items[i].type) {
                     case "background": {
-                        var name = "\"" + items[i].name + "\" Banner Image";
+                        var name = language.bannerImageItem.replace("$name", items[i].name);
                         descText += "\n| " + items[i].code;
                         for (var j = 0; j < 6 - items[i].code.length; j++) descText += " ";
                         if (name.length <= 29) {
@@ -61,12 +73,12 @@ module.exports.run = async (client, message, args, language) => {
                 }
             } else break;
         }
-        descText += "`\nUse the `preview <code>` command to preview a banner image.\nUse the `buy <code>` command to buy an item.\n";
-        if ((n + 1) * 10 <= items.length - 1) descText += "Use the `shop " + (n + 2) + "` command to get to the next page.";
+        descText += language.shopInstructions;
+        if ((n + 1) * 10 <= items.length - 1) descText += language.shopNextPage.replace("$page", n + 2);
         const embed = {
             color: Math.floor(Math.random() * 16777214) + 1,
             author: {
-                name: "List of " + client.user.username + "'s items",
+                name: language.shopTitle.replace("$name", client.user.username),
                 icon_url: client.user.avatarURL({
                     size: 128
                 })

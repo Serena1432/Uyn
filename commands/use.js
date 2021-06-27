@@ -14,7 +14,7 @@ function use(client, message, args, language) {
     var items = require("../items.json");
     if (args[0] != "bgdf") {
         if (!client.economyManager[message.author.id].inventory) client.economyManager[message.author.id].inventory = [];
-        if (!args[0]) return message.reply("Please specify the code of an item!");
+        if (!args[0]) return message.reply(language.specifyCode);
         var item;
         for (var i = 0; i < items.length; i++) {
             if (items[i].code == args[0]) item = items[i];

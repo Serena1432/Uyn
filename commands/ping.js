@@ -9,7 +9,7 @@ module.exports.run = async (client, message, args, language) => {
     var dated = new Date();
     message.channel.send("", {embed: {
         color: Math.floor(Math.random() * 16777214) + 1,
-        description: "Connecting to the BOT server, please wait..."
+        description: language.connectingToServer
     }}).then(msg => {
         var serverPingText = "Unknown";
         request(process.env.php_server_url + "/GetAllQuotes.php", function(error, response, body) {
@@ -17,7 +17,7 @@ module.exports.run = async (client, message, args, language) => {
                 serverPingText = ((new Date()).getTime() - message.createdTimestamp).toString() + "ms";
             }
             else {
-                serverPingText = "Unable to connect";
+                serverPingText = language.unableToConnect;
             }
             msg.edit("", {embed: {
                 color: Math.floor(Math.random() * 16777214) + 1,

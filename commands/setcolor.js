@@ -7,14 +7,14 @@ const {
 module.exports.run = async (client, message, args, language) => {
     if (!message.member.permissions.has("MANAGE_ROLES")) return message.reply(language.insufficientPermission);
 	if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply(language.missingManageRolesPermission);
-	if (!message.mentions.roles.size) return message.reply("Please mention a role first!");
-	if (!args[1]) return message.reply("Please specify a role color!");
-	if (message.mentions.roles.first().position >= message.guild.member(client.user).roles.highest.position) return message.reply("This role is higher than the BOT's highest role!");
+	if (!message.mentions.roles.size) return message.reply(language.missingRoleMention);
+	if (!args[1]) return message.reply(language.missingRoleColor);
+	if (message.mentions.roles.first().position >= message.guild.member(client.user).roles.highest.position) return message.reply(language.higherRole);
 	message.mentions.roles.first().setColor(args[1])
 	  .then(role => {
 		  message.channel.send(new Discord.MessageEmbed()
 			.setColor(Math.floor(Math.random() * 16777214) + 1)
-			.setAuthor(message.author.tag + " has just recolored the " + role.name + " role into " + args[1], message.author.avatarURL({
+			.setAuthor(language.recolored("$user", message.author.name).replace("$role", message.mentions.roles.first().name).replace("$color", args[1]), message.author.avatarURL({
                 format: "png",
                 dynamic: true,
                 size: 2048
@@ -24,7 +24,7 @@ module.exports.run = async (client, message, args, language) => {
 	  })
 	  .catch(err => {
 		  console.error(err);
-		  message.reply("There's an error while recoloring the role! Please try again!");
+		  message.reply(language.recolorError);
 	  });
 }
 

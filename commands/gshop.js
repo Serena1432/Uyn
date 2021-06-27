@@ -14,7 +14,19 @@ module.exports.run = async (client, message, args, language) => {
                 if (!client.economyManager[message.guild.id] || client.economyManager[message.guild.id].roles.length == 0) return message.reply(language.serverItemsNotFound);
                 var n = 0;
                 if (args[0]) n = parseInt(args[0]) - 1;
-                var descText = "`-------------------------------------------------------------\n| ID     | Item name                     | Price            |\n-------------------------------------------------------------";
+                var descText = "`-------------------------------------------------------------\n| ID     | ";
+                if (language.itemName.length <= 29) {
+                    descText += " | " + language.itemName;
+                    for (var j = 0; j < 29 - language.itemName.length; j++) descText += " ";
+                }
+                else descText += " | " + language.itemName.substr(0, 26) + "...";
+				descText += " | ";
+                if (language.price.length <= 16) {
+                    descText += " | " + language.price;
+                    for (var j = 0; j < 16 - language.price.length; j++) descText += " ";
+                }
+                else descText += " | " + language.price.substr(0, 13) + "...";
+				descText += " |\n-------------------------------------------------------------";
                 if (n * 10 > client.economyManager[message.guild.id].roles.length - 1) return message.reply(language.noMoreServerItems);
                 for (var i = n * 10; i < n * 10 + 10; i++) {
                     if (client.economyManager[message.guild.id].roles[i]) {

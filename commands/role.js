@@ -14,11 +14,7 @@ module.exports.run = async (client, message, args, language) => {
         timeout: 10000
     });
     if (args[0]) {
-        var text = "";
-        for (var i = 0; i < args.length; i++) {
-            text += args[i] + " ";
-        }
-        text = text.substr(0, text.length - 1);
+        var text = args.join(" ");
         let membersWithRole = message.guild.members.cache.filter(member => {
             return member.roles.cache.find(role => role.name == text);
         }).map(member => {
@@ -26,7 +22,7 @@ module.exports.run = async (client, message, args, language) => {
         })
         const mess = {
             color: Math.floor(Math.random() * 16777214) + 1,
-            title: 'List of all members who have the ' + text + ' role:',
+            title: language.role.replace("$role", text),
             description: membersWithRole.join("\n"),
             footer: {
                 text: ''
@@ -36,7 +32,7 @@ module.exports.run = async (client, message, args, language) => {
             embed: mess
         });
     } else {
-        message.reply('You must type a role name first!');
+        message.reply(language.missingRoleName);
     }
 }
 

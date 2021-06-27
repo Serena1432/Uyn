@@ -7,7 +7,7 @@ const {
 module.exports.run = async (client, message, args, language) => {
     if (!message.member.permissions.has("MANAGE_ROLES")) return message.reply(language.insufficientPermission);
 	if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply(language.missingManageRolesPermission);
-	if (!message.mentions.members.size) return message.reply("Please mention a member first!");
+	if (!message.mentions.members.size) return message.reply(language.pleaseMentionUser);
 	args.splice(0,1);
 	var role;
 	if (args[0] && message.mentions.roles.size) role = message.mentions.roles.first();
@@ -15,7 +15,7 @@ module.exports.run = async (client, message, args, language) => {
 	else if (!args[0]) return message.reply(language.specifyARole);
 	if (!role) return message.reply(language.roleNotFound);
 	if (!message.mentions.members.first().roles.cache.find(memrole => memrole.id == role.id)) return message.reply("This member isn't having that role!");
-	if (role.position >= message.guild.member(client.user).roles.highest.position) return message.reply("This role is higher than the BOT's highest role!");
+	if (role.position >= message.guild.member(client.user).roles.highest.position) return message.reply(language.higherRole);
 	message.mentions.members.first().roles.remove(role, "Role taken by " + message.author.tag)
 	  .then(mrole => {
 		  message.channel.send(new Discord.MessageEmbed()

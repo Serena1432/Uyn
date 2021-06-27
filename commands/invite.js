@@ -15,8 +15,8 @@ module.exports.run = async (client, message, args, language) => {
     });
     const mess = {
         color: Math.floor(Math.random() * 16777214) + 1,
-        title: client.user.username + ' BOT\'s Invite Link',
-        description: '[Invite this BOT](https://discord.com/oauth2/authorize?client_id=' + client.user.id + '&scope=bot&permissions=271707254) | [Support Server](https://discord.gg/v9c27j9CQ6)',
+        title: client.user.username + language.inviteLink,
+        description: '[' + language.inviteThisBOT + '](https://discord.com/oauth2/authorize?client_id=' + client.user.id + '&scope=bot&permissions=271707254) | [' + language.supportServer + '](https://discord.gg/xjS8djsNDz)',
         footer: {
             text: 'Thank you so much!'
         },

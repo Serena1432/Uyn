@@ -180,7 +180,7 @@ module.exports.run = async (client, message, args, language) => {
                 })
             }
         };
-        message.channel.send("Information about this server's owner: ", {
+        message.channel.send(language.ownerInformation, {
             embed: infoMessage
         });
     }

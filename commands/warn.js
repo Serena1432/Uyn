@@ -5,7 +5,7 @@ const {
 } = require('util');
 
 module.exports.run = async (client, message, args, language) => {
-    if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.reply("You don't have the `Manage Messages` permission to do this!"); 
+    if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.reply(language.insufficentMessagePermission); 
     if (!message.mentions.members.size) return message.reply(language.pleaseMentionUser);
     if (message.mentions.members.first().user.id == message.author.id) return message.reply("You can't warn yourself!");
     if (message.mentions.members.first().roles.highest.rawPosition >= message.member.roles.highest.rawPosition) return message.reply(language.higherThanYours);
@@ -26,7 +26,7 @@ module.exports.run = async (client, message, args, language) => {
             },
             description: "**" + language.reason + ":** " + reason,
             footer: {
-                text: message.senderID + message.author.id + message.mentionedMemberID + message.mentions.members.first().id,
+                text: language.senderID + message.author.id + language.mentionedMemberID + message.mentions.members.first().id,
                 timestamp: message.timestamp
             }
         }
@@ -44,7 +44,7 @@ module.exports.run = async (client, message, args, language) => {
             },
             description: "**Being warned by:** " + message.author.toString() + "\n**" + language.reason + ":** " + reason,
             footer: {
-                text: message.senderID + message.author.id + message.mentionedMemberID + message.mentions.members.first().id,
+                text: language.senderID + message.author.id + language.mentionedMemberID + message.mentions.members.first().id,
                 timestamp: message.timestamp
             }
         }

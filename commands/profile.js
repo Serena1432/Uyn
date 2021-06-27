@@ -44,13 +44,13 @@ async function prof(client, message, args, language, user) {
     ctx.drawImage(messageIcon, 33, 415, 42, 42);
     ctx.fillText((client.economyManager[user.id].messagePoints) ? parseInt(decrypt(client.economyManager[user.id].messagePoints)).toLocaleString() : "0", 90, 445, 194, 40);
     ctx.font = "bold 26px " + font;
-    ctx.fillText(user.username + "'s Biography:", 314, 216, 498, 40);
+    ctx.fillText(language.bio.replace("$name", user.username), 314, 216, 498, 40);
     ctx.textAlign = "right";
     ctx.font = "18px " + font;
-    ctx.fillText("User's ID: " + user.id, 822, 460, 400, 40);
+    ctx.fillText(language.userProfileID + user.id, 822, 460, 400, 40);
     ctx.textAlign = "left";
     ctx.font = "20px " + font;
-    var bio = "No biography was set.";
+    var bio = language.noBio;
     if (data.bio) bio = data.bio;
     ctx.fillText(bio, 314, 246, 498, 184);
 

@@ -19,12 +19,12 @@ module.exports.run = async (client, message, args, language) => {
             text += args[i] + " ";
         }
         text = text.substr(0, text.length - 1);
-        message.channel.send(text + '\n(Requested by ' + message.author.toString() + ')\n:thumbsup: **Yes**\n:thumbsdown: **No**').then(async msg => {
+        message.channel.send(text + '\n(' + language.requestedBy + ' ' + message.author.toString() + ')\n:thumbsup: **' + language.yes + '**\n:thumbsdown: **' + language.no + '**').then(async msg => {
             await msg.react('👍');
             await msg.react('👎');
         });
     } else {
-        message.reply('You must type the content first!!');
+        message.reply(language.missingContent);
     }
 }
 

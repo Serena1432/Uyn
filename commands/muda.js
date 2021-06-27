@@ -23,7 +23,7 @@ module.exports.run = async (client, message, args, language) => {
         const image = {
             color: Math.floor(Math.random() * 16777214) + 1,
             author: {
-                name: message.author.username + ' muda muda-s ' + message.mentions.users.first().username + "\n" + text,
+                name: message.author.username + language.muda + message.mentions.users.first().username + "\n" + text,
                 icon_url: message.author.avatarURL({
                     format: "png",
                     dynamic: true,

@@ -7,13 +7,13 @@ const {
 } = require('util');
 
 module.exports.run = async (client, message, args, language) => {
-    if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.reply("You don't have the `Manage Messages` permission to do this!");
+    if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.reply(language.insufficentMessagePermission);
     if (!message.mentions.members.size) return message.reply(language.pleaseMentionUser);
-    if (message.mentions.members.first().user.id == message.author.id) return message.reply("You can't mute yourself!");
+    if (message.mentions.members.first().user.id == message.author.id) return message.reply(language.cannotMuteYourself);
     if (message.mentions.members.first().roles.highest.rawPosition >= message.member.roles.highest.rawPosition) return message.reply(language.higherThanYours);
     if (message.mentions.members.first().roles.highest.rawPosition >= message.guild.member(client.user).roles.highest.rawPosition) return message.reply(language.higherThanBOT);
-    if (message.mentions.members.first().user.id == client.user.id) return message.reply("You cannot mute this BOT!");
-    if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply("BOT doesn't have the Manage Roles permission on this server!");
+    if (message.mentions.members.first().user.id == client.user.id) return message.reply(language.cannotMuteThisBOT);
+    if (!message.guild.member(client.user).permissions.has("MANAGE_ROLES")) return message.reply(language.missingManageRolesPermission);
     var reason = language.unspecified;
     var duration = undefined;
     var durationText = "";
@@ -26,12 +26,12 @@ module.exports.run = async (client, message, args, language) => {
         args.splice(0, 1);
     }
     if (args[0]) reason = args.join(" ");
-    if (duration) durationText = "**Duration:** " + ms(duration, {
+    if (duration) durationText = "**" + language.duration + "** " + ms(duration, {
         long: true
     }) + "\n";
     var mutedRole = guild.roles.cache.find(role => role.name == "Muted");
     if (mutedRole) {
-        if (mutedRole.position >= guild.member(client.user).roles.highest.position) return message.reply("The Muted role is higher than this BOT's highest role! Please contact the server admin to fix this issue!");
+        if (mutedRole.position >= guild.member(client.user).roles.highest.position) return message.reply(language.higherMutedRole);
     } else {
         mutedRole = await guild.roles.create({
             data: {
@@ -39,47 +39,47 @@ module.exports.run = async (client, message, args, language) => {
                 color: "#000000",
                 permissions: []
             },
-            reason: "Create a new Muted role"
+            reason: language.mutedRoleReason
         });
         mutedRole.setPosition(guild.member(client.user).roles.highest.position - 1);
-        message.channel.send("Created a new Muted role.");
+        message.channel.send(language.mutedRoleCreated);
         guild.channels.cache.forEach(async (channel, id) => {
             await channel.overwritePermissions([{
                 id: mutedRole.id,
                 deny: ['SEND_MESSAGES', 'ADD_REACTIONS'],
-            }, ], "Change the permissions of the Muted role")
+            }, ], language.muteRolePermissions)
         });
     }
-    if (member.roles.cache.find(role => role.id == mutedRole.id)) return message.reply("This member is already being muted!");
+    if (member.roles.cache.find(role => role.id == mutedRole.id)) return message.reply(language.alreadyBeingMuted);
     if (duration) {
         request(process.env.php_server_url + '/MuteManager.php?token=' + process.env.php_server_token + '&type=add&id=' + author.id + '&victim=' + member.user.id + '&server=' + guild.id + "&endtime=" + ((new Date()).getTime() + duration), function(error, response, body) {
             if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Connection failed")) {
-                member.roles.add(mutedRole, "Muted by " + author.tag + " - " + reason);
+                member.roles.add(mutedRole, language.mutedBy + author.tag + " - " + reason);
                 setTimeout(function() {
                     request(process.env.php_server_url + '/MuteManager.php?token=' + process.env.php_server_token + '&type=delete&victim=' + member.user.id + '&server=' + guild.id, function(error, response, body) {
 						if (response && response.statusCode == 200 && !body.includes("Connection failed") && !body.includes("Connection failed")) {
-							member.roles.remove(mutedRole, "Automatic Unmute");
+							member.roles.remove(mutedRole, language.automaticUnmute);
 							member.user.send({
 								embed: {
 									color: Math.floor(Math.random() * 16777214) + 1,
 									author: {
-										name: "You have just been unmuted in the " + guild.name + " server",
+										name: language.unmuted.replace("$guild.name", guild.name),
 										icon_url: guild.iconURL({
 											format: "png",
 											dynamic: true,
 											size: 2048
 										})
 									},
-									description: "**Reason**: Automatic Unmute",
+									description: language.automaticUnmuteReason,
 									footer: {
-										text: message.senderID + author.id + message.mentionedMemberID + member.user.id,
+										text: language.senderID + author.id + language.mentionedMemberID + member.user.id,
 										timestamp: message.timestamp
 									}
 								}
 							});
 						}
 						else {
-							client.users.cache.get("536899471720841228").send("Cannot connect to the unmute server.");
+							client.users.cache.get(client.config.ownerID[0]).send("Cannot connect to the unmute server.");
 						}
 					});
                 }, duration);
@@ -87,7 +87,7 @@ module.exports.run = async (client, message, args, language) => {
                     embed: {
                         color: Math.floor(Math.random() * 16777214) + 1,
                         author: {
-                            name: author.tag + " has just muted " + member.user.tag,
+                            name: author.tag + language.hasJustMuted + member.user.tag,
                             icon_url: author.avatarURL({
                                 format: "png",
                                 dynamic: true,
@@ -96,7 +96,7 @@ module.exports.run = async (client, message, args, language) => {
                         },
                         description: durationText + "**" + language.reason + ":** " + reason,
                         footer: {
-                            text: message.senderID + author.id + message.mentionedMemberID + member.user.id,
+                            text: language.senderID + author.id + language.mentionedMemberID + member.user.id,
                             timestamp: message.timestamp
                         }
                     }
@@ -105,23 +105,23 @@ module.exports.run = async (client, message, args, language) => {
                     embed: {
                         color: Math.floor(Math.random() * 16777214) + 1,
                         author: {
-                            name: "You have just been muted in the " + guild.name + " server",
+                            name: language.muted.replace("$guild.name", guild.name),
                             icon_url: guild.iconURL({
                                 format: "png",
                                 dynamic: true,
                                 size: 2048
                             })
                         },
-                        description: "**Being muted by:** " + author.toString() + "\n" + durationText + "**" + language.reason + ":** " + reason,
+                        description: language.beingMutedBy + author.toString() + "\n" + durationText + "**" + language.reason + ":** " + reason,
                         footer: {
-                            text: message.senderID + author.id + message.mentionedMemberID + member.user.id,
+                            text: language.senderID + author.id + language.mentionedMemberID + member.user.id,
                             timestamp: message.timestamp
                         }
                     }
                 });
             } else {
-                client.users.cache.get("536899471720841228").send("Cannot connect to the mute server.");
-                message.channel.send("Cannot connect to the server! Please try again later.");
+                client.users.cache.get(client.config.ownerID[0]).send("Cannot connect to the mute server.");
+                message.channel.send(language.serverConnectionError);
             }
         });
 		client.mutes.push({
@@ -132,12 +132,12 @@ module.exports.run = async (client, message, args, language) => {
 			endtime: ((new Date()).getTime()) + duration
 		});
     } else {
-        member.roles.add(mutedRole, "Muted by " + author.tag + " - " + reason);
+        member.roles.add(mutedRole, language.mutedBy + author.tag + " - " + reason);
         message.channel.send({
             embed: {
                 color: Math.floor(Math.random() * 16777214) + 1,
                 author: {
-                    name: author.tag + " has just muted " + member.user.tag,
+                    name: author.tag + language.hasJustMuted + member.user.tag,
                     icon_url: author.avatarURL({
                         format: "png",
                         dynamic: true,
@@ -146,7 +146,7 @@ module.exports.run = async (client, message, args, language) => {
                 },
                 description: "**" + language.reason + ":** " + reason,
                 footer: {
-                    text: message.senderID + author.id + message.mentionedMemberID + member.user.id,
+                    text: language.senderID + author.id + language.mentionedMemberID + member.user.id,
                     timestamp: message.timestamp
                 }
             }
@@ -155,16 +155,16 @@ module.exports.run = async (client, message, args, language) => {
             embed: {
                 color: Math.floor(Math.random() * 16777214) + 1,
                 author: {
-                    name: "You have just been muted in the " + guild.name + " server",
+                    name: language.muted,
                     icon_url: guild.iconURL({
                         format: "png",
                         dynamic: true,
                         size: 2048
                     })
                 },
-                description: "**Being muted by:** " + author.toString() + "\n**" + language.reason + ":** " + reason,
+                description: language.beingMutedBy + author.toString() + "\n**" + language.reason + ":** " + reason,
                 footer: {
-                    text: message.senderID + author.id + message.mentionedMemberID + member.user.id,
+                    text: language.senderID + author.id + language.mentionedMemberID + member.user.id,
                     timestamp: message.timestamp
                 }
             }

@@ -25,7 +25,7 @@ module.exports.run = async (client, message, args, language) => {
             embed: mess
         });
     } else {
-        message.reply('You must type the content first!');
+        message.reply(language.missingContent);
     }
 }
 

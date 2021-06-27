@@ -9,9 +9,9 @@ async function setbio(client, message, args, language) {
     try {
         var bio = "";
         if (client.economyManager[message.author.id].bio) bio = client.economyManager[message.author.id].bio;
-        if (!args[0]) return message.reply("Please type your biography!");
-        if (args.join(" ") == bio) return message.reply("You have already set this biography for your profile!");
-        if (args.join(" ").length > 1024) return message.reply("Your biography must have shorter than 1024 characters!");
+        if (!args[0]) return message.reply(language.missingBio);
+        if (args.join(" ") == bio) return message.reply(language.bioAlreadySet);
+        if (args.join(" ").length > 1024) return message.reply(language.bioTooLong);
         client.economyManager[message.author.id].bio = args.join(" ");
         request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
             type: "update",
@@ -22,8 +22,8 @@ async function setbio(client, message, args, language) {
             if (!error && response.statusCode == 200 && body.includes("Success")) {
                 message.channel.send(new Discord.MessageEmbed()
                 .setColor(Math.floor(Math.random() * 16777215))
-                .setAuthor("Successfully updated your profile biography.", message.author.avatarURL({size:128}))
-                .addField("Your current biography:", args.join(" "))
+                .setAuthor(language.bioUpdated, message.author.avatarURL({size:128}))
+                .addField(language.currentBio, args.join(" "))
                 .setTimestamp()
                 .setFooter(client.devUsername, client.user.avatarURL({size:128})));
             }

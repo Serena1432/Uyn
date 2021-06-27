@@ -9,9 +9,9 @@ async function settheme(client, message, args, language) {
     try {
         var theme = "dark";
         if (client.economyManager[message.author.id].theme) theme = client.economyManager[message.author.id].theme;
-        if (!args[0]) return message.reply("Please type a theme name: \"light\" or \"dark\"!");
-        if (args[0] != "light" && args[0] != "dark") return message.reply("Please type a theme name: \"light\" or \"dark\"!");
-        if (args[0] == theme) return message.reply("You have already set the " + args[0] + " theme for your profile!");
+        if (!args[0]) return message.reply(language.missingThemeName);
+        if (args[0] != "light" && args[0] != "dark") return message.reply(language.missingThemeName);
+        if (args[0] == theme) return message.reply(language.themeAlreadySet.replace("$theme", args[0]));
         client.economyManager[message.author.id].theme = args[0];
         request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
             type: "update",
@@ -20,7 +20,7 @@ async function settheme(client, message, args, language) {
             data: JSON.stringify(client.economyManager[message.author.id])
         }}, function(error, response, body) {
             if (!error && response.statusCode == 200 && body.includes("Success")) {
-                message.channel.send("Successfully set the " + args[0] + " theme for your profile.");
+                message.channel.send(language.themeSet.replace("$theme", args[0]));
             }
             else {
                 client.economyManager[message.author.id].theme = theme;

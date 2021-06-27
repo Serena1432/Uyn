@@ -13,7 +13,7 @@ function roll(client, message, args, language) {
             var spent = "500 🪙 Uyncoins";
             if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
             if (!client.economyManager[message.author.id].rolling_streaks) client.economyManager[message.author.id].rolling_streaks = 0;
-            if (client.economyManager[message.author.id].waifus.length >= 200) return message.reply("You have exceeded the maximum limit of waifus in an account! Please remove one and try again!")
+            if (client.economyManager[message.author.id].waifus.length >= 200) return message.reply(language.waifuLimitExceeded)
             var random = Math.random(), waifu, length = client.economyManager[message.author.id].waifus.length, rarity, type, normalRate, rareRate, sRareRate, ssRareRate;
             if (!args[0] || args[0] == "uync") {
                 if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < 500) return message.reply(language.insufficentBalance);
@@ -26,7 +26,7 @@ function roll(client, message, args, language) {
                 ssRareRate = 0.03;
             }
             else if (args[0] == "msgp") {
-                if (parseInt(decrypt(client.economyManager[message.author.id].messagePoints)) < 100) return message.reply("Insufficent 💬 " + language.messagePoints + "!");
+                if (parseInt(decrypt(client.economyManager[message.author.id].messagePoints)) < 100) return message.reply(language.insufficent + " 💬 " + language.messagePoints + "!");
                 var msgp = parseInt(decrypt(client.economyManager[message.author.id].messagePoints));
                 msgp -= 100;
                 client.economyManager[message.author.id].messagePoints = encrypt(msgp.toString());
@@ -45,9 +45,9 @@ function roll(client, message, args, language) {
                     }
                 }
                 if (!item) return message.reply(language.invalidItemID);
-                if (item.type != "gacha_ticket") return message.reply("This item isn't a gacha ticket! Please type another code!");
+                if (item.type != "gacha_ticket") return message.reply(language.notAGachaTicket);
                 if (!client.economyManager[message.author.id].leveling_tickets) client.economyManager[message.author.id].leveling_tickets = {};
-                if (eval("!client.economyManager[message.author.id].leveling_tickets." + item.code)) return message.reply("You don't have this item in your inventory!");
+                if (eval("!client.economyManager[message.author.id].leveling_tickets." + item.code)) return message.reply(language.notInInventory);
                 eval("!client.economyManager[message.author.id].leveling_tickets." + item.code + "--");
                 spent = "a " + item.name;
                 normalRate = item.normal_rate;
@@ -119,7 +119,7 @@ function roll(client, message, args, language) {
                 if (!client.economyManager[message.author.id].leveling_tickets) client.economyManager[message.author.id].leveling_tickets = {};
                 var random = Math.floor(Math.random() * 3) + 1;
                 eval("if (!client.economyManager[message.author.id].leveling_tickets.gtk" + random + ") client.economyManager[message.author.id].leveling_tickets.gtk" + random + " = 1; else client.economyManager[message.author.id].leveling_tickets.gtk" + random + "++;");
-                ticket = "\nYou got a **Gacha Ticket " + random + "★**!";
+                ticket = language.rollGachaTicketText + random + "★**!";
             }
             request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                 type: "update",
@@ -139,7 +139,7 @@ function roll(client, message, args, language) {
                         .setAuthor(message.author.username + " has just spent " + spent + " for rolling a waifu/husbando.", message.author.avatarURL({size: 128}))
                         .setTimestamp()
                     );
-                    message.channel.send("**" + message.author.username + "** spent **" + spent + "** and rolled a " + rarity + " " + type + ":" + ticket, new Discord.MessageEmbed()
+                    message.channel.send(language.rolled.replace("$user", message.author.username).replace("$amount", spent).replace("$rarity", rarity).replace("$type", type) + ticket, new Discord.MessageEmbed()
                     .setDescription("**" + waifu.name + "**\n" + waifu.anime)
                     .setImage(waifu.image_url)
                     .setTimestamp());

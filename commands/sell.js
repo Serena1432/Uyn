@@ -8,8 +8,8 @@ function random(min, max) {
 }
 
 function sell(client, message, args, language) {
-    if (client.trades[message.author.id]) return message.reply("You are currently in a trade, please end or complete it first!");
-    if (client.divorce[message.author.id]) return message.reply("You are currently in a divorce, please end or complete it first!");
+    if (client.trades[message.author.id]) return message.reply(language.trading);
+    if (client.divorce[message.author.id]) return message.reply(language.divorcing);
     if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
     try {
         if (!client.sell[message.author.id]) {
@@ -29,18 +29,18 @@ function sell(client, message, args, language) {
             }
             if (!waifu) return message.reply(language.invalidWaifu);
             client.sell[message.author.id] = args[0];
-            message.reply("You are going to sell your **" + waifu.name + "**.\n\nNotice that this action is **IRREVERSIBLE**!\nUse the `sell <coins>` command again to confirm selling with <coins> as your waifu's price in " + client.config.currency + " or use the `sell cancel` command to cancel selling.");
+            message.reply(language.sellWarning.replace("$name", waifu.name).replace("$currency", client.config.currency));
         }
         else {
             switch (args[0]) {
                 case "cancel": {
                     client.sell[message.author.id] = undefined;
-                    message.reply("Successfully cancelled the current selling.");
+                    message.reply(language.sellCancelled);
                     break;
                 }
                 default: {
                     var waifu;
-                    if (!args[0]) return message.reply("Please type your price in " + client.config.currency + "!");
+                    if (!args[0]) return message.reply(language.missingSellPrice.replace("$currency", client.config.currency));
                     if (isNaN(args[0])) return message.reply(language.priceisNaN);
                     for (var i = 0; i < client.economyManager[message.author.id].waifus.length; i++) {
                         if (client.economyManager[message.author.id].waifus[i].id == client.sell[message.author.id]) {
@@ -102,7 +102,7 @@ function sell(client, message, args, language) {
                                     );
                                     message.channel.send(new Discord.MessageEmbed()
                                     .setAuthor(message.author.tag, message.author.avatarURL({size: 128, dynamic: true}))
-                                    .setDescription("Successfully sold **" + waifu.name + "** in the BOT's public shop.")
+                                    .setDescription(language.sold.replace("$name", waifu.name))
                                     .setTimestamp());
                                 }
                                 else {

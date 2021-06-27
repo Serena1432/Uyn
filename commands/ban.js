@@ -31,7 +31,7 @@ module.exports.run = async (client, message, args, language) => {
             },
             description: "**" + language.reason + ":** " + reason,
             footer: {
-                text: message.senderID + message.author.id + message.mentionedMemberID + message.mentions.members.first().user.id,
+                text: language.senderID + message.author.id + language.mentionedMemberID + message.mentions.members.first().user.id,
                 timestamp: message.timestamp
             }
         }
@@ -49,7 +49,7 @@ module.exports.run = async (client, message, args, language) => {
             },
             description: language.beingBannedBy + message.author.toString() + "\n**" + language.reason + ":** " + reason,
             footer: {
-                text: message.senderID + message.author.id + message.mentionedMemberID + message.mentions.members.first().user.id,
+                text: language.senderID + message.author.id + language.mentionedMemberID + message.mentions.members.first().user.id,
                 timestamp: message.timestamp
             }
         }
