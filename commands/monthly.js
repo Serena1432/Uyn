@@ -86,7 +86,7 @@ async function monthly(client, message, args, language) {
                 if (hours > 0) timeText += hours + "h ";
                 if (minutes > 0) timeText += minutes + "m ";
                 if (seconds > 0) timeText += seconds + "s ";
-                return message.reply("You have to wait **" + timeText + "**to get your next reward!");
+                return message.reply(language.waitCountdown.replace("$time", timeText));
             }
         }
         catch (err) {
