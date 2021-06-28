@@ -139,7 +139,7 @@ function roll(client, message, args, language) {
                         .setAuthor(message.author.username + " has just spent " + spent + " for rolling a waifu/husbando.", message.author.avatarURL({size: 128}))
                         .setTimestamp()
                     );
-                    message.channel.send(language.rolled.replace("$user", message.author.username).replace("$amount", spent).replace("$rarity", rarity).replace("$type", type) + ticket, new Discord.MessageEmbed()
+                    message.channel.send(language.rolled.replace("$user", message.author.username).replace("$spent", spent).replace("$rarity", rarity).replace("$type", type) + ticket, new Discord.MessageEmbed()
                     .setDescription("**" + waifu.name + "**\n" + waifu.anime)
                     .setImage(waifu.image_url)
                     .setTimestamp());
