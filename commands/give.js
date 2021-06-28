@@ -84,7 +84,7 @@ module.exports.run = async (client, message, args, language) => {
                                                                     .setTimestamp()
                                                                 );
                                                                 else console.log("Cannot get the log channel.");
-                                                                message.channel.send("**" + message.author.username + "** have just sent **" + args[1] + " " + client.config.currency + "** to **" + message.mentions.users.first().username + "**!", new Discord.MessageEmbed()
+                                                                message.channel.send("**" + message.author.username + language.haveJustSent + args[1] + " " + client.config.currency + language.giveTo + message.mentions.users.first().username + "**!", new Discord.MessageEmbed()
                                                                     .setColor(Math.floor(Math.random() * 16777215))
                                                                     .setDescription(language.transactionEmbedNotice.replace("$id", result))
                                                                     .setTimestamp()
@@ -160,7 +160,7 @@ module.exports.run = async (client, message, args, language) => {
                                                         .setTimestamp()
                                                     );
                                                     else console.log("Cannot get the log channel.");
-                                                    message.channel.send("**" + message.author.username + "** have just sent **" + args[1] + " " + client.config.currency + "** to **" + message.mentions.users.first().username + "**!", new Discord.MessageEmbed()
+                                                    message.channel.send("**" + message.author.username + language.haveJustSent + args[1] + " " + client.config.currency + language.giveTo + message.mentions.users.first().username + "**!", new Discord.MessageEmbed()
                                                         .setColor(Math.floor(Math.random() * 16777215))
                                                         .setDescription(language.transactionEmbedNotice.replace("$id", result))
                                                         .setTimestamp()
@@ -254,7 +254,7 @@ module.exports.run = async (client, message, args, language) => {
                                                             .setTimestamp()
                                                         );
                                                         else console.log("Cannot get the log channel.");
-                                                        message.channel.send("**" + message.author.username + "** have just sent **" + args[1] + " " + client.config.currency + "** to **" + message.mentions.users.first().username + "**!", new Discord.MessageEmbed()
+                                                        message.channel.send("**" + message.author.username + language.haveJustSent + args[1] + " " + client.config.currency + language.giveTo + message.mentions.users.first().username + "**!", new Discord.MessageEmbed()
                                                             .setColor(Math.floor(Math.random() * 16777215))
                                                             .setDescription(language.transactionEmbedNotice.replace("$id", result))
                                                             .setTimestamp()
@@ -330,7 +330,7 @@ module.exports.run = async (client, message, args, language) => {
                                                 .setTimestamp()
                                             );
                                             else console.log("Cannot get the log channel.");
-                                            message.channel.send("**" + message.author.username + "** have just sent **" + args[1] + " " + client.config.currency + "** to **" + message.mentions.users.first().username + "**!", new Discord.MessageEmbed()
+                                            message.channel.send("**" + message.author.username + language.haveJustSent + args[1] + " " + client.config.currency + language.giveTo + message.mentions.users.first().username + "**!", new Discord.MessageEmbed()
                                                 .setColor(Math.floor(Math.random() * 16777215))
                                                 .setDescription(language.transactionEmbedNotice.replace("$id", result))
                                                 .setTimestamp()
