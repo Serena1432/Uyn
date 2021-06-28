@@ -76,7 +76,7 @@ function waifu(client, message, args, language) {
     else {
         try {
             var length = 0;
-            var descText = "**" + language.waifuCount + "** " + client.economyManager[message.author.id].waifus.length + "/200\n`--------------------------------------------------------\n| ID     | ";
+            var descText = "**" + language.waifuCount + "** " + client.economyManager[message.author.id].waifus.length + "/200\n`--------------------------------------------------------\n| ID    ";
 			if (language.waifuName.length <= 29) {
 				descText += " | " + language.waifuName;
 				for (var j = 0; j < 29 - language.waifuName.length; j++) descText += " ";
