@@ -414,4 +414,5 @@
   "wshopSearchInstructions": "This message only shows 10 first results. To reduce the search results please search using the full name.\nUse the `wbuy <id>` command to buy a waifu/husbando.",
   "waifuName": "Waifu/Husbando",
   "gshopRole": "\"$role\" role"
+  "a": "a"
 }
