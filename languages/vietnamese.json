@@ -257,7 +257,7 @@
   "notAGachaTicket": "Vật phẩm này không phải là một vé quay! Vui lòng nhập lại!",
   "notInInventory": "Bạn hiện không có vật phẩm này!",
   "rollGachaTicketText": "\nBạn nhận được một **Vé quay ",
-  "rolled": "**$user** dành ra **$spent** và quay được một $type có độ hiếm $rarity:",
+  "rolled": "**$user** sử dụng **$spent** và quay được một $type có độ hiếm $rarity:",
   "missingWaifuName": "Hãy nhập tên Waifu trước!",
   "searchDesc": "\nTin nhắn này chỉ hiện 20 kết quả đầu tiên. Để thu gọn kết quả tìm kiếm hãy tìm kiếm với một cái tên rõ ràng hơn.\nDùng lệnh `dex <id>` với ID ở bên cạnh tên để xem thông tin của một Waifu hay Husbando.",
   "searchTitle": "Danh sách các Waifu hoặc Husbando có tên \"$name\"",
