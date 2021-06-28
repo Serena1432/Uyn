@@ -28,7 +28,7 @@ module.exports.run = async (client, message, args, language) => {
         const p2avatar = await Canvas.loadImage(message.author.avatarURL);
         ctx.drawImage(p2avatar, 368, 430, 181, 181);
         creatingMsg.delete();
-        message.channel.send(message.mentions.users.first().toString() + " have been trashed by " + message.author.toString() + "!", {
+        message.channel.send(language.trash.replace("$user", message.author.toString()).replace("$mention", message.mentions.users.first().toString()), {
             files: [{
                 attachment: canvas.toBuffer(),
                 name: message.mentions.users.first().username + '_is_Trash.png'

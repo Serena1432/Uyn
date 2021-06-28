@@ -29,7 +29,7 @@ async function weekly(client, message, args, language) {
                         encoding: 'buffer', 
                         format: 'png'
                     });
-                    return message.channel.send("Please type the command `weekly (captcha code)` to claim the reward:\nUse the `weekly refresh` command to generate a new captcha code.", {files: [
+                    return message.channel.send(language.weekly, {files: [
                         {attachment: data, name: "captcha.png"}
                     ]});
                 }
@@ -59,7 +59,7 @@ async function weekly(client, message, args, language) {
                             .setTimestamp()
                         );
                         else console.log("Cannot get the log channel.");
-                        message.channel.send("Here is your weekly reward: **" + weeklyCoins.toString() + " " + client.config.currency + "**!", new Discord.MessageEmbed()
+                        message.channel.send(language.weeklyReward + weeklyCoins.toString() + " " + client.config.currency + "**!", new Discord.MessageEmbed()
                             .setColor(Math.floor(Math.random() * 16777215))
                             .setDescription(language.transactionEmbedNotice.replace("$id", result))
                             .setTimestamp()
@@ -86,7 +86,7 @@ async function weekly(client, message, args, language) {
                 if (hours > 0) timeText += hours + "h ";
                 if (minutes > 0) timeText += minutes + "m ";
                 if (seconds > 0) timeText += seconds + "s ";
-                return message.reply("You have to wait **" + timeText + "**to get your next reward!");
+                return message.reply(language.waitCountdown.replace("$time", timeText));
             }
         }
         catch (err) {

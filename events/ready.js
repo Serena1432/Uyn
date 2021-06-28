@@ -185,6 +185,14 @@ module.exports = (client) => {
             client.customPrefixes = JSON.parse(body);
             console.log("👌 Custom prefixes succesfully get");
         }
+        else console.error(error + "\n" + body);
+    });
+    request(process.env.php_server_url + '/GetLanguages.php', function(error, response, body) {
+        if (response && response.statusCode == 200 && !body.includes("Connection failed")) {
+            client.languages = JSON.parse(body);
+            console.log("👌 Server languages succesfully get");
+        }
+        else console.error(error + "\n" + body);
     });
     request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
             if (!error && response.statusCode == 200 && !body.includes("Error")) {

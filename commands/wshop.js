@@ -10,23 +10,23 @@ function random(min, max) {
 function waifu(client, message, args, language) {
     if (!client.economyManager["6746"].waifus) client.economyManager["6746"].waifus = [];
     if (!args[0] || !isNaN(args[0])) {
-        if (client.economyManager["6746"].waifus.length == 0) return message.reply("There aren't any waifus/husbandos in the BOT's public shop!");
+        if (client.economyManager["6746"].waifus.length == 0) return message.reply(language.noWshopItem);
         try {
-            var descText = "Use the `wbuy <id>` command to buy a waifu/husbando.\nUse the `wshop <name>` command to search for waifus/husbando that have a specific name.";
+            var descText = language.wshopInstructions;
             var n = parseInt(args[0]) - 1 || 0;
-            if ((n + 1) * 6 <= client.economyManager["6746"].waifus.length - 1) descText += "\nUse the `wshop " + (n + 2) + "` command to get to the next page.";
+            if ((n + 1) * 6 <= client.economyManager["6746"].waifus.length - 1) descText += language.wshopNextPage.replace("$page", n + 2);
             var embed = new Discord.MessageEmbed()
-            .setAuthor(client.user.username + " BOT's public shop", client.user.avatarURL({
+            .setAuthor(language.wshopTitle.replace("$bot", client.user.username), client.user.avatarURL({
                 size: 128
             }))
             .setColor(Math.floor(Math.random() * 16777215))
             .setDescription(descText)
             .setTimestamp();
-            if (n * 6 > client.economyManager["6746"].waifus.length - 1) return message.reply("There aren't have any more waifus/husbandos in the shop!");
+            if (n * 6 > client.economyManager["6746"].waifus.length - 1) return message.reply(language.noMoreWshopItem);
             for (var i = n * 6; i < n * 6 + 6; i++) {
                 if (client.economyManager["6746"].waifus[i]) {
                     var waifu = client.economyManager["6746"].waifus[i];
-                    embed.addField((i + 1) + ". " + waifu.name, "**Rarity:** " + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "\n**Level:** " + waifu.level + "\n**Seller:** " + (client.users.cache.get(waifu.seller) ? client.users.cache.get(waifu.seller).tag : "Unknown") + "\n**Price:** " + waifu.price.toLocaleString() + " " + client.config.currency, true);
+                    embed.addField((i + 1) + ". " + waifu.name, language.rarity + " " + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "\n**" + language.level + "** " + waifu.level + "\n**" + language.seller + "** " + (client.users.cache.get(waifu.seller) ? client.users.cache.get(waifu.seller).tag : "Unknown") + "\n**" + language.price + ":** " + waifu.price.toLocaleString() + " " + client.config.currency, true);
                 } else break;
             }
             message.channel.send(embed);
@@ -39,18 +39,18 @@ function waifu(client, message, args, language) {
     else {
         try {
             var embed = new Discord.MessageEmbed()
-            .setAuthor(client.user.username + " BOT's public shop that contains the \"" + args.join(" ") + "\" name", client.user.avatarURL({
+            .setAuthor(language.wshopSearchTitle.replace("$bot", client.user.username).replace("$name", args.join(" ")), client.user.avatarURL({
                 size: 128
             }))
             .setColor(Math.floor(Math.random() * 16777215))
-            .setDescription("This message only shows 10 first results. To reduce the search results please search using the full name.\nUse the `wbuy <id>` command to buy a waifu/husbando.")
+            .setDescription(language.wshopSearchInstructions)
             .setTimestamp();
             var length = 0;
             for (var i = 0; i < client.economyManager["6746"].waifus.length; i++) {
                 if (client.economyManager["6746"].waifus[i].name.toLowerCase().includes(args.join(" ").toLowerCase()) && length < 10) {
                     length++;
                     var waifu = client.economyManager["6746"].waifus[i];
-                    embed.addField((i + 1) + ". " + waifu.name, "**Rarity:** " + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "\n**Level:** " + waifu.level + "\n**Seller:** " + (client.users.cache.get(waifu.seller) ? client.users.cache.get(waifu.seller).tag : "Unknown") + "\n**Price:** " + waifu.price.toLocaleString() + " " + client.config.currency);
+                    embed.addField((i + 1) + ". " + waifu.name, language.rarity + " " + waifu.rarity.replace("Super Super Rare", "Specially Super Rare") + "\n**" + language.level + "** " + waifu.level + "\n**" + language.seller + "** " + (client.users.cache.get(waifu.seller) ? client.users.cache.get(waifu.seller).tag : "Unknown") + "\n**" + language.price + ":** " + waifu.price.toLocaleString() + " " + client.config.currency, true);
                 }
             }
             message.channel.send(embed);

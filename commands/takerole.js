@@ -14,13 +14,13 @@ module.exports.run = async (client, message, args, language) => {
 	else if (args[0] && !message.mentions.roles.size) role = message.guild.roles.cache.find(role => role.name == args.join(" "));
 	else if (!args[0]) return message.reply(language.specifyARole);
 	if (!role) return message.reply(language.roleNotFound);
-	if (!message.mentions.members.first().roles.cache.find(memrole => memrole.id == role.id)) return message.reply("This member isn't having that role!");
+	if (!message.mentions.members.first().roles.cache.find(memrole => memrole.id == role.id)) return message.reply(language.memberRoleNotFound);
 	if (role.position >= message.guild.member(client.user).roles.highest.position) return message.reply(language.higherRole);
-	message.mentions.members.first().roles.remove(role, "Role taken by " + message.author.tag)
+	message.mentions.members.first().roles.remove(role, language.roleTakenBy + message.author.tag)
 	  .then(mrole => {
 		  message.channel.send(new Discord.MessageEmbed()
 			.setColor(Math.floor(Math.random() * 16777214) + 1)
-			.setAuthor(message.author.tag + " has just taken the " + role.name + " role from " + message.mentions.members.first().user.tag, message.author.avatarURL({
+			.setAuthor(language.roleTaken.replace("$user", message.author.tag).replace("$role", role.name).replace("$mention", message.mentions.members.first().user.tag), message.author.avatarURL({
                 format: "png",
                 dynamic: true,
                 size: 2048
@@ -29,18 +29,18 @@ module.exports.run = async (client, message, args, language) => {
 		  );
 		  message.mentions.members.first().user.send(new Discord.MessageEmbed()
 			.setColor(Math.floor(Math.random() * 16777214) + 1)
-			.setAuthor("You have just been taken the " + role.name + " role the " + message.guild.name + " server", message.guild.iconURL({
+			.setAuthor(language.roleHasJustTaken.replace("$role", role.name).replace("$guild.name", message.guild.name), message.guild.iconURL({
                 format: "png",
                 dynamic: true,
                 size: 2048
             }))
-			.setDescription("**Being taken by:** " + message.author.toString())
+			.setDescription(language.beingTakenBy + message.author.toString())
 			.setTimestamp()
 		  );
 	  })
 	  .catch(err => {
 		  console.error(err);
-		  message.reply("There's an error while taking the role! Please try again!");
+		  message.reply(language.takeRoleError);
 	  });
 }
 

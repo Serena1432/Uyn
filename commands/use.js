@@ -29,12 +29,12 @@ function use(client, message, args, language) {
                 if (client.economyManager[message.author.id].inventory[i] == args[0]) has = true;
             }
         }
-        if (!has) return message.reply("You don't have this item in the inventory!");
+        if (!has) return message.reply(language.notInInventory);
         switch (item.type) {
             case "background": {
                 var formerBackground = "background_default";
                 if (client.economyManager[message.author.id].background) formerBackground = client.economyManager[message.author.id].background;
-                if (formerBackground == item.background_image) return message.reply("You are already using this profile banner image!");
+                if (formerBackground == item.background_image) return message.reply(language.imageAlreadySet);
                 client.economyManager[message.author.id].background = item.background_image;
                 request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                     type: "update",
@@ -45,9 +45,9 @@ function use(client, message, args, language) {
                     if (!error && response.statusCode == 200 && body.includes("Success")) {
                         const embed = {
                             color: Math.floor(Math.random() * 16777215),
-                            description: "**Disclaimer:** Neither the developer nor the submitter is the real creator of these banner images. All of the rights belong to their respective creators or owners."
+                            description: language.disclaimer
                         };
-                        return message.reply("Successfully changed your profile banner image into **" + item.name + "**.\nUse the command `use bgdf` to change your profile banner image into the default one.", {embed: embed});
+                        return message.reply(language.imageChanged.replace("$item", item.name), {embed: embed});
                     }
                     else {
                         client.economyManager[message.author.id].background = formerBackground;
@@ -62,7 +62,7 @@ function use(client, message, args, language) {
                 if (isNaN(args[1])) return message.reply(language.waifuIsNaN);
                 if (args[2] && isNaN(args[2])) return message.reply(language.quantityIsNaN);
                 var waifu, quantity = args[2] ? parseInt(args[2]) : 1;
-                if (eval("client.economyManager[message.author.id].leveling_tickets." + item.code) < quantity) return message.reply("You don't have enough tickets!");
+                if (eval("client.economyManager[message.author.id].leveling_tickets." + item.code) < quantity) return message.reply(language.notEnoughTickets);
                 for (var i = 0; i < client.economyManager[message.author.id].waifus.length; i++) {
                     if (client.economyManager[message.author.id].waifus[i].id == args[1]) {
                         waifu = client.economyManager[message.author.id].waifus[i];
@@ -108,7 +108,7 @@ function use(client, message, args, language) {
                                 name: message.author.tag,
                                 icon_url: message.author.avatarURL({size: 128})
                             },
-                            description: "You just used " + (quantity > 1 ? quantity : "a") + " " + item.name + " and your **" + waifu.name + "** got " + (item.exp_points * quantity).toLocaleString() + " EXP.\n\n**" + language.transactionID + "**\n" + result + "\n" + language.transactionNotice + "",
+                            description: language.ticketUsed.replace("$quantity", (quantity > 1 ? quantity : language.a)).replace("$item", item.name).replace("$waifu", waifu.name).replace("$exp", (item.exp_points * quantity).toLocaleString()) + "\n\n**" + language.transactionID + "**\n" + result + "\n" + language.transactionNotice + "",
                             timestamp: new Date()
                         };
                         message.channel.send({embed: embed});
@@ -118,11 +118,11 @@ function use(client, message, args, language) {
                 break;
             }
             case "gacha_ticket": {
-                return message.reply("You cannot use this item by this command!\nUse the `roll <code>` command to use a gacha ticket.");
+                return message.reply(language.gachaTicketNotSupported);
                 break;
             }
             default: {
-                message.reply("The usage of another item type isn't supported yet!");
+                message.reply(language.anotherItemNotSupported);
                 break;
             }
         }
@@ -130,7 +130,7 @@ function use(client, message, args, language) {
     else {
         var formerBackground = "background_default";
         if (client.economyManager[message.author.id].background) formerBackground = client.economyManager[message.author.id].background;
-        if (formerBackground == "background_default") return message.reply("You are already using this profile banner image!");
+        if (formerBackground == "background_default") return message.reply(language.imageAlreadySet);
         client.economyManager[message.author.id].background = "background_default";
         request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
             type: "update",
@@ -139,7 +139,7 @@ function use(client, message, args, language) {
             data: JSON.stringify(client.economyManager[message.author.id])
         }}, function(error, response, body) {
             if (!error && response.statusCode == 200 && body.includes("Success")) {
-                return message.reply("Successfully changed your profile banner image into the default image.");
+                return message.reply(language.defaultImageChanged);
             }
             else {
                 client.economyManager[message.author.id].background = formerBackground;

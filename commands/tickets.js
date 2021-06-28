@@ -13,8 +13,8 @@ function random(min, max) {
 function inventory(client, message, args, language) {
     try {
         var embed = new Discord.MessageEmbed()
-        .setAuthor(message.author.username + "'s available tickets", message.author.avatarURL({size: 128, dynamic: true}))
-        .setDescription("Use the `use <code> <waifu ID> <quantity>` command to use a leveling ticket.\nUse the `roll <code>` command to use a gacha ticket.")
+        .setAuthor(language.availableTickets.replace("$user", message.author.username), message.author.avatarURL({size: 128, dynamic: true}))
+        .setDescription(language.ticketsInstructions)
         .setColor(Math.floor(Math.random() * 1677215))
         .setTimestamp();
         var items = require("../items.json");
@@ -22,7 +22,7 @@ function inventory(client, message, args, language) {
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
             if (item.type == "leveling_ticket" || item.type == "gacha_ticket") {
-                embed.addField("(" + item.code + ") " + item.name, "**Available:** " + eval("client.economyManager[message.author.id].leveling_tickets." + item.code + " ? client.economyManager[message.author.id].leveling_tickets." + item.code + ".toString() : '0'"), true);
+                embed.addField("(" + item.code + ") " + item.name, "**" + language.available + ":** " + eval("client.economyManager[message.author.id].leveling_tickets." + item.code + " ? client.economyManager[message.author.id].leveling_tickets." + item.code + ".toString() : '0'"), true);
             }
         }
         message.channel.send(embed);

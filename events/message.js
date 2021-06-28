@@ -118,6 +118,27 @@ module.exports = async (client, message) => {
     var prefix = client.config.prefix, language = require("../languages/english.json");
     // Detect if it was a Guild Chat, if yes, go to the Custom Prefixes part
     if (message.channel.type == "text") {
+        // If the client.customPrefixes was null, refresh it
+        if (!client.customPrefixes) {
+            request(process.env.php_server_url + '/GetCustomPrefixes.php', function(error, response, body) {
+                if (response && response.statusCode == 200 && !body.includes("Connection failed")) {
+                    // Refreshing the prefixes list
+                    client.customPrefixes = JSON.parse(body);
+                    // Go to the Custom Prefix part
+                    CustomPrefix();
+                }
+            });
+        }
+        else CustomPrefix();
+        if (!client.languages) {
+            request(process.env.php_server_url + '/GetLanguages.php', function(error, response, body) {
+                if (response && response.statusCode == 200 && !body.includes("Connection failed")) {
+                    client.languages = JSON.parse(body);
+                    SetLang();
+                }
+            });
+        }
+        else SetLang();
         if (client.addRole[message.author.id] && client.addRole[message.author.id].channel == message.channel.id) {
             try {
                 if (message.content == "cancel") {
@@ -214,27 +235,22 @@ module.exports = async (client, message) => {
                 return message.reply(language.unexpectedErrorOccurred);
             }
         }
-        // If the client.customPrefixes was null, refresh it
-        if (!client.customPrefixes) {
-            request(process.env.php_server_url + '/GetCustomPrefixes.php', function(error, response, body) {
-                if (response && response.statusCode == 200 && !body.includes("Connection failed")) {
-                    // Refreshing the prefixes list
-                    client.customPrefixes = JSON.parse(body);
-                    // Go to the Custom Prefix part
-                    CustomPrefix();
-                }
-            });
-        }
-        else CustomPrefix();
     }
-    
-    // Custom Prefix part
     function CustomPrefix() {
-        // Check if the server has a prefix, if yes, assign it as the current prefix
         if (client.customPrefixes[message.guild.id]) prefix = client.customPrefixes[message.guild.id];
     }
-    
-    // Done the Custom Prefix part.
+
+    function SetLang() {
+        if (client.languages[message.guild.id]) {
+            try {
+                language = require("../languages/" + client.languages[message.guild.id] + ".json");
+            }
+            catch (err) {
+                console.log(err);
+                message.channel.send("Cannot get the language information! Please contact the developer/translator!\nThe language of this BOT will be English!");
+            }
+        }
+    }
    
     if (message.mentions.users.size)
     if (message.mentions.users.first().id == client.user.id) message.channel.send(language.currentServerPrefix.replace("$prefix", prefix)).then(message => {

@@ -14,13 +14,12 @@ module.exports.run = async (client, message, args, language) => {
                 if (!client.economyManager[message.guild.id] || client.economyManager[message.guild.id].roles.length == 0) return message.reply(language.serverItemsNotFound);
                 var n = 0;
                 if (args[0]) n = parseInt(args[0]) - 1;
-                var descText = "`-------------------------------------------------------------\n| ID     | ";
+                var descText = "`-------------------------------------------------------------\n| ID    ";
                 if (language.itemName.length <= 29) {
                     descText += " | " + language.itemName;
                     for (var j = 0; j < 29 - language.itemName.length; j++) descText += " ";
                 }
                 else descText += " | " + language.itemName.substr(0, 26) + "...";
-				descText += " | ";
                 if (language.price.length <= 16) {
                     descText += " | " + language.price;
                     for (var j = 0; j < 16 - language.price.length; j++) descText += " ";
@@ -32,7 +31,7 @@ module.exports.run = async (client, message, args, language) => {
                     if (client.economyManager[message.guild.id].roles[i]) {
                         var role = message.guild.roles.cache.get(client.economyManager[message.guild.id].roles[i].id);
                         if (role) {
-                            var name = "\"" + role.name + "\" role";
+                            var name = language.gshopRole.replace("$role", role.name);
                             descText += "\n| " + (i + 1);
                             for (var j = 0; j < 6 - (i+1).toString().length; j++) descText += " ";
                             if (name.length <= 29) {
@@ -56,7 +55,7 @@ module.exports.run = async (client, message, args, language) => {
                 const embed = {
                     color: Math.floor(Math.random() * 16777214) + 1,
                     author: {
-                        name: language.gbuyTitle.replace("$name", message.guild.name),
+                        name: language.gbuyTitle.replace("$guild", message.guild.name),
                         icon_url: message.guild.iconURL({size: 128})
                     },
                     description: descText,

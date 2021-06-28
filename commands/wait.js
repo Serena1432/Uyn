@@ -33,7 +33,7 @@ module.exports.run = async (client, message, args, language) => {
                     const image = {
                         color: Math.floor(Math.random() * 16777214) + 1,
                         author: {
-                            name: message.author.username + ' is waiting ' + message.mentions.users.first().username + '... Where are you ' + message.mentions.users.first().username + '?\n' + text,
+                            name: message.author.username + language.wait + message.mentions.users.first().username + '...\n' + text,
                             icon_url: message.author.avatarURL({
                                 format: "png",
                                 dynamic: true,
@@ -50,7 +50,7 @@ module.exports.run = async (client, message, args, language) => {
                 }
             });
     } else if (!message.mentions.users.size && args[0] == "@noone") {
-        message.channel.send(message.author.username + " is waiting for no one, so no GIF was sent.");
+        message.channel.send(message.author.username + language.waitNoOne);
     } else {
         var text = "";
         for (var i = 0; i < args.length; i++) {
@@ -71,7 +71,7 @@ module.exports.run = async (client, message, args, language) => {
                     const image = {
                         color: Math.floor(Math.random() * 16777214) + 1,
                         author: {
-                            name: message.author.username + ' is waiting for someone...\n' + text,
+                            name: message.author.username + ' ' + language.waitForSomeone + '\n' + text,
                             icon_url: message.author.avatarURL({
                                 format: "png",
                                 dynamic: true,

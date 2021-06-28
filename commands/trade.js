@@ -8,14 +8,14 @@ function random(min, max) {
 }
 
 function trade(client, message, args, language) {
-    if (client.divorce[message.author.id]) return message.reply("You are currently in a divorce, please cancel or complete it first!");
-    if (client.sell[message.author.id]) return message.reply("You are currently selling a waifu, please cancel or complete it first!");
+    if (client.divorce[message.author.id]) return message.reply(language.divorcing);
+    if (client.sell[message.author.id]) return message.reply(language.selling);
     if (!client.economyManager[message.author.id].waifus) client.economyManager[message.author.id].waifus = [];
     try {
         if (!client.trades[message.author.id] && message.mentions.users.size) {
-            if (message.mentions.users.first().bot) return message.reply("You cannot trade with a BOT!");
-            if (message.mentions.users.first().id == message.author.id) return message.reply("You cannot trade with a yourself!");
-            if (client.trades[message.mentions.users.first().id]) return message.reply("The mentioned user is currently in a trade!");
+            if (message.mentions.users.first().bot) return message.reply(language.cannotTradeWithBOT);
+            if (message.mentions.users.first().id == message.author.id) return message.reply(language.cannotTradeWithYourself);
+            if (client.trades[message.mentions.users.first().id]) return message.reply(language.alreadyInTrade);
             client.trades[message.author.id] = {
                 recipent: message.mentions.users.first().id,
                 items: [],
@@ -27,11 +27,11 @@ function trade(client, message, args, language) {
                 completed: false
             };
             message.channel.send(new Discord.MessageEmbed()
-            .setAuthor(message.author.username + "'s trade with " + message.mentions.users.first().username, message.author.avatarURL({size: 128, dynamic: true}))
-            .setDescription("If you encountered an error during the trade, that means the BOT has been restarted.\nAt that time, please begin the trade again.\n\nUse the `trade add <waifu ID>` command to add a waifu to the trade.\nUse the `trade remove <trade item ID>` command to remove a trade item.\nUse the `trade set` to completely set your trade items.\nUse the `trade end` command to end this trade without changing anything.")
+            .setAuthor(language.tradeTitle.replace("$user", message.author.username).replace("$mention", message.mentions.users.first().username), message.author.avatarURL({size: 128, dynamic: true}))
+            .setDescription(language.tradeInstructions)
             .addFields(
-                {name: "📦 " + message.author.username + "'s items", value: "❎ Nothing has been added yet.", inline: true},
-                {name: "📦 " + message.mentions.users.first().username + "'s items", value: "❎ Nothing has been added yet.", inline: true}
+                {name: "📦 " + language.tradeItemsTitle.replace("$user", message.author.username), value: "❎ " + language.nothingAdded, inline: true},
+                {name: "📦 " + language.tradeItemsTitle.replace("$user", message.mentions.users.first.username), value: "❎ " + language.nothingAdded, inline: true}
             )
             .setColor(Math.floor(Math.random() * 16777215))
             .setTimestamp());
@@ -40,15 +40,15 @@ function trade(client, message, args, language) {
             var sender = message.author;
             sender.info = client.trades[message.author.id];
             var recipent = client.users.cache.get(sender.info.recipent);
-            if (!recipent) return message.reply("Cannot get the recipent information!");
+            if (!recipent) return message.reply(language.recipentNotFound);
             recipent.info = client.trades[recipent.id];
             switch (args[0]) {
                 case "add": {
-                    if (sender.info.completed) return message.reply("You have already set your trade items!");
+                    if (sender.info.completed) return message.reply(language.tradeAlreadySet);
                     if (!args[1]) return message.reply(language.noWaifuID);
                     if (isNaN(args[1])) return message.reply(language.waifuIsNaN);
                     for (var i = 0; i < sender.info.items.length; i++) {
-                        if (sender.info.items[i].id == args[1]) return message.reply("You have already added this waifu!");
+                        if (sender.info.items[i].id == args[1]) return message.reply(language.waifuAlreadyAdded);
                     }
                     if (client.economyManager[sender.id].team && client.economyManager[sender.id].team.members.length) {
                         for (var i = 0; i < client.economyManager[sender.id].team.members.length; i++) {
@@ -67,9 +67,9 @@ function trade(client, message, args, language) {
                     break;
                 }
                 case "remove": {
-                    if (sender.info.completed) return message.reply("You have already set your trade items!");
-                    if (!args[1]) return message.reply("Please type the ID first!");
-                    if (isNaN(args[1])) return message.reply("The ID must be a number!");
+                    if (sender.info.completed) return message.reply(language.tradeAlreadySet);
+                    if (!args[1]) return message.reply(language.noTradeID);
+                    if (isNaN(args[1])) return message.reply(language.tradeIDIsNaN);
                     if (!sender.info.items[parseInt(args[1]) - 1]) return message.reply(language.invalidItemID);
                     sender.info.items.splice(parseInt(args[1]) - 1, 1);
                     break;
@@ -145,13 +145,13 @@ function trade(client, message, args, language) {
                     client.trades[message.author.id] = undefined;
                     return message.channel.send(new Discord.MessageEmbed()
                     .setAuthor(sender.tag, sender.avatarURL({size: 128, dynamic: true}))
-                    .setDescription("Successfully ended your current trade with " + recipent.tag + ".")
+                    .setDescription(language.tradeEnded.replace("$mention", recipent.tag))
                     .setColor(Math.floor(Math.random() * 16777215))
                     .setTimestamp());
                     break;
                 }
                 default: {
-                    return message.reply("Invalid command!");
+                    return message.reply(language.invalidTradeCommand);
                 }
             }
             if (sender.info && recipent.info) {
@@ -164,11 +164,11 @@ function trade(client, message, args, language) {
                     recipent.description += "**" + (i + 1) + ". " + recipent.info.items[i].name + "** (Lv." + recipent.info.items[i].level + ")\n";
                 }
                 message.channel.send(new Discord.MessageEmbed()
-                .setAuthor((sender.info.completed && recipent.info.completed) ? "Trade completed!" : (sender.username + "'s trade with " + recipent.username), sender.avatarURL({size: 128, dynamic: true}))
-                .setDescription("If you encountered an error during the trade, that means the BOT has been restarted.\nAt that time, please begin the trade again.\n\nUse the `trade add <waifu ID>` command to add a waifu to the trade.\nUse the `trade remove <trade item ID>` command to remove a trade item.\nUse the `trade set` to completely set your trade items.\nUse the `trade end` command to end this trade without changing anything.")
+                .setAuthor((sender.info.completed && recipent.info.completed) ? language.tradeCompleted : (language.tradeTitle.replace("$user", message.author.username).replace("$mention", message.mentions.users.first().username)), sender.avatarURL({size: 128, dynamic: true}))
+                .setDescription(language.tradeInstructions)
                 .addFields(
-                    {name: "📦 " + sender.username + "'s items" + (sender.info.completed ? " (Set)" : ""), value: (sender.info.items.length ? sender.description : "❎ Nothing has been added yet."), inline: true},
-                    {name: "📦 " + recipent.username + "'s items" + (recipent.info.completed ? " (Set)" : ""), value: (recipent.info.items.length ? recipent.description : "❎ Nothing has been added yet."), inline: true}
+                    {name: "📦 " + language.tradeItemsTitle.replace("$user", sender.username) + (sender.info.completed ? language.tradeItemSet : ""), value: (sender.info.items.length ? sender.description : ("❎ " + language.nothingAdded)), inline: true},
+                    {name: "📦 " + language.tradeItemsTitle.replace("$user", recipent.username) + (recipent.info.completed ? language.tradeItemSet : ""), value: (recipent.info.items.length ? recipent.description : ("❎ " + language.nothingAdded)), inline: true}
                 )
                 .setColor(Math.floor(Math.random() * 16777215))
                 .setTimestamp());
@@ -178,7 +178,7 @@ function trade(client, message, args, language) {
                 }
             }
         }
-        else return message.reply("Please mention someone to begin a trade!")
+        else return message.reply(language.pleaseMentionRecipent)
     }
     catch (err) {
         console.error(err);
@@ -275,5 +275,5 @@ module.exports.config = {
     accessableby: "Members",
     aliases: [],
     category: "👧 Waifu/Husbando Collection",
-    dmAvailable: true
+    dmAvailable: false
 }

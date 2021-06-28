@@ -16,7 +16,7 @@ function info(client, message, args, language) {
     try {
         switch (args[0]) {
             case "add": {
-                if (client.economyManager[message.author.id].team.members.length >= 3) return message.reply("Your team already have enough members! Please remove one using the `team remove <member id>` command and try again!");
+                if (client.economyManager[message.author.id].team.members.length >= 3) return message.reply(language.enoughTeamMembers);
                 if (!args[1]) return message.reply(language.noWaifuID);
                 if (isNaN(args[1])) return message.reply(language.waifuIsNaN);
                 var waifu, length = client.economyManager[message.author.id].team.members.length;
@@ -28,7 +28,7 @@ function info(client, message, args, language) {
                 }
                 if (!waifu) return message.reply(language.invalidWaifu);
                 for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
-                    if (client.economyManager[message.author.id].team.members[i] == waifu.id) return message.reply("This waifu/husbando is already in your team!");
+                    if (client.economyManager[message.author.id].team.members[i] == waifu.id) return message.reply(language.alreadyInTeam);
                 }
                 client.economyManager[message.author.id].team.members.push(waifu.id);
                 request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
@@ -41,7 +41,7 @@ function info(client, message, args, language) {
                         message.channel.send(new Discord.MessageEmbed()
                         .setAuthor(message.author.tag, message.author.avatarURL({size: 128, dynamic: true}))
                         .setColor(Math.floor(Math.random() * 16777215))
-                        .setDescription("Successfully added **" + waifu.name + "** into your team.")
+                        .setDescription(language.teamMemberAdded.replace("$name", waifu.name))
                         .setTimestamp());
                     }
                     else {
@@ -53,10 +53,10 @@ function info(client, message, args, language) {
                 break;
             }
             case "remove": {
-                if (client.economyManager[message.author.id].team.members.length == 0) return message.reply("Your team don't have any members! Please add one using the `team add <waifu id>` command and try again!");
-                if (!args[1]) return message.reply("Please type a member ID!");
-                if (isNaN(args[1])) return message.reply("The member ID must be a number!");
-                if (!client.economyManager[message.author.id].team.members[parseInt(args[1]) - 1]) return message.reply("Invalid member ID!");
+                if (client.economyManager[message.author.id].team.members.length == 0) return message.reply(language.noTeamMember);
+                if (!args[1]) return message.reply(language.noMemberID);
+                if (isNaN(args[1])) return message.reply(language.memberIDIsNaN);
+                if (!client.economyManager[message.author.id].team.members[parseInt(args[1]) - 1]) return message.reply(language.invalidMemberID);
                 var waifu, length = client.economyManager[message.author.id].team.members.length;
                 for (var i = 0; i < client.economyManager[message.author.id].waifus.length; i++) {
                     if (client.economyManager[message.author.id].waifus[i].id == client.economyManager[message.author.id].team.members[parseInt(args[1]) - 1]) {
@@ -75,7 +75,7 @@ function info(client, message, args, language) {
                         message.channel.send(new Discord.MessageEmbed()
                         .setAuthor(message.author.tag, message.author.avatarURL({size: 128, dynamic: true}))
                         .setColor(Math.floor(Math.random() * 16777215))
-                        .setDescription("Successfully removed **" + waifu.name + "** from your team.")
+                        .setDescription(language.teamMemberRemoved.replace("$name", waifu.name))
                         .setTimestamp());
                     }
                     else {
@@ -89,9 +89,9 @@ function info(client, message, args, language) {
             case "rename": {
                 var oldName = client.economyManager[message.author.id].team.name;
                 args.splice(0, 1);
-                if (!args[0]) return message.reply("Please type a team name!");
+                if (!args[0]) return message.reply(language.noTeamName);
                 var newName = args.join(" ");
-                if (oldName == newName) return message.reply("You have already set that team name!");
+                if (oldName == newName) return message.reply(language.teamNameAlreadySet);
                 client.economyManager[message.author.id].team.name = newName;
                 request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
                     type: "update",
@@ -103,7 +103,7 @@ function info(client, message, args, language) {
                         message.channel.send(new Discord.MessageEmbed()
                         .setAuthor(message.author.tag, message.author.avatarURL({size: 128, dynamic: true}))
                         .setColor(Math.floor(Math.random() * 16777215))
-                        .setDescription("Successfully renamed your team into " + newName + ".")
+                        .setDescription(language.teamRenamed.replace("$name", newName))
                         .setTimestamp());
                     }
                     else {
@@ -118,12 +118,12 @@ function info(client, message, args, language) {
                 if (client.economyManager[message.author.id].team.members.length == 0) return message.channel.send(new Discord.MessageEmbed()
                     .setAuthor(message.author.tag, message.author.avatarURL({size: 128, dynamic: true}))
                     .setColor(Math.floor(Math.random() * 16777215))
-                    .setDescription("You don't have any team.\nUse the `team add <waifu id>` command to add a member to your team.")
+                    .setDescription(language.noTeamMemberEmbed)
                     .setTimestamp());
                 embed = new Discord.MessageEmbed()
                     .setAuthor(message.author.tag + "'s " + (client.economyManager[message.author.id].team.name != "" ? client.economyManager[message.author.id].team.name : "team"), message.author.avatarURL({size: 128, dynamic: true}))
                     .setColor(Math.floor(Math.random() * 16777215))
-                    .setDescription("Use the `team add <waifu id>` command to add a member to your team.\nUse the `team remove <member id>` command to add a member to your team.\nUse the `team rename <name>` command to rename your team.")
+                    .setDescription(language.teamInstructions)
                     .setTimestamp();
                 for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
                     var waifu;
@@ -133,7 +133,7 @@ function info(client, message, args, language) {
                             break;
                         }
                     }
-                    embed.addField((i + 1) + ". " + waifu.name + " (" + waifu.anime + ")", "**Level:** " + waifu.level + " / **HP:** " + parseInt(waifu.base_hp * (1 + 0.05 * waifu.level)).toLocaleString() + " / **Attack:** " + parseInt(waifu.base_atk * (1 + 0.075 * waifu.level)).toLocaleString() + " / **Defense:** " + parseInt(waifu.base_def * (1 + 0.085 * waifu.level)).toLocaleString())
+                    embed.addField((i + 1) + ". " + waifu.name + " (" + waifu.anime + ")", "**" + language.level + "** " + waifu.level + " / **HP:** " + parseInt(waifu.base_hp * (1 + 0.05 * waifu.level)).toLocaleString() + " / **" + language.atk + "** " + parseInt(waifu.base_atk * (1 + 0.075 * waifu.level)).toLocaleString() + " / **" + language.def + "** " + parseInt(waifu.base_def * (1 + 0.085 * waifu.level)).toLocaleString())
                 }
                 message.channel.send(embed);
                 break;

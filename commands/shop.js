@@ -16,13 +16,12 @@ module.exports.run = async (client, message, args, language) => {
         if (items.length == 0) return message.reply(language.noBOTShopItem);
         var n = 0;
         if (args[0]) n = parseInt(args[0]) - 1;
-        var descText = "`-------------------------------------------------------------\n| ID     | ";
+        var descText = "`-------------------------------------------------------------\n| ID    ";
         if (language.itemName.length <= 29) {
             descText += " | " + language.itemName;
             for (var j = 0; j < 29 - language.itemName.length; j++) descText += " ";
         }
         else descText += " | " + language.itemName.substr(0, 26) + "...";
-		descText += " | ";
         if (language.price.length <= 16) {
             descText += " | " + language.price;
             for (var j = 0; j < 16 - language.price.length; j++) descText += " ";

@@ -84,10 +84,10 @@ function wbuy(client, message, args, language) {
                           const embed = {
                               color: Math.floor(Math.random() * 16777215),
                               author: {
-                                  name: "Succesfully bought \"" + name + "\" from the server shop.",
+                                  name: language.waifuBought("$waifu", name),
                                   icon_url: message.author.avatarURL({size: 128})
                               },
-                              description: "The transaction ID is " + result + ".\n" + language.transactionNotice + "",
+                              description: language.transactionEmbedNotice.replace("$id", result),
                               timestamp: new Date()
                           };
                           message.channel.send({
