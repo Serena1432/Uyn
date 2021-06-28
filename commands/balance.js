@@ -6,7 +6,7 @@ const {encrypt, decrypt} = require("../utils/crypto.js");
 function bal(client, message, args, language, user) {
     message.channel.send(new Discord.MessageEmbed()
     .setColor(Math.floor(Math.random() * 16777215))
-    .setAuthor(language.balance.replace("$username", user.username), user.avatarURL({size:128}))
+    .setAuthor(language.balance.replace("$user", user.username), user.avatarURL({size:128}))
     .addFields([
         {name: client.config.currency + ":", value: parseInt(decrypt(client.economyManager[user.id].coins)).toLocaleString()},
         {name: "💬 " + language.messagePoints + ":", value: (client.economyManager[user.id].messagePoints) ? parseInt(decrypt(client.economyManager[user.id].messagePoints)).toLocaleString() : "0"}
