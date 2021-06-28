@@ -414,5 +414,6 @@
   "wshopSearchTitle": "Danh sách các Waiuf/Husbando trong cửa hàng của BOT $bot có tên \"$name\" ",
   "wshopSearchInstructions": "Tin nhắn này chỉ hiện 10 kết quả đầu tiên. Để thu gọn kết quả tìm kiếm hãy tìm kiếm với một cái tên rõ ràng hơn.\nDùng lệnh `wbuy <id>` để mua một Waifu hoặc Husbando.",
   "waifuName": "Waifu hoặc Husbando",
-  "gshopRole": "Vai trò \"$role\""
+  "gshopRole": "Vai trò \"$role\"",
+  "a": "một"
 }

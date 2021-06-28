@@ -49,7 +49,7 @@ function roll(client, message, args, language) {
                 if (!client.economyManager[message.author.id].leveling_tickets) client.economyManager[message.author.id].leveling_tickets = {};
                 if (eval("!client.economyManager[message.author.id].leveling_tickets." + item.code)) return message.reply(language.notInInventory);
                 eval("!client.economyManager[message.author.id].leveling_tickets." + item.code + "--");
-                spent = item.name;
+                spent = language.a + " " + item.name;
                 normalRate = item.normal_rate;
                 rareRate = item.rare_rate;
                 sRareRate = item.srare_rate;
