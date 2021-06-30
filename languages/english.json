@@ -358,6 +358,7 @@
   "cannotTradeWithYourself": "You cannot trade with yourself!",
   "alreadyInTrade": "The mentioned user is currently in a trade!",
   "tradeTitle": "$user's trade with $mention",
+  "tradeEnded": "Succesfully ended your current trade with $mention.",
   "tradeInstructions": "If you encountered an error during the trade, that means the BOT has been restarted.\nAt that time, please begin the trade again.\n\nUse the `trade add <waifu ID>` command to add a waifu to the trade.\nUse the `trade remove <trade item ID>` command to remove a trade item.\nUse the `trade set` to completely set your trade items.\nUse the `trade end` command to end this trade without changing anything.",
   "tradeItemsTitle": "$user's items",
   "nothingAdded": "Nothing has been added yet.",
