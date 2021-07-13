@@ -67,7 +67,7 @@
   "mentionedMemberID": " | Mentioned member's ID: ",
   "banned": "You have just been banned in the $guild.name server",
   "beingBannedBy": "**Being banned by:** ",
-  "noTeam": "This team ID doesn't have any members!\nUse the `team add <team id> <waifu id>` command to add a member to your team!",
+  "noTeam": "This team doesn't have any members!\nUse the `team add <team id> <waifu id>` command to add a member to your team!",
   "defaultPlayerTeamName": "$username's team",
   "insufficentBattleAmount": "You need to have at least **$amount** to start a battle!",
   "defaultOpponentTeamName": "Opponent's Team",
