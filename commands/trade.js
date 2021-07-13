@@ -31,7 +31,7 @@ function trade(client, message, args, language) {
             .setDescription(language.tradeInstructions)
             .addFields(
                 {name: "📦 " + language.tradeItemsTitle.replace("$user", message.author.username), value: "❎ " + language.nothingAdded, inline: true},
-                {name: "📦 " + language.tradeItemsTitle.replace("$user", message.mentions.users.first.username), value: "❎ " + language.nothingAdded, inline: true}
+                {name: "📦 " + language.tradeItemsTitle.replace("$user", message.mentions.users.first().username), value: "❎ " + language.nothingAdded, inline: true}
             )
             .setColor(Math.floor(Math.random() * 16777215))
             .setTimestamp());
@@ -175,7 +175,7 @@ function trade(client, message, args, language) {
                     recipent.description += "**" + (i + 1) + ". " + recipent.info.items[i].name + "** (Lv." + recipent.info.items[i].level + ")\n";
                 }
                 message.channel.send(new Discord.MessageEmbed()
-                .setAuthor((sender.info.completed && recipent.info.completed) ? language.tradeCompleted : (language.tradeTitle.replace("$user", message.author.username).replace("$mention", message.mentions.users.first().username)), sender.avatarURL({size: 128, dynamic: true}))
+                .setAuthor((sender.info.completed && recipent.info.completed) ? language.tradeCompleted : (language.tradeTitle.replace("$user", sender.username).replace("$mention", recipent.username)), sender.avatarURL({size: 128, dynamic: true}))
                 .setDescription(language.tradeInstructions)
                 .addFields(
                     {name: "📦 " + language.tradeItemsTitle.replace("$user", sender.username) + (sender.info.completed ? language.tradeItemSet : ""), value: (sender.info.items.length ? sender.description : ("❎ " + language.nothingAdded)), inline: true},

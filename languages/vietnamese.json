@@ -359,6 +359,7 @@
   "cannotTradeWithYourself": "Bạn không thể trao đổi với chính mình!",
   "alreadyInTrade": "Thành viên được nhắc đến đang trao đổi với người khác rồi!",
   "tradeTitle": "Trao đổi giữa $user và $mention",
+  "tradeEnded": "Đã kết thúc việc trao đổi hiện tại của bạn với $mention.",
   "tradeInstructions": "Nếu có lỗi xảy ra trong quá trình trao đổi thì có thể BOT đã khởi động lại trong quá trình đó\nNếu điều đó xảy ra, hãy bắt đầu lại quá trình trao đổi.\n\nDùng lệnh `trade add <waifu ID>` để thêm một Waifu vào quá trình trao đổi.\nDùng lệnh `trade remove <trade item ID>` để xoá một Waifu khỏi quá trình trao đổi.\nDùng lệnh `trade set` để xác nhận vật phẩm trao đổi.\nDùng lệnh `trade end` để kết thúc việc trao đổi mà không thay đổi bất cứ thứ gì.",
   "tradeItemsTitle": "Vật phẩm của $user",
   "nothingAdded": "Chưa thêm vật phẩm nào.",
