@@ -15,18 +15,21 @@ function info(client, message, args, language) {
 			name: "",
 			members: []
 		};
+		if (args[0] == "1" || isNaN(args[0])) team = client.economyManager[message.author.id].team;
+        else eval("team = client.economyManager[message.author.id].team" + args[0]);
+        if (!team) eval("client.economyManager[message.author.id].team" + args[0] + " = { name : '', members: [] }; team = client.economyManager[message.author.id].team" + args[0]);
 		try {
 			var opponentTeam = {};
-			if (!client.economyManager[message.author.id].team || client.economyManager[message.author.id].team.members.length == 0) return message.reply(language.noTeam);
+			if (!team || team.members.length == 0) return message.reply(language.noTeam);
 			var playerTeam = {
-				name: client.economyManager[message.author.id].team.name != "" ? client.economyManager[message.author.id].team.name : (language.defaultPlayerTeamName.replace("$username", message.author.username)),
+				name: team.name != "" ? team.name : (language.defaultPlayerTeamName.replace("$username", message.author.username)),
 				members: []
 			};
 			var maxLevel = 0;
-			for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
+			for (var i = 0; i < team.members.length; i++) {
 				var waifu;
 				for (var j = 0; j < client.economyManager[message.author.id].waifus.length; j++) {
-					if (client.economyManager[message.author.id].waifus[j].id == client.economyManager[message.author.id].team.members[i]) {
+					if (client.economyManager[message.author.id].waifus[j].id == team.members[i]) {
 						waifu = client.economyManager[message.author.id].waifus[j];
 						break;
 					}
@@ -34,10 +37,10 @@ function info(client, message, args, language) {
 				maxLevel = Math.max(waifu.level, maxLevel);
 			}
 			if (parseInt(decrypt(client.economyManager[message.author.id].coins)) < 50 * (2 + maxLevel * 0.35)) return message.reply(language.insufficentBattleAmount.replace("$amount", parseInt(50 * (2 + maxLevel * 0.35)) + " " + client.config.currency));
-			for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
+			for (var i = 0; i < team.members.length; i++) {
 				var waifu;
 				for (var j = 0; j < client.economyManager[message.author.id].waifus.length; j++) {
-					if (client.economyManager[message.author.id].waifus[j].id == client.economyManager[message.author.id].team.members[i]) {
+					if (client.economyManager[message.author.id].waifus[j].id == team.members[i]) {
 						waifu = client.economyManager[message.author.id].waifus[j];
 						break;
 					}
@@ -255,10 +258,10 @@ function info(client, message, args, language) {
 						client.economyManager[message.author.id].coins = encrypt(coins.toString());
 						if (res == "win") {
 							var rExp = parseInt(5 * (2 + maxLevel * 0.05) *  opponentTeam.members.length * (1 + client.economyManager[message.author.id].streaks * 0.1));
-							for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
+							for (var i = 0; i < team.members.length; i++) {
 								var waifu;
 								for (var j = 0; j < client.economyManager[message.author.id].waifus.length; j++) {
-									if (client.economyManager[message.author.id].waifus[j].id == client.economyManager[message.author.id].team.members[i]) {
+									if (client.economyManager[message.author.id].waifus[j].id == team.members[i]) {
 										waifu = client.economyManager[message.author.id].waifus[j];
 										break;
 									}
@@ -426,7 +429,7 @@ module.exports.run = async (client, message, args, language) => {
 module.exports.config = {
     name: "battle",
     description: "Battle with a random team or a specific user",
-    usage: require("../config.json").prefix + "battle <@mention> (optional)",
+    usage: require("../config.json").prefix + "battle <team id> <@mention> (optional)",
     accessableby: "Members",
     aliases: [],
     category: "👧 Waifu/Husbando Collection",

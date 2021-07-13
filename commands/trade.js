@@ -50,9 +50,20 @@ function trade(client, message, args, language) {
                     for (var i = 0; i < sender.info.items.length; i++) {
                         if (sender.info.items[i].id == args[1]) return message.reply(language.waifuAlreadyAdded);
                     }
-                    if (client.economyManager[sender.id].team && client.economyManager[sender.id].team.members.length) {
-                        for (var i = 0; i < client.economyManager[sender.id].team.members.length; i++) {
-                            if (client.economyManager[sender.id].team.members[i] == args[1]) return message.reply(language.inTeam);
+                    if (client.economyManager[message.author.id].team && client.economyManager[message.author.id].team.members.length) {
+                        for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
+                            if (client.economyManager[message.author.id].team.members[i] == args[1]) return message.reply(language.inTeam);
+                        }
+                    }
+                    var c = 1;
+                    while (1) {
+                        c++;
+                        eval("var team = client.economyManager[message.author.id].team" + c);
+                        if (!eval("client.economyManager[message.author.id].team" + c)) break;
+                        if (team && team.members.length) {
+                            for (var i = 0; i < team.members.length; i++) {
+                                if (team.members[i] == args[1]) return message.reply(language.inTeam);
+                            }
                         }
                     }
                     var waifu;

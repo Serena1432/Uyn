@@ -30,8 +30,21 @@ function info(client, message, args, language) {
                         var waifu = client.economyManager[message.author.id].waifus[i];
                         if (waifu.rarity == "Normal") {
                             var inTeam = false;
-                            for (var j = 0; j < client.economyManager[message.author.id].team.members.length; j++) {
-                                if (client.economyManager[message.author.id].team.members[j] == waifu.id) inTeam = true;
+                            if (client.economyManager[message.author.id].team && client.economyManager[message.author.id].team.members.length) {
+                                for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
+                                    if (client.economyManager[message.author.id].team.members[i] == waifu.id) inTeam = true;
+                                }
+                            }
+                            var c = 1;
+                            while (1) {
+                                c++;
+                                eval("var team = client.economyManager[message.author.id].team" + c);
+                                if (!eval("client.economyManager[message.author.id].team" + c)) break;
+                                if (team && team.members.length) {
+                                    for (var i = 0; i < team.members.length; i++) {
+                                        if (team.members[i] == waifu.id) return inTeam = true;
+                                    }
+                                }
                             }
                             if (!inTeam) {
                                 client.economyManager[message.author.id].waifus.splice(i, 1);
