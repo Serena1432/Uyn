@@ -281,7 +281,7 @@ module.exports = async (client, message) => {
 		if (message.guild.member(client.user).hasPermission("SEND_MESSAGES")) {
 			if (!message.channel.permissionOverwrites.get(client.user.id) || message.channel.permissionOverwrites.get(client.user.id).deny.has("SEND_MESSAGES") != true) {
                 if (message.guild.id == "852080861901488129" && !message.member.roles.cache.get("857846843999649802")) {
-                    message.member.roles.add("857846843999649802").then(role => message.channel.send("Thank you for using the Uyn BOT in its official server! You got the UynUsers role!"));
+                    message.member.roles.add("857846843999649802").then(role => message.reply("Thank you for using the Uyn BOT in its official server! You got the UynUsers role!"));
                 }
 				cmd.run(client, message, args, language);
             }
