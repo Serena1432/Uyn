@@ -3,6 +3,40 @@ const request = require("request");
 const app = express();
 const fs = require("fs");
 
+function vote(client, req, res, user, success) {
+    if (success) {
+        var coinValue = Math.floor(Math.random() * 4000) + 1000;
+        var coins = parseInt(decrypt(client.economyManager[user.id].coins));
+        coins += coinValue;
+        client.economyManager[user.id].coins = encrypt(coins.toString());
+        var lvt = Math.floor(Math.random() * 4) + 1;
+        eval("client.economyManager[user.id].leveling_tickets.lvt" + lvt + "++");
+        var gtk = Math.floor(Math.random() * 4) + 1;
+        eval("client.economyManager[user.id].leveling_tickets.gtk" + gtk + "++");
+        request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
+            type: "update",
+            token: process.env.php_server_token,
+            id: user.id,
+            data: JSON.stringify(client.economyManager[user.id])
+        }}, function(error, response, body) {
+            client.countdown[message.author.id] = (new Date()).getTime() + 5000;
+            if (!error && response.statusCode == 200 && body.includes("Success")) {
+                user.send("Thank you for voting me " + user.username + "!\nYou have received **" + coinValue.toLocaleString() + " " + client.config.currency + ", 1 Leveling Ticket " + lvt + "★ and 1 Gacha Ticket" + gtk + "★** as a reward!");
+            }
+            else {
+                var coins = parseInt(decrypt(client.economyManager[user.id].coins));
+                coins -= coinValue;
+                client.economyManager[user.id].coins = encrypt(coins.toString());
+                eval("client.economyManager[user.id].leveling_tickets.lvt" + lvt + "--");
+                eval("client.economyManager[user.id].leveling_tickets.gtk" + gtk + "--");
+                user.send("Thank you for voting me " + user.username + "!");
+            }
+        });
+    }
+    else user.send("Thank you for voting me " + user.username + "!");
+    res.send("Success!");
+}
+
 function random(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
@@ -51,9 +85,38 @@ module.exports = (client) => {
             console.log(req.body.user);
             var user = client.users.cache.get(req.body.user);
             if (!user) return res.status(500).send("Cannot find the user!");
-            
-            user.send("Thank you for voting me " + user.username + "!\n(Note: This Vote Message feature is still in development; maybe a Voting Reward will coming soon if this BOT is completely developed)");
-            res.send("Success!");
+            if (!client.economyManager || !client.economyManager[user.id]) {
+                request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
+                    if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
+                        client.economyManager = JSON.parse(body);
+                        if (client.economyManager[user.id]) {
+                            vote(client, req, res, user, true);
+                            return;
+                        }
+                        else {
+                            client.economyManager[user.id] = {
+                                coins: encrypt("500"),
+                                waifus: [],
+                                leveling_tickets: {}
+                            };
+                            request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
+                                type: "add",
+                                token: process.env.php_server_token,
+                                id: user.id,
+                                data: JSON.stringify(client.economyManager[user.id])
+                            }}, function(error, response, body) {
+                                if (!error && response.statusCode == 200 && body.includes("Success")) {
+                                    vote(client, req, res, user, true);
+                                    return;
+                                }
+                                else vote(client, req, res, user, false);
+                            });
+                        }
+                    }
+                    else vote(client, req, res, user, false);
+                });
+            }
+            else vote(client, req, res, user, true);
         }
         else res.status(400).send("ERROR: Cannot find the 'dbl_vote_authorization' environment variable; please add it and try again");
     })
