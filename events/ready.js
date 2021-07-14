@@ -78,48 +78,6 @@ module.exports = (client) => {
         res.header("Access-Control-Allow-Headers", "Authorization, Content-Type");
         res.send("true");
     });
-    app.post('/VoteReceiver', (req, res) => {
-        if (process.env.dbl_vote_authorization) {
-            if (req.headers.authorization != process.env.dbl_vote_authorization) return res.status(401).send("Invalid authorization token");
-            if (!req.body.user) return res.status(500).send("Cannot find the user!");
-            console.log(req.body.user);
-            var user = client.users.cache.get(req.body.user);
-            if (!user) return res.status(500).send("Cannot find the user!");
-            if (!client.economyManager || !client.economyManager[user.id]) {
-                request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
-                    if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
-                        client.economyManager = JSON.parse(body);
-                        if (client.economyManager[user.id]) {
-                            vote(client, req, res, user, true);
-                            return;
-                        }
-                        else {
-                            client.economyManager[user.id] = {
-                                coins: encrypt("500"),
-                                waifus: [],
-                                leveling_tickets: {}
-                            };
-                            request.post({url: process.env.php_server_url + "/EconomyManager.php", formData: {
-                                type: "add",
-                                token: process.env.php_server_token,
-                                id: user.id,
-                                data: JSON.stringify(client.economyManager[user.id])
-                            }}, function(error, response, body) {
-                                if (!error && response.statusCode == 200 && body.includes("Success")) {
-                                    vote(client, req, res, user, true);
-                                    return;
-                                }
-                                else vote(client, req, res, user, false);
-                            });
-                        }
-                    }
-                    else vote(client, req, res, user, false);
-                });
-            }
-            else vote(client, req, res, user, true);
-        }
-        else res.status(400).send("ERROR: Cannot find the 'dbl_vote_authorization' environment variable; please add it and try again");
-    })
     console.log(`Ready as ${client.user.tag} to server in ${client.channels.cache.size} channels on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users.`);
     client.users.fetch(client.config.ownerId[0]).then((user) => {
         user.send("BOT has been restarted!");
