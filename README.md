@@ -64,7 +64,7 @@ checkperm, invite, ping, stats
 flip, slots
 
 ### 👋 Config:
-prefix
+language, prefix
 
 ## More informations about this BOT
 This BOT is being ran using Heroku, Node.JS, PHP and MySQL. I made it without any cost so I am not sure about the BOT security very much.

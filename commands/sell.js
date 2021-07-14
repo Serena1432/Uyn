@@ -21,10 +21,9 @@ function sell(client, message, args, language) {
                 }
             }
             var c = 1;
-            while (1) {
+            while (c < 50) {
                 c++;
                 eval("var team = client.economyManager[message.author.id].team" + c);
-                if (!eval("client.economyManager[message.author.id].team" + c)) break;
                 if (team && team.members.length) {
                     for (var i = 0; i < team.members.length; i++) {
                         if (team.members[i] == args[0]) return message.reply(language.inTeam);

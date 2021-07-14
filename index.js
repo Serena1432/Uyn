@@ -107,9 +107,7 @@ client.on("guildMemberAdd", (member) => {
 			client.muteLeaved[member.user.id] = false;
         }
     }
-    /*
-    Temporarily remove it because the official support server is not yet created.
-	if (member.guild.id == 653949728547143691) {
+	if (member.guild.id == "852080861901488129") {
 		const e = new Discord.MessageEmbed()
 			.setColor(Math.floor(Math.random() * 16777214) + 1)
 			.setAuthor(client.devUsername, client.users.cache.get(client.config.ownerId[0]).avatarURL({
@@ -123,12 +121,11 @@ client.on("guildMemberAdd", (member) => {
                 size: 2048
             }))
 			.setTitle("Welcome " + member.user.username + " to the Uyn BOT's Official Server!")
-			.setDescription("Welcome to the Official Server of the \"Uyn\" BOT! I'm really glad to see you joining this server!\nPlease don't hesitate to chat and ask anything about me, this server or the Uyn BOT! I really appreciate all of support!\nThe first thing you should do after joining this server is go to the #rules channel and make sure that you accepted our rules before doing anything in this server.\nAfter that, you can go to the #main-chat channel to begin chatting, the #get-roles channel to get some specific roles, or any channels that you want to do something with!\nHave fun chatting in this server! Don't forget to try using the Uyn BOT and tell me your experience with it!\n\nNote that the Uyn BOT is still in development so it still lacks many features! I will add more later!")
+			.setDescription("Welcome to the Official Server of the \"Uyn\" BOT! I'm really glad to see you joining this server!\nPlease don't hesitate to chat and ask anything about me, this server or the Uyn BOT! I really appreciate all of support!\nThe first thing you should do after joining this server is go to the <#857849356887130122> channel and make sure that you accepted our rules before doing anything in this server.\nAfter that, you can go to the <#857849923352395776> channel to begin chatting, the <#857849665835237377> channel to get some specific roles, or any channels that you want to do something with!\nHave fun chatting in this server! Don't forget to try using the Uyn BOT and tell me your experience with it!\n\nNote that the Uyn BOT is still in development so it still lacks many features! I will add more later!")
 			.setTimestamp();
-		client.channels.cache.get("810005345799503882").send(e);
+		client.channels.cache.get("857849343812698112").send(e);
 		member.user.send(e);
 	}
-    */
 });
 
 client.commands = new Discord.Collection();

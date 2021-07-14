@@ -17,6 +17,7 @@ function info(client, message, args, language) {
         var team = client.economyManager[message.author.id].team;
         switch (args[0]) {
             case "add": {
+                if (!isNaN(args[1]) && args[1] < 50) return message.reply("The Team ID must be lower than 50!");
                 if ((args[1] && args[1] == "1") || isNaN(args[1])) team = client.economyManager[message.author.id].team;
                 else eval("team = client.economyManager[message.author.id].team" + args[1]);
                 if (!team) eval("client.economyManager[message.author.id].team" + args[1] + " = { name : '', members: [] }; team = client.economyManager[message.author.id].team" + args[1]);
@@ -37,7 +38,7 @@ function info(client, message, args, language) {
                     }
                 }
                 var c = 1;
-                while (1) {
+                while (c < 50) {
                     c++;
                     eval("var team2 = client.economyManager[message.author.id].team" + c);
                     if (!team2) break;
@@ -70,6 +71,7 @@ function info(client, message, args, language) {
                 break;
             }
             case "remove": {
+                if (!isNaN(args[1]) && args[1] < 50) return message.reply("The Team ID must be lower than 50!");
                 if ((args[1] && args[1] == "1") || isNaN(args[1])) team = client.economyManager[message.author.id].team;
                 else eval("team = client.economyManager[message.author.id].team" + args[1]);
                 if (!team) eval("client.economyManager[message.author.id].team" + args[1] + " = { name : '', members: [] }; team = client.economyManager[message.author.id].team" + args[1]);
@@ -107,6 +109,7 @@ function info(client, message, args, language) {
                 break;
             }
             case "rename": {
+                if (!isNaN(args[1]) && args[1] < 50) return message.reply("The Team ID must be lower than 50!");
                 if ((args[1] && args[1] == "1") || isNaN(args[1])) team = client.economyManager[message.author.id].team;
                 else eval("team = client.economyManager[message.author.id].team" + args[1]);
                 if (!team) eval("client.economyManager[message.author.id].team" + args[1] + " = { name : '', members: [] }; team = client.economyManager[message.author.id].team" + args[1]);
@@ -138,6 +141,7 @@ function info(client, message, args, language) {
                 break;
             }
             default: {
+                if (!isNaN(args[0]) && args[0] < 50) return message.reply("The Team ID must be lower than 50!");
                 if (!args[0] || args[0] == "1") team = client.economyManager[message.author.id].team;
                 else eval("team = client.economyManager[message.author.id].team" + args[0]);
                 if (!team) eval("client.economyManager[message.author.id].team" + args[0] + " = { name : '', members: [] }; team = client.economyManager[message.author.id].team" + args[0]);
@@ -147,7 +151,7 @@ function info(client, message, args, language) {
                     .setDescription(language.noTeamMemberEmbed)
                     .setTimestamp());
                 embed = new Discord.MessageEmbed()
-                    .setAuthor(message.author.tag + "'s " + (team.name != "" ? team.name : "team"), message.author.avatarURL({size: 128, dynamic: true}))
+                    .setAuthor(message.author.tag + "'s " + (team.name != "" ? team.name : "team") + " (ID: " + (args[0] || "1") + ")", message.author.avatarURL({size: 128, dynamic: true}))
                     .setColor(Math.floor(Math.random() * 16777215))
                     .setDescription(language.teamInstructions)
                     .setTimestamp();

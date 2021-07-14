@@ -2,6 +2,9 @@
 
 # Uyn BOT Changelogs
 
+### July 14, 2021
+* Added multiple teams support.
+
 ### June 20, 2021
 * Added the Waifu Collecting System.
 
