@@ -7,6 +7,7 @@ function vote(client, req, res, user, success) {
         var coins = parseInt(decrypt(client.economyManager[user.id].coins));
         coins += coinValue;
         client.economyManager[user.id].coins = encrypt(coins.toString());
+        if (!client.economyManager[user.id].leveling_tickets) client.economyManager[user.id].leveling_tickets = {};
         var lvt = Math.floor(Math.random() * 4) + 1;
         eval("if (client.economyManager[user.id].leveling_tickets.lvt" + lvt + ") client.economyManager[user.id].leveling_tickets.lvt" + lvt + "++; else client.economyManager[user.id].leveling_tickets.lvt" + lvt + " = 1;");
         var gtk = Math.floor(Math.random() * 4) + 1;
