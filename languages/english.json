@@ -52,7 +52,7 @@
   "arrestedYourself": "You arrested yourself, but... why??",
   "pleaseMentionUser": "You must mention an user!",
   "baka": " is an idiot! Baka!",
-  "balance": "$username's balance",
+  "balance": "$user's balance",
   "messagePoints": "Message Points",
   "insufficientPermission": "You don't have the rights to do this!",
   "cannotBanYourself": "You cannot ban yourself!",
