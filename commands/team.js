@@ -17,7 +17,7 @@ function info(client, message, args, language) {
         var team = client.economyManager[message.author.id].team;
         switch (args[0]) {
             case "add": {
-                if (!isNaN(args[1]) && args[1] < 50) return message.reply("The Team ID must be lower than 50!");
+                if (!isNaN(args[1]) && args[1] >= 50) return message.reply("The Team ID must be lower than 50!");
                 if ((args[1] && args[1] == "1") || isNaN(args[1])) team = client.economyManager[message.author.id].team;
                 else eval("team = client.economyManager[message.author.id].team" + args[1]);
                 if (!team) eval("client.economyManager[message.author.id].team" + args[1] + " = { name : '', members: [] }; team = client.economyManager[message.author.id].team" + args[1]);
@@ -38,7 +38,7 @@ function info(client, message, args, language) {
                     }
                 }
                 var c = 1;
-                while (c < 50) {
+                while (c >= 50) {
                     c++;
                     eval("var team2 = client.economyManager[message.author.id].team" + c);
                     if (!team2) break;
@@ -71,7 +71,7 @@ function info(client, message, args, language) {
                 break;
             }
             case "remove": {
-                if (!isNaN(args[1]) && args[1] < 50) return message.reply("The Team ID must be lower than 50!");
+                if (!isNaN(args[1]) && args[1] >= 50) return message.reply("The Team ID must be lower than 50!");
                 if ((args[1] && args[1] == "1") || isNaN(args[1])) team = client.economyManager[message.author.id].team;
                 else eval("team = client.economyManager[message.author.id].team" + args[1]);
                 if (!team) eval("client.economyManager[message.author.id].team" + args[1] + " = { name : '', members: [] }; team = client.economyManager[message.author.id].team" + args[1]);
@@ -109,7 +109,7 @@ function info(client, message, args, language) {
                 break;
             }
             case "rename": {
-                if (!isNaN(args[1]) && args[1] < 50) return message.reply("The Team ID must be lower than 50!");
+                if (!isNaN(args[1]) && args[1] >= 50) return message.reply("The Team ID must be lower than 50!");
                 if ((args[1] && args[1] == "1") || isNaN(args[1])) team = client.economyManager[message.author.id].team;
                 else eval("team = client.economyManager[message.author.id].team" + args[1]);
                 if (!team) eval("client.economyManager[message.author.id].team" + args[1] + " = { name : '', members: [] }; team = client.economyManager[message.author.id].team" + args[1]);
