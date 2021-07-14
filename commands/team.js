@@ -38,7 +38,7 @@ function info(client, message, args, language) {
                     }
                 }
                 var c = 1;
-                while (c >= 50) {
+                while (c < 50) {
                     c++;
                     eval("var team2 = client.economyManager[message.author.id].team" + c);
                     if (!team2) break;
