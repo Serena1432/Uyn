@@ -29,7 +29,7 @@ module.exports.run = async (client, message, args, language) => {
         });
         fields.push({
             name: "BOT Information",
-            value: "[Invite Link](https://discord.com/oauth2/authorize?client_id=" + client.user.id + "&scope=bot&permissions=271707254) | [Support Server](https://discord.gg/v9c27j9CQ6)",
+            value: "[Invite Link](https://discord.com/oauth2/authorize?client_id=" + client.user.id + "&scope=bot&permissions=271707254) | [Support Server](https://discord.gg/v9c27j9CQ6) | [Vote this BOT](https://top.gg/bot/" + client.user.id + "/vote) | [Source Code](https://www.github.com/LilShieru/Uyn)",
             inline: false
         });
         for (i = 0; i < categories.length; i++) {

@@ -418,5 +418,7 @@
   "a": "a",
   "haveJustSent": "** have just sent **",
   "giveTo": "** to **",
-  "invalidTeamID": "Invalid Team ID!"
+  "invalidTeamID": "Invalid Team ID!",
+  "balanceDescription": "You need more coins? Consider receiving rewards from the `hourly`, `daily`, `weekly` and `monthly` command or vote this BOT using the `vote` command!",
+  "vote": "Vote this BOT on Top.gg to get some rewards!\n[Vote this BOT](https://top.gg/bot/$id/vote)"
 }

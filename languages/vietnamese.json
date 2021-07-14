@@ -419,5 +419,7 @@
   "a": "một",
   "haveJustSent": "** vừa gửi **",
   "giveTo": "** cho **",
-  "invalidTeamID": "ID đội không hợp lệ!"
+  "invalidTeamID": "ID đội không hợp lệ!",
+  "balanceDescription": "Bạn cần nhiều tiền hơn? Thử nhận các phần thưởng bằng lệnh `hourly`, `daily`, `weekly` và `monthly` hoặc bỏ phiếu cho BOT này bằng lệnh `vote`!",
+  "vote": "Hãy bỏ phiếu cho BOT này để nhận một số phần thưởng!\n[Bỏ phiếu](https://top.gg/bot/$id/vote)"
 }
