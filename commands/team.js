@@ -141,7 +141,7 @@ function info(client, message, args, language) {
                 break;
             }
             default: {
-                if (!isNaN(args[0]) && args[0] < 50) return message.reply("The Team ID must be lower than 50!");
+                if (!isNaN(args[0]) && args[0] > 50) return message.reply("The Team ID must be lower than 50!");
                 if (!args[0] || args[0] == "1") team = client.economyManager[message.author.id].team;
                 else eval("team = client.economyManager[message.author.id].team" + args[0]);
                 if (!team) eval("client.economyManager[message.author.id].team" + args[0] + " = { name : '', members: [] }; team = client.economyManager[message.author.id].team" + args[0]);

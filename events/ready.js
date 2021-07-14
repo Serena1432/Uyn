@@ -51,6 +51,7 @@ module.exports = (client) => {
             console.log(req.body.user);
             var user = client.users.cache.get(req.body.user);
             if (!user) return res.status(500).send("Cannot find the user!");
+            
             user.send("Thank you for voting me " + user.username + "!\n(Note: This Vote Message feature is still in development; maybe a Voting Reward will coming soon if this BOT is completely developed)");
             res.send("Success!");
         }
