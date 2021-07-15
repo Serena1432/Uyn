@@ -37,13 +37,17 @@ function info(client, message, args, language) {
                             }
                             var c = 1;
                             while (c < 50) {
-                                c++;
-                                eval("var team = client.economyManager[message.author.id].team" + c);
-                                if (team && team.members.length) {
-                                    for (var i = 0; i < team.members.length; i++) {
-                                        if (team.members[i] == waifu.id) return inTeam = true;
+                                if (!inTeam) {
+                                    c++;
+                                    var team;
+                                    eval("team = client.economyManager[message.author.id].team" + c);
+                                    if (team && team.members.length) {
+                                        for (var i = 0; i < team.members.length; i++) {
+                                            if (team.members[i] == waifu.id) return inTeam = true;
+                                        }
                                     }
                                 }
+                                else break;
                             }
                             if (!inTeam) {
                                 client.economyManager[message.author.id].waifus.splice(i, 1);
@@ -100,7 +104,6 @@ function info(client, message, args, language) {
 }
 
 module.exports.run = async (client, message, args, language) => {
-    return message.reply("This command has been temporarily disabled due to serious errors.")
     request(process.env.php_server_url + "/EconomyManager.php?type=get&token=" + process.env.php_server_token, function(error, response, body) {
         if (!error && response.statusCode == 200 && !body.includes("Connection failed")) {
             client.economyManager = JSON.parse(body);
