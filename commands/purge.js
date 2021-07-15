@@ -43,7 +43,7 @@ function info(client, message, args, language) {
                                     eval("team = client.economyManager[message.author.id].team" + c);
                                     if (team && team.members.length) {
                                         for (var j = 0; j < team.members.length; j++) {
-                                            if (team.members[j] == waifu.id) return inTeam = true;
+                                            if (team.members[j] == waifu.id) inTeam = true;
                                         }
                                     }
                                 }
