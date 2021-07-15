@@ -31,7 +31,7 @@ function info(client, message, args, language) {
                         if (waifu.rarity == "Normal") {
                             var inTeam = false;
                             if (client.economyManager[message.author.id].team && client.economyManager[message.author.id].team.members.length) {
-                                for (var i = 0; i < client.economyManager[message.author.id].team.members.length; i++) {
+                                for (var j = 0; j < client.economyManager[message.author.id].team.members.length; j++) {
                                     if (client.economyManager[message.author.id].team.members[i] == waifu.id) inTeam = true;
                                 }
                             }
@@ -42,7 +42,7 @@ function info(client, message, args, language) {
                                     var team;
                                     eval("team = client.economyManager[message.author.id].team" + c);
                                     if (team && team.members.length) {
-                                        for (var i = 0; i < team.members.length; i++) {
+                                        for (var j = 0; j < team.members.length; j++) {
                                             if (team.members[i] == waifu.id) return inTeam = true;
                                         }
                                     }

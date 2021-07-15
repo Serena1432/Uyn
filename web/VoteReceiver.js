@@ -19,10 +19,12 @@ function vote(client, req, res, user, success) {
             data: JSON.stringify(client.economyManager[user.id])
         }}, function(error, response, body) {
             if (!error && response.statusCode == 200 && body.includes("Success")) {
+                console.log("Success");
                 user.send("Thank you for voting me " + user.username + "!\nYou have received **" + coinValue.toLocaleString() + " " + client.config.currency + ", 1 Leveling Ticket " + lvt + "★ and 1 Gacha Ticket " + gtk + "★** as a reward!");
                 res.send({success: true, message: "Action has been done."});
             }
             else {
+                console.log("Failed");
                 var coins = parseInt(decrypt(client.economyManager[user.id].coins));
                 coins -= coinValue;
                 client.economyManager[user.id].coins = encrypt(coins.toString());
@@ -34,6 +36,7 @@ function vote(client, req, res, user, success) {
         });
     }
     else {
+        console.log("Failed");
         user.send("Thank you for voting me " + user.username + "!");
         res.send({success: true, message: "Action has been done, but no coins was given due to server error."})
     }
@@ -44,6 +47,7 @@ module.exports.post = function(client, req, res) {
         if (process.env.dbl_vote_authorization) {
             if (req.headers.authorization != process.env.dbl_vote_authorization) return res.status(401).send({error: 401, message: "Invalid authorization token"});
             if (!req.body.user) return res.status(404).send({error: 404, message: "Invalid user."});
+            console.log(req.body.user);
             var user = client.users.cache.get(req.body.user);
             if (!user) return res.status(404).send({error: 404, message: "Invalid user."});
             if (!client.economyManager || !client.economyManager[user.id]) {
