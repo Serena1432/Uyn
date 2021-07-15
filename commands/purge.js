@@ -32,7 +32,7 @@ function info(client, message, args, language) {
                             var inTeam = false;
                             if (client.economyManager[message.author.id].team && client.economyManager[message.author.id].team.members.length) {
                                 for (var j = 0; j < client.economyManager[message.author.id].team.members.length; j++) {
-                                    if (client.economyManager[message.author.id].team.members[i] == waifu.id) inTeam = true;
+                                    if (client.economyManager[message.author.id].team.members[j] == waifu.id) inTeam = true;
                                 }
                             }
                             var c = 1;
@@ -43,7 +43,7 @@ function info(client, message, args, language) {
                                     eval("team = client.economyManager[message.author.id].team" + c);
                                     if (team && team.members.length) {
                                         for (var j = 0; j < team.members.length; j++) {
-                                            if (team.members[i] == waifu.id) return inTeam = true;
+                                            if (team.members[j] == waifu.id) return inTeam = true;
                                         }
                                     }
                                 }

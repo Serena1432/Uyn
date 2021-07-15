@@ -46,6 +46,7 @@ module.exports.post = function(client, req, res) {
     try {
         if (process.env.dbl_vote_authorization) {
             if (req.headers.authorization != process.env.dbl_vote_authorization) return res.status(401).send({error: 401, message: "Invalid authorization token"});
+            console.log(req.body);
             if (!req.body.user) return res.status(404).send({error: 404, message: "Invalid user."});
             console.log(req.body.user);
             var user = client.users.cache.get(req.body.user);
